@@ -1,4 +1,10 @@
-@import "tailwindcss";
+/*
+ * source("../") scopes Tailwind's class detection to src/. Without it, v4
+ * auto-detects from the repo root and scans the markdown in docs/, so utilities
+ * mentioned only in a plan document get generated and shipped, and editing a doc
+ * changes the production CSS bundle.
+ */
+@import "tailwindcss" source("../");
 @import "../styles/generated/tokens.css";
 @import "../styles/generated/tokens.dark.css";
 

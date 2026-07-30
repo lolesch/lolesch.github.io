@@ -2,5 +2,6 @@
 # diffs and the Pages build see the same bytes regardless of who committed.
 * text=auto eol=lf
 
-# Generated token CSS is compared byte-wise by the Seam 1 tests.
+# Hand-authored CSS. The generated token CSS is gitignored, so this rule never
+# applies to it; the only file it touches today is src/app/globals.css.
 *.css text eol=lf

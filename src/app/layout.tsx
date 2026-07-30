@@ -15,7 +15,9 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Leonid Schreiber — Design Engineer',
+  // No em-dash (CLAUDE.md guardrail 5). The middot matches the metadata
+  // separator already used in site_copy.md's tile lines.
+  title: 'Leonid Schreiber · Design Engineer',
   description: 'I build systems that designers can understand and engineers can build.',
 };
 

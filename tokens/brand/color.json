@@ -6,7 +6,7 @@
     "shade":   { "$value": "{primitive.neutral.100}" },
     "quiet":   { "$value": "{primitive.neutral.500}" },
     "rule":    { "$value": "{primitive.neutral.300}" },
-    "accent":  { "$value": "{primitive.amber.600}" },
+    "accent":  { "$value": "{primitive.amber.700}" },
 
     "ink-inverse":    { "$value": "{primitive.neutral.50}" },
     "paper-inverse":  { "$value": "{primitive.neutral.900}" },

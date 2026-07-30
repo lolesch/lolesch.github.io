@@ -15,7 +15,10 @@ Every task's requirements implicitly include this section.
 **Versions (verified 2026-07-30, not assumed):**
 - `next` 16.2.12, `react` / `react-dom` 19.2.4, `typescript` `^5`. **Do not install `typescript@7`** even though it is npm `latest` (7.0.2). Next 16's own generator pins `^5`; TS 7 compatibility with Next 16 is unverified.
 - `tailwindcss` `^4`, `@tailwindcss/postcss` `^4` (4.3.3 current), `style-dictionary` `^5` (5.5.0 current), `vitest` `^4`.
+- `@types/node` `^24`, **not** the `^20` Next's generator emits. Node 24 has `fs.globSync`, which the tests use, and `@types/node@20` does not declare it. With `^20` the repo does not typecheck even though it builds.
 - Node 24.16.0 locally and in CI.
+
+**Typechecking is not covered by the build.** `next build` typechecks only its own module graph, so errors under `tests/` pass unnoticed. Run `npm run typecheck` (`tsc --noEmit`) and keep it in CI. Avoid the regex `/s` flag in tests: `target` is `ES2017` and `[\s\S]` works without it.
 
 **Hosting (ADR-0001):**
 - `output: 'export'` in `next.config.ts`.
@@ -163,6 +166,7 @@ Expected: FAIL. There is no `package.json` yet, so this errors before it even co
     "pretest": "npm run tokens",
     "dev": "next dev",
     "build": "next build",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run tests/unit",
     "test:export": "npm run build && vitest run tests/export"
   },
@@ -173,7 +177,7 @@ Expected: FAIL. There is no `package.json` yet, so this errors before it even co
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "style-dictionary": "^5",
@@ -777,9 +781,9 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Leonid Schreiber — Design Engineer',
-  description:
-    'I build systems that designers can understand and engineers can build.',
+  // No em-dash, per guardrail 5. A page title is outward-facing text.
+  title: 'Leonid Schreiber · Design Engineer',
+  description: 'I build systems that designers can understand and engineers can build.',
 };
 
 // Runs before first paint so the correct theme is on <html> with no flash.
@@ -960,6 +964,9 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # next build does not typecheck tests/, so this has to be its own step.
+      - run: npm run typecheck
 
       # Seam 1 + token discipline. A broken token architecture fails the deploy.
       - run: npm test
