@@ -4,6 +4,11 @@ export type Lens = 'UX/UI' | 'Systems & Architecture' | 'Games / XR' | 'AI Workf
 // featured/bridge/archive split and the v2 Router cost no model change.
 export type Tier = 'featured' | 'bridge' | 'archive';
 
+// `embed` resolves through a registry (FigureId -> React component), which is
+// what keeps "content is data" true: the data names a figure, it does not
+// carry one.
+export type FigureId = 'rollhaus-architecture';
+
 // A page renders the sections that exist and stops. There is no fixed template
 // and no required section: CONTEXT.md's rule is that a section exists only if
 // it has substance, never padded to look complete.
@@ -17,7 +22,8 @@ export type Section =
       alt: string;
       width: number;
       height: number;
-    };
+    }
+  | { kind: 'embed'; heading: string; caption: string; figure: FigureId };
 
 export type Project = {
   slug: string;

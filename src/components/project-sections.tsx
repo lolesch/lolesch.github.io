@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { FIGURES } from '@/components/figures/registry';
 import type { Section } from '@/content/types';
 
 export function ProjectSections({ sections }: { sections: readonly Section[] }) {
@@ -38,6 +39,16 @@ function SectionBody({ section }: { section: Section }) {
           <figcaption className="mt-tight text-meta text-muted">{section.caption}</figcaption>
         </figure>
       );
+
+    case 'embed': {
+      const Figure = FIGURES[section.figure];
+      return (
+        <figure className="mt-gap">
+          <Figure />
+          <figcaption className="mt-tight text-meta text-muted">{section.caption}</figcaption>
+        </figure>
+      );
+    }
 
     default: {
       // Adding an arm to Section without handling it here fails the build
