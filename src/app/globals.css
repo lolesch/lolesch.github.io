@@ -1,1 +1,32 @@
 @import "tailwindcss";
+@import "../styles/generated/tokens.css";
+@import "../styles/generated/tokens.dark.css";
+
+/*
+ * The framework adapter (CONTEXT.md, ADR-0003).
+ * `inline` is required: it makes utilities reference --ds-* directly instead of
+ * Tailwind minting its own :root variables, which is what lets the
+ * [data-theme="dark"] block override them with no component involvement.
+ * Remove Tailwind and the --ds-* system above survives untouched.
+ */
+@theme inline {
+  --color-bg: var(--ds-color-bg);
+  --color-fg: var(--ds-color-fg);
+  --color-muted: var(--ds-color-muted);
+  --color-accent: var(--ds-color-accent);
+  --color-border: var(--ds-color-border);
+  --color-surface: var(--ds-color-surface);
+
+  --spacing-gutter: var(--ds-space-gutter);
+  --spacing-stack: var(--ds-space-stack);
+  --spacing-section: var(--ds-space-section);
+
+  --font-serif: var(--font-headline);
+  --font-sans: var(--font-body);
+}
+
+/* The one global rule. Everything else is a utility. */
+body {
+  background-color: var(--ds-color-bg);
+  color: var(--ds-color-fg);
+}
