@@ -46,6 +46,23 @@ export const projects: readonly Project[] = [
         ],
       },
       {
+        // PLACEHOLDER, pending a clean export. This is the only shipped source
+        // that carries the post-rework editor as a full screen, and it was
+        // captured into a slide rather than exported from the design file, so
+        // the panel heading reads "Patten" and the summary card is clipped
+        // behind the panel. Neither is a limitation of the design. Provenance
+        // and the replacement plan are in `scripts/extract-figures.py`; the
+        // open item is in `_build-log.md`.
+        kind: 'figure',
+        heading: 'The editor',
+        caption:
+          'The customization editor after the usability rework, with each category on its own step and the configured skate updating alongside it.',
+        src: '/figures/rollhaus-editor.jpg',
+        alt: 'The Rollhaus customization editor: a site navigation bar across the top, a white roller skate filling the left of the screen, and a panel on the right pairing a category rail with a grid of pattern swatches.',
+        width: 1440,
+        height: 1024,
+      },
+      {
         kind: 'prose',
         heading: 'Context',
         body: [

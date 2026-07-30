@@ -6,15 +6,29 @@ import { projects } from '../../src/content/projects';
 // Every string a visitor reads inside a section, whatever kind it is. A new
 // section kind whose copy is not reachable from here ships past every rule
 // below, which is exactly how figure copy escaped these guards once already.
+//
+// There is no `default` arm on purpose, and that is the whole point of this
+// shape. A `default` is what let the same bug land three times: it silently
+// answers for kinds nobody has thought about yet, so `constraints` shipped
+// label/value pairs past these rules, and `figure` shipped `alt` past them.
+// `alt` is copy: it reaches screen readers and it sits in the exported HTML.
+// With every kind named explicitly and `never` closing the switch, adding an
+// arm to `Section` fails typecheck here until its copy is accounted for.
 const bodies = (project: (typeof projects)[number]) =>
-  project.sections.flatMap((section) => {
+  project.sections.flatMap((section): string[] => {
     switch (section.kind) {
       case 'prose':
         return [...section.body];
       case 'constraints':
         return section.items.flatMap((item) => [item.label, item.value]);
-      default:
+      case 'figure':
+        return [section.caption, section.alt];
+      case 'embed':
         return [section.caption];
+      default: {
+        const unhandled: never = section;
+        throw new Error(`section kind not reached by the copy guards: ${JSON.stringify(unhandled)}`);
+      }
     }
   });
 

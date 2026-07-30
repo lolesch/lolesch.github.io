@@ -3,19 +3,26 @@ import { FIGURES } from '@/components/figures/registry';
 import type { Section } from '@/content/types';
 
 export function ProjectSections({ sections }: { sections: readonly Section[] }) {
+  // `next/image` lazy-loads by default, which is exactly wrong for the first
+  // image on the page: it is the LCP candidate, so deferring it delays the
+  // paint it defines. Decided here rather than on the content record, because
+  // which image paints first is a property of the rendered page, not of the
+  // copy. Later figures keep the default and stay lazy.
+  const lead = sections.findIndex((section) => section.kind === 'figure');
+
   return (
     <>
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <section key={section.heading} className="mt-section">
           <h2 className="font-serif text-heading leading-tight">{section.heading}</h2>
-          <SectionBody section={section} />
+          <SectionBody section={section} priority={index === lead} />
         </section>
       ))}
     </>
   );
 }
 
-function SectionBody({ section }: { section: Section }) {
+function SectionBody({ section, priority }: { section: Section; priority: boolean }) {
   switch (section.kind) {
     case 'prose':
       return (
@@ -51,6 +58,7 @@ function SectionBody({ section }: { section: Section }) {
             alt={section.alt}
             width={section.width}
             height={section.height}
+            priority={priority}
             className="h-auto w-full rounded-card border border-border"
           />
           <figcaption className="mt-tight text-meta text-muted">{section.caption}</figcaption>
