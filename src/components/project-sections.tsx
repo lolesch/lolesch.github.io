@@ -26,6 +26,23 @@ function SectionBody({ section }: { section: Section }) {
         </div>
       );
 
+    case 'constraints':
+      return (
+        // Bordered rather than filled, for the reason the tile is: `muted` on
+        // `surface` measures 4.40:1 in light, under AA, and every value here
+        // sits under a muted label. On `bg` both pairs are already in the
+        // contrast table. The decorative `border` token is correct because a
+        // callout is not a control.
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter text-body sm:grid-cols-2">
+          {section.items.map((item) => (
+            <div key={item.label}>
+              <dt className="text-meta text-muted">{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      );
+
     case 'figure':
       return (
         <figure className="mt-gap">

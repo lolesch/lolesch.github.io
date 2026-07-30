@@ -14,6 +14,14 @@ export type FigureId = 'rollhaus-architecture';
 // it has substance, never padded to look complete.
 export type Section =
   | { kind: 'prose'; heading: string; body: readonly string[] }
+  // The time/team/tools callout CONTEXT.md lists as pending polish on the case
+  // study template. Label/value pairs rather than prose, because the reader
+  // scans them: they answer "what was this" before the writing has to.
+  | {
+      kind: 'constraints';
+      heading: string;
+      items: readonly { label: string; value: string }[];
+    }
   | {
       kind: 'figure';
       heading: string;

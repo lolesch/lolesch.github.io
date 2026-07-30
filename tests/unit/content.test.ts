@@ -3,10 +3,20 @@ import { describe, expect, it } from 'vitest';
 // aliases, and adding one to run a test is a worse trade than a relative path.
 import { projects } from '../../src/content/projects';
 
+// Every string a visitor reads inside a section, whatever kind it is. A new
+// section kind whose copy is not reachable from here ships past every rule
+// below, which is exactly how figure copy escaped these guards once already.
 const bodies = (project: (typeof projects)[number]) =>
-  project.sections.flatMap((section) =>
-    section.kind === 'prose' ? [...section.body] : [section.caption],
-  );
+  project.sections.flatMap((section) => {
+    switch (section.kind) {
+      case 'prose':
+        return [...section.body];
+      case 'constraints':
+        return section.items.flatMap((item) => [item.label, item.value]);
+      default:
+        return [section.caption];
+    }
+  });
 
 describe('project content', () => {
   it('ships at least one project', () => {
@@ -44,6 +54,15 @@ describe('project content', () => {
           if (section.kind === 'prose') {
             expect(section.body.length).toBeGreaterThan(0);
             for (const paragraph of section.body) expect(paragraph.length).toBeGreaterThan(0);
+          }
+          if (section.kind === 'constraints') {
+            // A callout with no rows, or a labelled row with nothing in it, is
+            // the same padding the rule above bans in prose.
+            expect(section.items.length).toBeGreaterThan(0);
+            for (const item of section.items) {
+              expect(item.label.length).toBeGreaterThan(0);
+              expect(item.value.length).toBeGreaterThan(0);
+            }
           }
         }
       });
