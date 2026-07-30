@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FIGURES } from '@/components/figures/registry';
 import type { Section } from '@/content/types';
 
-export function ProjectSections({ sections }: { sections: readonly Section[] }) {
+export function ContentSections({ sections }: { sections: readonly Section[] }) {
   // `next/image` lazy-loads by default, which is exactly wrong for the first
   // image on the page: it is the LCP candidate, so deferring it delays the
   // paint it defines. Decided here rather than on the content record, because

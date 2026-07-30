@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ProjectSections } from '@/components/project-sections';
+import { ContentSections } from '@/components/sections';
 import { projects } from '@/content/projects';
 
 // trailingSlash: true is already set, so the export emits
@@ -54,7 +54,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         where the tile stopped. A project with nothing verified to say yet is a
         short page, which is the no-padding rule working.
       */}
-      <ProjectSections sections={project.sections} />
+      <ContentSections sections={project.sections} />
 
       <p className="mt-section text-body">
         <Link href="/" className="underline underline-offset-4">
