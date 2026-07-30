@@ -50,3 +50,25 @@ export type Project = {
   // Only what has substance. May be empty. Never padded to look complete.
   sections: readonly Section[];
 };
+
+export type ContactLink = {
+  label: string; // "Email", "LinkedIn"
+  value: string; // what the visitor reads, and the link's accessible name
+  href: string;
+  // Marks a link that leaves the site, which gets rel="noopener noreferrer".
+  // false for mailto, which opens no page at all.
+  external: boolean;
+};
+
+export type About = {
+  // The opening line, above the sections. Not a Section: it sits beside the
+  // portrait rather than under a heading.
+  intro: string;
+  sections: readonly Section[];
+  portrait: { src: string; alt: string; width: number; height: number };
+  contact: readonly ContactLink[];
+  // Nullable so the page ships before the Track C re-export exists. The export
+  // guard only fires when this is non-null, which is the difference between a
+  // page that waits and a page that ships a broken link.
+  cv: { label: string; href: string } | null;
+};
