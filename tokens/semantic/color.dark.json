@@ -8,6 +8,7 @@
     "border":  { "$value": "{brand.rule-inverse}" },
     "surface": { "$value": "{brand.shade-inverse}" },
 
-    "border-interactive": { "$value": "{brand.edge-inverse}" }
+    "border-interactive": { "$value": "{brand.edge-inverse}" },
+    "border-media": { "$value": "{brand.edge-inverse}" }
   }
 }

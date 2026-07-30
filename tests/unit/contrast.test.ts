@@ -58,6 +58,17 @@ const PAIRS = [
     min: 3,
     role: 'control boundary (SC 1.4.11)',
   },
+  {
+    fg: '--ds-color-border-media',
+    bg: '--ds-color-bg',
+    min: 3,
+    // Design intent, not a WCAG requirement, and the distinction is recorded
+    // rather than blurred: SC 1.4.11 governs controls and meaningful graphics,
+    // and a decorative frame around a photograph is neither. Held at 3:1 anyway
+    // so a Brand change cannot quietly erase the ring, which is the whole
+    // reason the token exists.
+    role: 'media frame (design intent, not SC 1.4.11)',
+  },
 ] as const;
 
 const THEMES = [

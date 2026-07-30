@@ -30,6 +30,14 @@
    * name on one concept in the adapter layer.
    */
   --color-border-interactive: var(--ds-color-border-interactive);
+  /*
+   * A third border *role*, not a third border value: it points at the same
+   * Brand token as `border-interactive` today. Two roles that happen to agree
+   * is the Semantic layer working, and they can diverge later without touching
+   * a component. A portrait is not a control, so borrowing the control token
+   * for it would repeat the mistake the log records once already.
+   */
+  --color-border-media: var(--ds-color-border-media);
 
   --spacing-gutter: var(--ds-space-gutter);
   --spacing-stack: var(--ds-space-stack);

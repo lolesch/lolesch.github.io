@@ -8,6 +8,7 @@
     "border":  { "$value": "{brand.rule}" },
     "surface": { "$value": "{brand.shade}" },
 
-    "border-interactive": { "$value": "{brand.edge}" }
+    "border-interactive": { "$value": "{brand.edge}" },
+    "border-media": { "$value": "{brand.edge}" }
   }
 }
