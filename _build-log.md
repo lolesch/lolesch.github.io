@@ -119,3 +119,37 @@ Worth separating from that: **the grid is not a new route.** It goes on Home, wh
 **The fifth was stale, and so was the state it came from.** The review flagged the hero line as unresolved and blocking. It was adjudicated and shipped earlier the same day, and is live. The flag traces to `tasks.md`, which still carries it open at line 25, alongside line 24 asserting that Pages was never enabled. Both closed today. Two agents working from a shared task file drifted within hours of each other, in a project whose most useful log entry to date is about exactly this failure mode. The fix is not more process, it is that a task file which is read by two sides has to be written back to by both.
 
 One smaller instance of the same thing, found while reading: **FerMentor's tile carries a note saying it must stay a stub** because its material came from three lines in `spiced_projects.md`. That note is stale too. `fermentor_source_of_truth.md` was gathered the same day and never folded back, and it holds the shipped problem statement, a full fermentation-stage domain model, and the `SHOW ME` interaction. The tile is an authoring task, not a blocked one.
+
+## 2026-07-30 — Building the work grid: what the measurements decided
+
+Tasks 1 to 5 of `docs/plans/2026-07-30-work-grid.md` landed. Home has a work grid, three `/work/<slug>/` routes exist, the token set grew a type ramp, a radius scale and an interactive-boundary colour, and five guards went in. 29 unit tests and 28 export tests green, typecheck clean.
+
+Almost every decision below was settled by a number rather than by taste, which is the thing worth recording.
+
+**Tiles are bordered, not filled, and a measurement decided it.** The intended design was a filled card on `surface`. Measuring first found `muted` on `surface` at **4.40:1 in light**, under AA, and metadata is exactly what a tile's `surface` would carry. Rather than darken `muted` for one component, the tile lost its fill. **Rejected: a filled card**, for a measured reason instead of a stylistic one. The unused pair is now recorded in a comment in `tests/unit/contrast.test.ts` alongside `border-interactive` on `surface` at 3.08:1 in dark, so whoever renders something on `surface` next inherits the finding rather than rediscovering it.
+
+**The contrast guard became a test with a pair table, not a devtools ritual.** The last entry recorded `brand.accent` sitting at 3.19:1 for a whole plan because "the token pair already existed and looked blessed". A per-task manual check does not catch that, and a check nobody can fail is not a check. `tests/unit/contrast.test.ts` parses the generated CSS, layers dark over light the way the cascade does, resolves the `var()` chain through all three layers, and asserts an explicit table of the pairs the site actually renders. Pairs nothing renders are deliberately absent: an unrendered pair passing tells you nothing.
+
+The measured numbers also corrected the spec, which had estimated them. `border-interactive` is **4.83:1 light and 3.67:1 dark**, against the guessed 4.6 and 3.7. Both clear the 3:1 that SC 1.4.11 requires to identify a control, from a single Primitive in both themes.
+
+**`border-border-interactive` is an ugly utility name, accepted rather than aliased.** The Tailwind adapter maps `--color-*` one to one onto the token name, so a semantic token called `border-interactive` produces that. Renaming it in the adapter would have given one concept a third name, in the layer whose whole job is to not do that. Two specs drifting apart is how this project's worst logged failure started, and it started smaller than this.
+
+**The hero steps to 2rem below `sm`, not 2.25rem.** Moving the hero onto `text.display` was the one change touching live, asserted markup. `text-title sm:text-display` keeps desktop byte-identical at 3rem and steps mobile from 2.25rem to 2rem. **Rejected: inventing a Primitive step to serve one breakpoint**, which is a ramp bending to a layout rather than a layout using a ramp.
+
+**`embed` and the figure registry were held back to Task 5**, on the walking skeleton's own precedent about scaffolding without a consumer. A registry whose only entry does not exist yet is that. The extension point is now demonstrated rather than asserted, and the exhaustive `never` check is what forced the renderer to be extended when the arm landed. It fired exactly as planned.
+
+**The Rollhaus page was going to ship near-empty, and did not.** This was the plan's own worst outcome, logged as an open question and then put to Leonid rather than decided quietly. Precondition 1 gates the Rollhaus page because `spiced_rollhaus.md` names three design principles where the 2026-07-29 top-up found four, and lacks the role split and the instructor feedback. Rendered, the consequence was worse than it read on paper: the site's hero case study was a title, a metadata line and a back link.
+
+The narrow reading of that precondition ships the architecture figure now, because the diagram was built from the live Figma file on 2026-06-19, separately from the case-study draft, and asserts none of the three things the top-up corrects. It is not what the gate is protecting. Leonid took it. The written case study still waits.
+
+Worth being honest about why this was asked rather than assumed: **reinterpreting an approved instruction to suit a sequencing preference is exactly the drift this log keeps recording.** The reading is defensible, and it was still not mine to take alone.
+
+**Three guards that would have passed for the wrong reason, found by trying to break them.**
+
+1. The no-repeat rule fired on `/work/glyphshero/` because `generateMetadata` puts the Problem line in `<meta name="description">`. The page was right and the assertion was wrong: someone arriving from a search result or a link unfurl has not seen the tile. Scoping it to `<body>` is correct, but scoping an assertion to make it pass is also how a guard gets hollowed out, so the rescoped version was **proved to still bite** by hardcoding a tile line into the page component, where the data-level guard cannot see it. It fired.
+2. `Record<FigureId, ComponentType>` proves the registry has an entry for every id. It cannot prove the component rendered. `tests/export/figures.test.ts` is that half, against the artifact.
+3. Figure copy is authored prose that ships on a page, but it lives outside the `Project` records, so every guard in `content.test.ts` walked straight past it. `tests/unit/figures.test.ts` reaches it. Watched failing on an inserted em-dash before being believed.
+
+**One copy decision inside the port.** The source figure flagged the ad hoc variable naming twice, once as an aside next to the variables and once in the footnote. Stated twice in one diagram it reads as apologising for the work. It is stated once now, in the footnote, where it is scoped and its consequence is given. Nothing was softened: the footnote is the stronger of the two.
+
+**Also fixed in passing:** the theme toggle had been borrowing `muted`, a text colour, for its border, with a comment saying `border` was too low contrast. That was a stopgap from the walking skeleton wearing a justification. It is on `border-interactive` now. Dark drops from 11.99:1 to 3.67:1, which is the point: 11.99 is a loud hairline on a site whose anti-brand constraint is "never cluttered".
