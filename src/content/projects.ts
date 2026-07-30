@@ -26,14 +26,26 @@ export const projects: readonly Project[] = [
       'Built the product page on Figma variables and modes instead of duplicated frames, so one mode switch reconfigures several linked elements at once. Added a color token system, then extended the setup from quad skates to inline, ice, and shoe-only, plus fabric and pattern options.',
     whatChanged:
       'The system grew by extension rather than duplication. Usability testing with 18 unmoderated and 1 moderated participant found a 68% misclick rate on editing a skate, which drove a category-based rework of the side panel.',
-    // Empty on purpose. `job-search/_project/tasks.md:26` sequences the Rollhaus
-    // top-up into spiced_rollhaus.md before this page is written: the draft
-    // names three design principles where the 2026-07-29 top-up found four, and
-    // it lacks the role split and the instructor feedback. This repo becomes
-    // canonical on copy at port time, so writing sections now would launder a
+    // The written case study still waits on the Rollhaus top-up into
+    // spiced_rollhaus.md (`job-search/_project/tasks.md:26`): that draft names
+    // three design principles where the 2026-07-29 top-up found four, and it
+    // lacks the role split and the instructor feedback. This repo becomes
+    // canonical on copy at port time, so porting prose now would launder a
     // stale draft into the source of truth. Task 6 of
-    // docs/plans/2026-07-30-work-grid.md fills this in once that lands.
-    sections: [],
+    // docs/plans/2026-07-30-work-grid.md fills that in once it lands.
+    //
+    // The figure is not gated on it. It was built from the live Figma file on
+    // 2026-06-19, separately from the case-study draft, and it makes none of
+    // the three claims the top-up corrects. Decision logged 2026-07-30.
+    sections: [
+      {
+        kind: 'embed',
+        heading: 'How the configurator is built',
+        caption:
+          'The system as it actually works, ported from the Figma file onto the tokens this site runs on, so it follows the theme.',
+        figure: 'rollhaus-architecture',
+      },
+    ],
   },
   {
     slug: 'glyphshero',

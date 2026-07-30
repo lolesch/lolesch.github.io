@@ -37,7 +37,10 @@ export const rollhausArchitecture = {
     },
     {
       title: '2 · Variables and modes',
-      detail: 'A selection sets a variable. Naming is still ad hoc.',
+      // The source figure also flagged the ad hoc naming here. Said twice in
+      // one diagram it reads as apologising for the work, so it is stated once,
+      // in the footnote, where it is scoped and its consequence is given.
+      detail: 'A selection sets a variable.',
       variables: [
         { name: 'QuadSelected', type: 'bool' },
         { name: 'Spotlight', type: 'string' },

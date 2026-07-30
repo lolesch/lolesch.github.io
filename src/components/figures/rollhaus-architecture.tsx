@@ -91,14 +91,20 @@ export function RollhausArchitecture() {
           <Label>{fig.tokensLabel}</Label>
           <div className="mt-tight rounded-card border border-border bg-surface p-gutter">
             <p className="font-bold text-meta">Colour</p>
-            <ul className="mt-tight flex flex-wrap gap-tight">
+            {/*
+              A grid rather than a wrapping flex row: the swatches are one
+              scale, and a scale that breaks across two lines at a narrow column
+              width reads as an accident. The columns scale, the row does not
+              wrap.
+            */}
+            <ul className="mt-tight grid grid-cols-6 gap-tight">
               {[
                 ...rollhausPalette.neutrals,
                 { value: rollhausPalette.brand, label: 'Primary 1' },
               ].map((swatch) => (
                 <li
                   key={swatch.value}
-                  className="size-8 rounded-control border border-border"
+                  className="aspect-square rounded-control border border-border"
                   style={{ background: swatch.value }}
                 >
                   <span className="sr-only">{`${swatch.label} ${swatch.value}`}</span>
