@@ -1,0 +1,8 @@
+{
+  "radius": {
+    "$type": "dimension",
+    "card":    { "$value": "{primitive.radius.medium}" },
+    "control": { "$value": "{primitive.radius.small}" },
+    "tag":     { "$value": "{primitive.radius.full}" }
+  }
+}

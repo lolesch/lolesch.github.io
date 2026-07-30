@@ -11,25 +11,51 @@ const SCANNED = [
   'public/**/*.{css,svg,js,html}',
 ];
 
-// Three ways application code actually escapes the Semantic layer.
-const OFFENCES: Array<[RegExp, string]> = [
-  [/--ds-(?:primitive|brand)-[\w-]+/g, 'references a Primitive or Brand token directly'],
-  // A name composed at runtime evades a literal match:
-  // style={{ background: `var(--ds-${layer}-${name})` }}
-  [/--ds-\$\{/g, 'composes a token name at runtime, which defeats this check'],
-  // The likelier failure is bypassing the token system altogether. Tailwind's
-  // built-in palette is not part of the three layers at all.
-  [
-    /\b(?:bg|text|border|ring|fill|stroke|from|via|to|outline|decoration|divide|shadow|accent|caret)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/g,
-    "uses Tailwind's built-in palette instead of a Semantic token",
-  ],
+type Offence = {
+  pattern: RegExp;
+  why: string;
+  // Paths this rule does not apply to, on top of the generated stylesheets.
+  exempt?: (path: string) => boolean;
+};
+
+// Four ways application code actually escapes the Semantic layer.
+const OFFENCES: Offence[] = [
+  {
+    pattern: /--ds-(?:primitive|brand)-[\w-]+/g,
+    why: 'references a Primitive or Brand token directly',
+  },
+  {
+    // A name composed at runtime evades a literal match:
+    // style={{ background: `var(--ds-${layer}-${name})` }}
+    pattern: /--ds-\$\{/g,
+    why: 'composes a token name at runtime, which defeats this check',
+  },
+  {
+    // The likelier failure is bypassing the token system altogether. Tailwind's
+    // built-in palette is not part of the three layers at all.
+    pattern:
+      /\b(?:bg|text|border|ring|fill|stroke|from|via|to|outline|decoration|divide|shadow|accent|caret)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/g,
+    why: "uses Tailwind's built-in palette instead of a Semantic token",
+  },
+  {
+    // Without this rule the test above means less than it looks: it bans
+    // reaching past Semantic while waving through skipping the token system
+    // outright. Exact hex lengths, so an English word that happens to be
+    // hex-ish (#added) does not trip it. A guard that cries wolf gets disabled.
+    pattern:
+      /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b|\brgba?\(|\bhsla?\(/g,
+    why: 'hardcodes a colour literal instead of using a Semantic token',
+    // src/content/** is exempt because a diagram that depicts the Rollhaus
+    // brand palette is *about* those colours. They are content, not styling.
+    exempt: (path) => path.startsWith('src/content/'),
+  },
 ];
 
 describe('token discipline', () => {
   it('never reaches past the Semantic layer from application code', () => {
-    const files = SCANNED.flatMap((pattern) => globSync(pattern)).filter(
-      (f) => !f.replaceAll('\\', '/').includes(GENERATED),
-    );
+    const files = SCANNED.flatMap((pattern) => globSync(pattern))
+      .map((f) => f.replaceAll('\\', '/'))
+      .filter((f) => !f.includes(GENERATED));
 
     // Guards against the whole test passing because the glob matched nothing.
     expect(files.length).toBeGreaterThan(0);
@@ -37,10 +63,11 @@ describe('token discipline', () => {
     const violations: string[] = [];
     for (const file of files) {
       const source = readFileSync(file, 'utf8');
-      for (const [pattern, why] of OFFENCES) {
-        const hits = source.match(pattern);
+      for (const offence of OFFENCES) {
+        if (offence.exempt?.(file)) continue;
+        const hits = source.match(offence.pattern);
         if (hits) {
-          violations.push(`${file} ${why}: ${[...new Set(hits)].join(', ')}`);
+          violations.push(`${file} ${offence.why}: ${[...new Set(hits)].join(', ')}`);
         }
       }
     }

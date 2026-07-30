@@ -6,6 +6,8 @@
     "muted":   { "$value": "{brand.quiet}" },
     "accent":  { "$value": "{brand.accent}" },
     "border":  { "$value": "{brand.rule}" },
-    "surface": { "$value": "{brand.shade}" }
+    "surface": { "$value": "{brand.shade}" },
+
+    "border-interactive": { "$value": "{brand.edge}" }
   }
 }

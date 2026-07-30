@@ -8,6 +8,8 @@ const base = [
   'tokens/primitive/**/*.json',
   'tokens/brand/**/*.json',
   'tokens/semantic/space.json',
+  'tokens/semantic/text.json',
+  'tokens/semantic/radius.json',
 ];
 
 const platforms = (destination, selector, filter) => ({

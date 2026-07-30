@@ -1,0 +1,12 @@
+{
+  "text": {
+    "$type": "dimension",
+    "display":    { "$value": "{primitive.font.size.700}" },
+    "title":      { "$value": "{primitive.font.size.600}" },
+    "heading":    { "$value": "{primitive.font.size.500}" },
+    "subheading": { "$value": "{primitive.font.size.400}" },
+    "lead":       { "$value": "{primitive.font.size.300}" },
+    "body":       { "$value": "{primitive.font.size.200}" },
+    "meta":       { "$value": "{primitive.font.size.100}" }
+  }
+}

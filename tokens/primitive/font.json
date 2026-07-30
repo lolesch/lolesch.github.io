@@ -1,0 +1,16 @@
+{
+  "primitive": {
+    "font": {
+      "size": {
+        "$type": "dimension",
+        "100": { "$value": "0.875rem" },
+        "200": { "$value": "1rem" },
+        "300": { "$value": "1.125rem" },
+        "400": { "$value": "1.25rem" },
+        "500": { "$value": "1.5rem" },
+        "600": { "$value": "2rem" },
+        "700": { "$value": "3rem" }
+      }
+    }
+  }
+}

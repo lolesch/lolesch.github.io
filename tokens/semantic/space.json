@@ -3,6 +3,8 @@
     "$type": "dimension",
     "gutter":  { "$value": "{primitive.size.6}" },
     "stack":   { "$value": "{primitive.size.4}" },
-    "section": { "$value": "{primitive.size.20}" }
+    "section": { "$value": "{primitive.size.20}" },
+    "gap":     { "$value": "{primitive.size.6}" },
+    "tight":   { "$value": "{primitive.size.2}" }
   }
 }

@@ -6,6 +6,8 @@
     "muted":   { "$value": "{brand.quiet-inverse}" },
     "accent":  { "$value": "{brand.accent-inverse}" },
     "border":  { "$value": "{brand.rule-inverse}" },
-    "surface": { "$value": "{brand.shade-inverse}" }
+    "surface": { "$value": "{brand.shade-inverse}" },
+
+    "border-interactive": { "$value": "{brand.edge-inverse}" }
   }
 }

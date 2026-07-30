@@ -22,10 +22,33 @@
   --color-accent: var(--ds-color-accent);
   --color-border: var(--ds-color-border);
   --color-surface: var(--ds-color-surface);
+  /*
+   * `border` is the decorative hairline; `border-interactive` is the 3:1
+   * boundary that identifies a control (WCAG 2.2 SC 1.4.11). The bridge is 1:1
+   * with the Semantic names on purpose, which is why the utility reads
+   * `border-border-interactive`. Aliasing it shorter here would put a third
+   * name on one concept in the adapter layer.
+   */
+  --color-border-interactive: var(--ds-color-border-interactive);
 
   --spacing-gutter: var(--ds-space-gutter);
   --spacing-stack: var(--ds-space-stack);
   --spacing-section: var(--ds-space-section);
+  --spacing-gap: var(--ds-space-gap);
+  --spacing-tight: var(--ds-space-tight);
+
+  /* Font size only: these emit no line-height, unlike Tailwind's text-4xl. */
+  --text-display: var(--ds-text-display);
+  --text-title: var(--ds-text-title);
+  --text-heading: var(--ds-text-heading);
+  --text-subheading: var(--ds-text-subheading);
+  --text-lead: var(--ds-text-lead);
+  --text-body: var(--ds-text-body);
+  --text-meta: var(--ds-text-meta);
+
+  --radius-card: var(--ds-radius-card);
+  --radius-control: var(--ds-radius-control);
+  --radius-tag: var(--ds-radius-tag);
 
   --font-serif: var(--font-headline);
   --font-sans: var(--font-body);

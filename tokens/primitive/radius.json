@@ -1,0 +1,11 @@
+{
+  "primitive": {
+    "radius": {
+      "$type": "dimension",
+      "0": { "$value": "0rem" },
+      "small": { "$value": "0.375rem" },
+      "medium": { "$value": "0.75rem" },
+      "full": { "$value": "9999px" }
+    }
+  }
+}
