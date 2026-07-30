@@ -4,6 +4,10 @@ Glossary for this project. Plain definitions only — no implementation details,
 
 ---
 
+## Track A / Track B / Track C
+
+The three job-search tracks the site serves. **A** — Unity/C# Engineer (games, XR, tools). **B** — UX/UI / Product Designer. **C** — the hybrid below.
+
 ## Track C
 
 The hybrid "Design Engineer / UX Engineer" job-search track. Highest priority target. Distinguishes candidates who design systems and implement them — not pure designer, not pure engineer.
@@ -42,6 +46,18 @@ The four pages that ship at launch, each one full (no skeleton/"coming soon" pag
 - `/about` — About + Contact merged: the craft-origin arc + email/LinkedIn/GitHub/CV download
 
 URL structure is forward-designed: `/work/rollhaus` lets a `/work` listing page slot in at v2 without breaking the case study URL. Deferred to v2: `/work` listing (a list of one is just a link), Playground/Experiments.
+
+## Tile Schema
+
+The fixed shape every project entry takes, down to archive tier: three first-person lines — `Problem` / `What I did` / `What changed` — plus a metadata line (year · context · role) and lens tags. It exists because the old portfolio's core failure was showing projects but not what Leonid did in them: the old template had no slot for a decision. Recorded as the v2 standard; v1 ships one case study and no tile grid, but any v1 content that will later become a tile is written to this shape.
+
+## Lens
+
+One of four cross-cutting capability tags applied to project entries: `UX/UI`, `Systems & Architecture`, `Games / XR`, `AI Workflow`. A project carries several. Lenses are what the Router sorts by.
+
+## Router
+
+The v2 mechanism for tailoring the work grid per application: three "hiring for" presets over the four Lenses that **re-sort rather than gate** (nothing is ever hidden), swap the offered CV download, and keep state in the URL so a focused link can be sent with a specific application. Not built in v1.
 
 ## Token Pipeline
 
