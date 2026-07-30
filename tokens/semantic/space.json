@@ -1,0 +1,8 @@
+{
+  "space": {
+    "$type": "dimension",
+    "gutter":  { "$value": "{primitive.size.6}" },
+    "stack":   { "$value": "{primitive.size.4}" },
+    "section": { "$value": "{primitive.size.20}" }
+  }
+}

@@ -408,7 +408,7 @@ describe('token pipeline (Seam 1)', () => {
 
   it('re-declares only the Semantic layer for dark', () => {
     expect(dark).toContain('[data-theme="dark"]');
-    expect(dark).toMatch(/--ds-color-bg:\s*var\(--ds-brand-ink\)/);
+    expect(dark).toMatch(/--ds-color-bg:\s*var\(--ds-brand-paper-inverse\)/);
     // No Primitive is referenced or declared in the dark override at all.
     expect(dark).not.toMatch(/--ds-primitive-/);
     // Brand may be *referenced* by dark, but never *declared* there.
@@ -418,8 +418,7 @@ describe('token pipeline (Seam 1)', () => {
   it('gives light and dark identical Semantic keys, so no component branches on theme', () => {
     const keys = (css: string) =>
       [...css.matchAll(/(--ds-color-[\w-]+):/g)].map((m) => m[1]).sort();
-    const lightSemantic = keys(light).filter((k) => k.startsWith('--ds-color-'));
-    expect(keys(dark)).toEqual(lightSemantic);
+    expect(keys(dark)).toEqual(keys(light));
   });
 });
 ```
@@ -430,6 +429,8 @@ Run: `npx vitest run tests/unit`
 Expected: FAIL with `ENOENT: no such file or directory, open 'src/styles/generated/tokens.css'`.
 
 - [ ] **Step 3: Create the Primitive layer**
+
+**Put `$type` on each sub-group, never on the shared `primitive` node.** Both files below write into `primitive`, and Style Dictionary deep-merges them. A `$type` declared at the `primitive` level in two files collides, so colours end up typed as `dimension` and the `css` transform group hands `#ffffff` to `size/rem`. It fails softly: the emitted CSS still looks correct, and the only symptom is `Some token transformations (11) could not be applied correctly` on the build.
 
 `tokens/primitive/color.json`:
 

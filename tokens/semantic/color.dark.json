@@ -1,0 +1,11 @@
+{
+  "color": {
+    "$type": "color",
+    "bg":      { "$value": "{brand.paper-inverse}" },
+    "fg":      { "$value": "{brand.ink-inverse}" },
+    "muted":   { "$value": "{brand.quiet-inverse}" },
+    "accent":  { "$value": "{brand.accent-inverse}" },
+    "border":  { "$value": "{brand.rule-inverse}" },
+    "surface": { "$value": "{brand.shade-inverse}" }
+  }
+}

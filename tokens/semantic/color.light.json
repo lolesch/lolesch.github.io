@@ -1,0 +1,11 @@
+{
+  "color": {
+    "$type": "color",
+    "bg":      { "$value": "{brand.paper}" },
+    "fg":      { "$value": "{brand.ink}" },
+    "muted":   { "$value": "{brand.quiet}" },
+    "accent":  { "$value": "{brand.accent}" },
+    "border":  { "$value": "{brand.rule}" },
+    "surface": { "$value": "{brand.shade}" }
+  }
+}

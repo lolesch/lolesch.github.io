@@ -1,0 +1,18 @@
+{
+  "brand": {
+    "$type": "color",
+    "ink":     { "$value": "{primitive.neutral.1000}" },
+    "paper":   { "$value": "{primitive.neutral.0}" },
+    "shade":   { "$value": "{primitive.neutral.100}" },
+    "quiet":   { "$value": "{primitive.neutral.500}" },
+    "rule":    { "$value": "{primitive.neutral.300}" },
+    "accent":  { "$value": "{primitive.amber.600}" },
+
+    "ink-inverse":    { "$value": "{primitive.neutral.50}" },
+    "paper-inverse":  { "$value": "{primitive.neutral.900}" },
+    "shade-inverse":  { "$value": "{primitive.neutral.800}" },
+    "quiet-inverse":  { "$value": "{primitive.neutral.300}" },
+    "rule-inverse":   { "$value": "{primitive.neutral.700}" },
+    "accent-inverse": { "$value": "{primitive.amber.400}" }
+  }
+}

@@ -1,0 +1,6 @@
+# Authored on Windows, built on Linux CI. Normalise to LF in the repository so
+# diffs and the Pages build see the same bytes regardless of who committed.
+* text=auto eol=lf
+
+# Generated token CSS is compared byte-wise by the Seam 1 tests.
+*.css text eol=lf

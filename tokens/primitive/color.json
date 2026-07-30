@@ -1,0 +1,21 @@
+{
+  "primitive": {
+    "neutral": {
+      "$type": "color",
+      "0":    { "$value": "#ffffff" },
+      "50":   { "$value": "#fafafa" },
+      "100":  { "$value": "#f4f4f5" },
+      "300":  { "$value": "#d4d4d8" },
+      "500":  { "$value": "#71717a" },
+      "700":  { "$value": "#3f3f46" },
+      "800":  { "$value": "#27272a" },
+      "900":  { "$value": "#18181b" },
+      "1000": { "$value": "#09090b" }
+    },
+    "amber": {
+      "$type": "color",
+      "400": { "$value": "#fbbf24" },
+      "600": { "$value": "#d97706" }
+    }
+  }
+}
