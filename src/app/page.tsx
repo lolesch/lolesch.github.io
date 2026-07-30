@@ -1,22 +1,20 @@
+import { WorkGrid } from '@/components/work-grid';
 import { hero } from '@/content/hero';
-import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-3xl px-gutter py-section">
-      <div className="flex justify-end">
-        <ThemeToggle />
-      </div>
-
-      <h1 className="font-serif text-4xl leading-tight tracking-tight text-balance sm:text-5xl">
+    <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
+      <h1 className="font-serif text-title leading-tight tracking-tight text-balance sm:text-display">
         {hero.headline}
       </h1>
 
-      <div className="mt-stack space-y-stack text-lg text-muted">
+      <div className="mt-stack space-y-stack text-lead text-muted">
         {hero.body.map((paragraph) => (
           <p key={paragraph.slice(0, 24)}>{paragraph}</p>
         ))}
       </div>
+
+      <WorkGrid />
     </main>
   );
 }

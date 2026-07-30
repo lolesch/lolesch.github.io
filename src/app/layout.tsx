@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Source_Serif_4, Inter } from 'next/font/google';
+import { SiteHeader } from '@/components/site-header';
 import './globals.css';
 
 const headline = Source_Serif_4({
@@ -41,7 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
-      <body className={`${headline.variable} ${body.variable} font-sans`}>{children}</body>
+      <body className={`${headline.variable} ${body.variable} font-sans`}>
+        <SiteHeader />
+        {children}
+      </body>
     </html>
   );
 }
