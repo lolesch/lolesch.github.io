@@ -83,7 +83,7 @@ Note the `inline` keyword is load-bearing. Without it Tailwind emits its own `--
 | `tsconfig.json` | TS config, `@/*` path alias to `src/*` |
 | `next.config.ts` | Static export, no basePath |
 | `postcss.config.mjs` | Tailwind v4 postcss plugin |
-| `vitest.config.ts` | Node-environment test runner |
+| `vitest.config.mts` | Node-environment test runner |
 | `scripts/build-tokens.mjs` | The whole token build. Two Style Dictionary instances, light and dark |
 | `tokens/primitive/*.json` | Raw scales. Referenced by Brand, never by components |
 | `tokens/brand/*.json` | Brand picks from Primitives. The single rebrand surface |
@@ -107,7 +107,7 @@ Note the `inline` keyword is load-bearing. Without it Tailwind emits its own `--
 ## Task 1: Toolchain scaffold that builds to static HTML
 
 **Files:**
-- Create: `package.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `vitest.config.ts`
+- Create: `package.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `vitest.config.mts`
 - Create: `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/globals.css`
 - Create: `public/.nojekyll`, `tests/export/static-export.test.ts`
 - Modify: `.gitignore`
@@ -258,7 +258,9 @@ const config = {
 export default config;
 ```
 
-- [ ] **Step 7: Create `vitest.config.ts`**
+- [ ] **Step 7: Create `vitest.config.mts`**
+
+The `.mts` extension is load-bearing. This package is not `"type": "module"` (Next's own scaffold omits it), so a `.ts` config is loaded as CommonJS and Vite warns that the ESM syntax inside is unsupported by the config loader that becomes its default in a future major. `tsconfig.json`'s `include` already covers `**/*.mts`.
 
 ```ts
 import { defineConfig } from 'vitest/config';
