@@ -48,4 +48,18 @@ describe('static export (Seam 2)', () => {
   it('ships a default theme on <html>, so the static markup is never theme-less', () => {
     expect(rendered()).toMatch(/<html[^>]*data-theme="light"/);
   });
+
+  it('links a favicon that actually exists in the export', () => {
+    // Following the href to disk is the point. Asserting only that a <link>
+    // is present would stay green over a 404, which is exactly the failure
+    // mode a favicon has: invisible until someone looks at the tab.
+    const head = raw().match(/<head>[\s\S]*?<\/head>/)?.[0] ?? '';
+    const href = head.match(/<link[^>]*rel="icon"[^>]*href="([^"]+)"/)?.[1];
+
+    expect(href, 'no rel="icon" link in <head>').toBeDefined();
+
+    // Next appends a cache-busting query to metadata icon hrefs.
+    const path = href!.split('?')[0];
+    expect(existsSync(`out${path}`), `${path} is linked but not exported`).toBe(true);
+  });
 });

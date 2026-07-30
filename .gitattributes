@@ -5,3 +5,10 @@
 # Hand-authored CSS. The generated token CSS is gitignored, so this rule never
 # applies to it; the only file it touches today is src/app/globals.css.
 *.css text eol=lf
+
+# Image assets. `text=auto` already detects these by content, but declaring it
+# means a corrupted favicon can never depend on that detection working.
+*.png binary
+*.ico binary
+*.jpg binary
+*.webp binary
