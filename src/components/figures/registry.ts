@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import { GlyphsheroChain } from '@/components/figures/glyphshero-chain';
 import { RollhausArchitecture } from '@/components/figures/rollhaus-architecture';
 import type { FigureId } from '@/content/types';
 
@@ -7,4 +8,5 @@ import type { FigureId } from '@/content/types';
 // build.
 export const FIGURES: Record<FigureId, ComponentType> = {
   'rollhaus-architecture': RollhausArchitecture,
+  'glyphshero-chain': GlyphsheroChain,
 };

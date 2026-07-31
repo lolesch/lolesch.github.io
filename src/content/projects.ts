@@ -146,6 +146,13 @@ export const projects: readonly Project[] = [
         ],
       },
       {
+        kind: 'embed',
+        heading: 'How an attack is built',
+        caption:
+          'The attack model as the game actually resolves it, ported onto the tokens this site runs on, so it follows the theme.',
+        figure: 'glyphshero-chain',
+      },
+      {
         kind: 'prose',
         heading: 'The loop',
         body: [
