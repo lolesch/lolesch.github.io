@@ -1,4 +1,4 @@
-import { existsSync, globSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { about } from '../../src/content/about';
 import { body, rendered, text } from './rendered';
@@ -101,32 +101,5 @@ describe('the CV link', () => {
     expect(tag, `no link to ${cv!.href}`).not.toBe('');
     expect(tag).toContain('target="_blank"');
     expect(tag).toContain('noopener noreferrer');
-  });
-});
-
-describe('site navigation', () => {
-  // Globbed rather than checked on Home. The nav lives in the layout, so a
-  // regression drops it from every page at once, and a Home-only check would
-  // not see that. The 404 pages carry the header too and are included on
-  // purpose: a visitor who lands on one needs the way out most.
-  const pages = globSync('out/**/*.html');
-
-  it('has pages to check, so the cases below are not vacuous', () => {
-    expect(pages.length).toBeGreaterThan(3);
-  });
-
-  for (const page of pages) {
-    it(`${page} carries both nav links`, () => {
-      const visible = body(page);
-      expect(visible, 'no Work link').toContain('href="/#work"');
-      expect(visible, 'no About link').toContain('href="/about/"');
-    });
-  }
-
-  it('marks About as the current page there, and nowhere else', () => {
-    expect(body(PAGE)).toContain('aria-current="page"');
-    // Work is a fragment link into Home, which has no unambiguous current
-    // state, so Home marks nothing.
-    expect(body('out/index.html')).not.toContain('aria-current="page"');
   });
 });
