@@ -315,3 +315,15 @@ The export itself is a manual Figma step nobody but Leonid can run, so the site 
 **Not acted on: the lens filter.** Games/XR, UX/UI and AI Workflow sit tangled on one page and a Track A reader gets diluted signal. True, and already recorded as accepted risk. The Router is v2 and nothing about this review moves it forward.
 
 38 unit tests, typecheck clean.
+
+---
+
+## 2026-07-31 — The CV link, unblocked
+
+Leonid re-exported `CV Track C - UX Engineer` from Figma and Task 6 of `docs/plans/2026-07-31-about-route.md` ran end to end. The baked-in URL is `https://lolesch.github.io`, so the domain decision was **taken, not deferred**, with the known cost accepted: buying a domain later means a second re-export of both tracks. Verified before it was copied and again after it deployed, on the downloaded file rather than the local one: 2 pages, A4 595x842, selectable text on both, five live footer links, portfolio link pointing at the site, and no figma.com anywhere in it. `about.cv` went from `null` to the record, and the two `it.skipIf` guards in `tests/export/about.test.ts` came back on their own, which is what nullable-plus-skip was for.
+
+**The CV guard was watched failing, and the reason it is worth having showed up in the failure.** With the PDF moved aside, `links a file that actually shipped` went red and the sibling case asserting `target="_blank"` and `rel="noopener noreferrer"` stayed green. That is the favicon lesson again: a download link fails invisibly, the markup stays perfect, and only following the href to disk sees it. 38 unit, 79 export with 0 skipped, typecheck clean, and `https://lolesch.github.io/cv/leonid-schreiber-ux-engineer.pdf` returns 200 with `application/pdf` at the exact byte count of the local file.
+
+**One CV, Track C. Rejected: offering both tracks side by side.** It would cover a Track B reviewer directly, and it asks the visitor to classify themselves, which is the job `CONTEXT.md` assigns to the v2 Router. One link matching what the rest of the site argues is the better answer until the Router exists.
+
+This closes the top finding of the 2026-07-31 review. A hiring manager who likes the site can now reach the document that shortlists him, which was the whole of that finding once the frontend half turned out to have shipped days earlier.
