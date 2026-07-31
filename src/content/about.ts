@@ -92,9 +92,17 @@ export const about: About = {
     },
   ],
 
-  // null until the Track C PDF is re-exported against the final portfolio URL.
-  // Both CVs currently point theirs at the old Figma prototype, so shipping the
-  // existing file would hand a reviewer a document that contradicts the site
-  // they are reading. Task 6 of docs/plans/2026-07-31-about-route.md fills this.
-  cv: null,
+  // Re-exported 2026-07-31 against https://lolesch.github.io, so the document
+  // and the site now agree. It was null until then, because the old export
+  // pointed its portfolio link at the Figma prototype and would have handed a
+  // reviewer a document contradicting the site they were reading.
+  //
+  // One CV, Track C. Offering both tracks side by side asks the visitor to
+  // classify themselves, which is the v2 Router's job.
+  cv: {
+    // What it is, not how it opens. The "(opens in a new tab)" cue belongs to
+    // the component, which is what knows the target.
+    label: 'CV (PDF)',
+    href: '/cv/leonid-schreiber-ux-engineer.pdf',
+  },
 };
