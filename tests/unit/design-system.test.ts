@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { CONTRAST_PAIRS, SEMANTIC_COLOURS } from '../../src/content/design-system';
 import { lightVars, readTokens, resolve } from '../../src/lib/tokens';
 
 const TOKENS = readTokens();
@@ -75,5 +76,42 @@ describe('the token model', () => {
     expect(() => resolve('--ds-color-nonexistent', lightVars())).toThrow(
       'is not declared in the generated tokens',
     );
+  });
+});
+
+describe('the documented Semantic list cannot drift from the tokens', () => {
+  const declared = TOKENS.filter((token) => token.family === 'color' && token.layer === 'semantic')
+    .map((token) => token.name)
+    .sort();
+  const documented = SEMANTIC_COLOURS.map((entry) => entry.token).sort();
+
+  // Both directions, because one direction catches half of drift. Adding a
+  // token without documenting it and documenting one that was deleted are
+  // different mistakes and they fail differently.
+  it('documents every Semantic colour the generated CSS declares', () => {
+    const undocumented = declared.filter((name) => !documented.includes(name));
+    expect(undocumented).toEqual([]);
+  });
+
+  it('documents nothing the generated CSS does not declare', () => {
+    const phantom = documented.filter((name) => !declared.includes(name));
+    expect(phantom).toEqual([]);
+  });
+
+  it('gives every documented token a distinct utility', () => {
+    const utilities = SEMANTIC_COLOURS.map((entry) => entry.utility);
+    expect(new Set(utilities).size).toBe(utilities.length);
+  });
+});
+
+describe('the contrast list', () => {
+  // A renamed token would otherwise drop a row from the documented table in
+  // silence, which is the failure this page exists to argue against.
+  it('names only tokens the generated CSS declares', () => {
+    const names = new Set(TOKENS.map((token) => token.name));
+    const missing = CONTRAST_PAIRS.flatMap((pair) =>
+      [pair.fg, pair.bg].filter((name) => !names.has(name)),
+    );
+    expect(missing).toEqual([]);
   });
 });
