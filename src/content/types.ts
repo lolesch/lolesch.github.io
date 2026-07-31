@@ -31,7 +31,33 @@ export type Section =
       width: number;
       height: number;
     }
+  // Two states of one screen, side by side. A separate kind rather than two
+  // `figure`s, because the claim lives in the difference between them: split
+  // across two sections a reader compares from memory, and the spec's decision
+  // 2 is that both states have to be visible at once. Not one pre-composed
+  // image either, which would carry two pictures under a single alt string.
+  //
+  // A fixed pair, not a list. The renderer is a two-column grid and there is no
+  // reading of "before, after, and a third thing" that the caption could carry,
+  // so the type says two and the layout never has to guess.
+  | {
+      kind: 'comparison';
+      heading: string;
+      caption: string;
+      items: readonly [ComparisonState, ComparisonState];
+    }
   | { kind: 'embed'; heading: string; caption: string; figure: FigureId };
+
+// `label` is the one thing a lone screenshot never needs: with both states
+// present, the reader has to be told which is which before the caption can
+// mean anything.
+export type ComparisonState = {
+  label: string;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
 
 export type Project = {
   slug: string;

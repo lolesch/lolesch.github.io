@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { rollhausArchitecture } from '../../src/content/figures/rollhaus-architecture';
 import { projects } from '../../src/content/projects';
+import type { Section } from '../../src/content/types';
 import { body } from './rendered';
 
 // The `embed` arm resolves a FigureId through a registry at render time. The
@@ -45,39 +46,106 @@ describe('embedded figures (Seam 2)', () => {
 // the embed's: a figure whose `src` does not resolve still renders a heading, a
 // caption and a neat empty box, so the page looks finished while its evidence
 // is a broken image.
-describe('image figures (Seam 2)', () => {
-  const figures = projects.flatMap((project) =>
-    project.sections
-      .filter((section) => section.kind === 'figure')
-      .map((section) => ({ project, section })),
+// Both image-bearing kinds, walked as one list. `comparison` ships four of the
+// images on this site and every failure mode below is identical for it, so
+// giving it a parallel describe block would mean two places to remember. The
+// switch is closed with `never`, so a third image kind fails typecheck here
+// rather than shipping unguarded, which is the mistake this file exists about.
+// Heading and caption are copied out here rather than read back off the
+// section later, so nothing downstream has to re-narrow `Section` to reach
+// them. A prose section has no caption, and the cast that would paper over
+// that is exactly the kind of thing these guards exist to not need.
+type Shipped = {
+  kind: 'figure' | 'comparison';
+  heading: string;
+  caption: string;
+  src: string;
+  alt: string;
+  label: string | null;
+};
+
+const imagesOf = (section: Section): Shipped[] => {
+  switch (section.kind) {
+    case 'figure': {
+      const { kind, heading, caption, src, alt } = section;
+      return [{ kind, heading, caption, src, alt, label: null }];
+    }
+    case 'comparison': {
+      const { kind, heading, caption } = section;
+      return section.items.map(({ src, alt, label }) => ({
+        kind,
+        heading,
+        caption,
+        src,
+        alt,
+        label,
+      }));
+    }
+    // Named rather than defaulted, for the reason content.test.ts spells out:
+    // a `default` arm answers for kinds nobody has thought about yet.
+    case 'prose':
+    case 'constraints':
+    case 'embed':
+      return [];
+    default: {
+      const unhandled: never = section;
+      throw new Error(`section kind not reached by the figure guards: ${JSON.stringify(unhandled)}`);
+    }
+  }
+};
+
+// The section index rides along, because the lead-figure rule below is about
+// position rather than about the image.
+const IMAGES = projects.flatMap((project) =>
+  project.sections.flatMap((section, index) =>
+    imagesOf(section).map((state) => ({ project, index, state })),
+  ),
+);
+
+// Which section owns the LCP image, by the same rule sections.tsx uses. Kept
+// as its own function so the two cannot drift apart silently: they did once,
+// when `comparison` became the lead figure on Rollhaus and this file still
+// only looked for `figure`.
+const leadIndex = (project: (typeof projects)[number]) =>
+  project.sections.findIndex(
+    (section) => section.kind === 'figure' || section.kind === 'comparison',
   );
 
-  it('ships at least one image figure, so the cases below are not vacuous', () => {
-    expect(figures.length).toBeGreaterThan(0);
+describe('image figures (Seam 2)', () => {
+  it('ships image figures of both kinds, so the cases below are not vacuous', () => {
+    expect(IMAGES.length).toBeGreaterThan(0);
+    expect(IMAGES.some(({ state }) => state.kind === 'figure')).toBe(true);
+    expect(IMAGES.some(({ state }) => state.kind === 'comparison')).toBe(true);
   });
 
-  for (const { project, section } of figures) {
-    describe(`${project.slug} / ${section.src}`, () => {
+  for (const { project, index, state } of IMAGES) {
+    describe(`${project.slug} / ${state.src}`, () => {
       const page = `out/work/${project.slug}/index.html`;
 
       it('renders its heading and caption', () => {
         const visible = body(page);
-        expect(visible).toContain(section.heading);
-        expect(visible).toContain(section.caption);
+        expect(visible).toContain(state.heading);
+        expect(visible).toContain(state.caption);
       });
 
       it('carries its alt text, which is the copy a screen reader gets', () => {
-        expect(body(page)).toContain(section.alt);
+        expect(body(page)).toContain(state.alt);
       });
+
+      if (state.label !== null) {
+        it('names which state it is, or the pair is just two pictures', () => {
+          expect(body(page)).toContain(state.label);
+        });
+      }
 
       it('does not lazy-load the lead figure', () => {
         // The first figure on a page sits at or near the fold, so it is the LCP
         // candidate. `next/image` lazy-loads unless told otherwise, and a
         // lazily loaded LCP image is a self-inflicted performance mark on a
         // site whose argument is design engineering.
-        const tag = body(page).match(new RegExp(`<img[^>]*${section.src}[^>]*>`))?.[0] ?? '';
-        expect(tag, `no <img> found for ${section.src}`).not.toBe('');
-        if (project.sections.findIndex((s) => s.kind === 'figure') === project.sections.indexOf(section)) {
+        const tag = body(page).match(new RegExp(`<img[^>]*${state.src}[^>]*>`))?.[0] ?? '';
+        expect(tag, `no <img> found for ${state.src}`).not.toBe('');
+        if (leadIndex(project) === index) {
           expect(tag).not.toContain('loading="lazy"');
         }
       });
@@ -86,9 +154,7 @@ describe('image figures (Seam 2)', () => {
         // `next export` copies `public/` verbatim, so the asset lands at the
         // same path it is referenced by. Asserting the file rather than the
         // markup is the half the browser would otherwise discover first.
-        expect(existsSync(`out${section.src}`), `${section.src} is missing from the export`).toBe(
-          true,
-        );
+        expect(existsSync(`out${state.src}`), `${state.src} is missing from the export`).toBe(true);
       });
     });
   }

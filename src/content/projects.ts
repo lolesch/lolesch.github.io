@@ -22,11 +22,15 @@ export const projects: readonly Project[] = [
     tier: 'featured',
     summary:
       'A roller-skate configurator built on Figma variables and modes, so new skate types extend the system instead of forcing a redraw.',
+    // Framed to 16:10 in `scripts/extract-figures.py` rather than left to
+    // object-cover, and kept as the whole viewport rather than the boot alone:
+    // at card size the option panel and the cart button are what make it read
+    // as a configurator, which is what the summary above claims it is.
     thumb: {
-      src: '/figures/rollhaus-editor.jpg',
-      alt: 'The Rollhaus customization editor, with a white roller skate beside a panel of pattern swatches.',
-      width: 1440,
-      height: 1024,
+      src: '/figures/rollhaus-thumb.jpg',
+      alt: 'The Rollhaus customization editor: a teal, red, yellow and blue roller skate fills the screen beside a panel of skate-type options and an add to cart button.',
+      width: 1120,
+      height: 700,
     },
     problem:
       "A custom roller-skate shop where a single product has dozens of configurations. Hand-building each variant doesn't scale, and early on every mid-build change cost us work.",
@@ -54,21 +58,36 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        // PLACEHOLDER, pending a clean export. This is the only shipped source
-        // that carries the post-rework editor as a full screen, and it was
-        // captured into a slide rather than exported from the design file, so
-        // the panel heading reads "Patten" and the summary card is clipped
-        // behind the panel. Neither is a limitation of the design. Provenance
-        // and the replacement plan are in `scripts/extract-figures.py`; the
-        // open item is in `_build-log.md`.
-        kind: 'figure',
+        // Replaces the placeholder screenshot that stood here until 2026-07-31,
+        // and retires it rather than swapping it: the caption below used to
+        // assert that the skate updates alongside the categories, and a single
+        // still could only assert it. The pair shows it. The old file carried a
+        // "Patten" typo and a clipped summary card baked in by the slide it was
+        // captured into, so nothing is lost by dropping it.
+        //
+        // Static rather than a cut-between loop, per the spec's decision 2: a
+        // loop would also claim smoothness, and Learnings below says the
+        // opposite about animating across a variable state change.
+        kind: 'comparison',
         heading: 'The editor',
         caption:
-          'The customization editor after the usability rework, with each category on its own step and the configured skate updating alongside it.',
-        src: '/figures/rollhaus-editor.jpg',
-        alt: 'The Rollhaus customization editor: a site navigation bar across the top, a white roller skate filling the left of the screen, and a panel on the right pairing a category rail with a grid of pattern swatches.',
-        width: 1440,
-        height: 1024,
+          'One switch, two states of the same screen. Selecting a skate type re-renders the hero and every option thumbnail into the colourway already configured, because each thumbnail is an instance of the product rather than a static icon. The step, the price and the colour set hold.',
+        items: [
+          {
+            label: 'Quad selected',
+            src: '/figures/rollhaus-editor-quad.jpg',
+            alt: 'The Rollhaus editor with Quad selected: a teal, red, yellow and blue boot on four wheels fills the screen, beside a panel whose four thumbnails show that same boot as a quad skate, an inline, an ice skate and a plain shoe.',
+            width: 1400,
+            height: 994,
+          },
+          {
+            label: 'Inline selected',
+            src: '/figures/rollhaus-editor-inline.jpg',
+            alt: 'The same editor with Inline selected: the boot is unchanged and now sits on a five-wheel inline frame, the selection has moved to the second thumbnail, and the step, price and colours are the same as before.',
+            width: 1400,
+            height: 994,
+          },
+        ],
       },
       {
         kind: 'prose',
@@ -78,6 +97,20 @@ export const projects: readonly Project[] = [
           "The brief asked for an e-commerce site for a niche product, and the product itself was ours to pick. We chose customizable skates on purpose, because a single configurable product was the hardest test we could set for Figma's variables, modes and the then-new Slots feature. Neither of us had built a system like that before, which was the point.",
           'The design process was collaborative. After wireframing we delegated screen responsibilities. I took the landing page and the editor, plus the technical screen setup that unified screens and scroll behaviour. My editor proof of concept became the basis for the variable setup, which we then refined together. Yassine mainly built the flow from cart to confirmation.',
         ],
+      },
+      {
+        // Sits above the next section rather than inside it, because that
+        // section closes on "the figure below carries it in full" pointing at
+        // the architecture embed. Putting this between the two would silently
+        // repoint that sentence at the wrong figure.
+        kind: 'figure',
+        heading: 'What the system had to survive',
+        caption:
+          'The option space as we mapped it at the lo-fi stage, down to ball bearings and inline sub-type by wheel count. A working note rather than a deliverable, and the thing the proof of concept below had to hold before it was worth scaling.',
+        src: '/figures/rollhaus-options.png',
+        alt: 'A note from the design file headed Customization Options, listing a nested tree: shoe model with high top, low top and a closing mechanism of laces or straps; size; pattern with a base colour set and an overlay; then base type branching into quad, inline and ice, the quad and inline each carrying their own wheel options and ball bearings.',
+        width: 1401,
+        height: 2299,
       },
       {
         kind: 'prose',
@@ -102,7 +135,40 @@ export const projects: readonly Project[] = [
         body: [
           'In week three we put the prototype through Maze, 18 unmoderated tasks and one moderated session. The shopping flow held. Cart to confirmation came back at a 100% success rate and people described it as straightforward. The editor did not hold: editing a skate produced a 68% misclick rate.',
           'The cause was structural rather than visual. People could not tell the customization categories apart, so they clicked around to find out what was editable and lost their place between tasks. We put the findings on an affinity map and a prioritization matrix, which pushed the side panel to the top of the list.',
-          'So we re-cut it. The panel became a category selector, Shoe Model, Colour, Skate Type and Wheels, sitting above an option grid, in place of one list that merged unrelated options. Reading the results as a request for visual tweaks would have been much cheaper. Re-cutting the information hierarchy was the more expensive call and the right one.',
+          // Category names corrected 2026-07-31 to the ones on the screen in
+          // the figure below, which reads Pattern and Skates. The earlier
+          // "Colour, Skate Type" was a paraphrase, and a paraphrase that
+          // disagrees with the image two paragraphs down is the kind of small
+          // thing the reader this page is written for will notice.
+          'So we re-cut it. The panel became a category selector, Shoe Model, Pattern, Skates and Wheels, sitting above an option grid, in place of one list that merged unrelated options. Reading the results as a request for visual tweaks would have been much cheaper. Re-cutting the information hierarchy was the more expensive call and the right one.',
+        ],
+      },
+      {
+        // Captioned as two panel structures, not as a test artefact. The merged
+        // column demonstrably exists in the design file, but nothing in the
+        // sources proves it is the exact screen the 18 Maze participants
+        // clicked, and the caption may not quietly imply that it is.
+        // Guardrail 1. Leonid, 2026-07-31; the open item is in
+        // `scripts/extract-figures.py` next to the crop.
+        kind: 'comparison',
+        heading: 'The side panel, before and after',
+        caption:
+          'Two panel structures from the design file. One merges shoe, pattern, skates and wheels into a single scroll, so nothing tells you where one category ends. The other gives each its own step, and the step you are on is the ringed icon in the row above the grid.',
+        items: [
+          {
+            label: 'One merged column',
+            src: '/figures/rollhaus-panel-before.jpg',
+            alt: 'A narrow dark panel running as one continuous column: a Shoe heading over two boot options, then Pattern at 5 euro over eight swatches, then Skates over three options, then Wheels at 23 euro over eight more, with nothing dividing one category from the next.',
+            width: 701,
+            height: 2501,
+          },
+          {
+            label: 'Four categories',
+            src: '/figures/rollhaus-panel-after.jpg',
+            alt: 'The reworked panel in four headed sections, Select Your Shoe Model, Select Your Pattern, Select Your Skates and Select Your Wheels. Each heading is paired with the same row of four icons, the icon for that section ringed and the line connecting them filled up to it, above only the options belonging to that one category.',
+            width: 901,
+            height: 2631,
+          },
         ],
       },
       {
@@ -113,6 +179,21 @@ export const projects: readonly Project[] = [
           'We paid for that depth in visual fidelity. Three weeks against a system this involved meant the surface never got the polish we wanted, and we chose it that way rather than discovered it late. The instructor feedback on the final presentation named the depth from the outside: "The level of detail in your design system, microinteractions and prototype depth is exceptional, this is a major strength."',
           'There are no live users behind any of this and no business numbers. What it shows is what the system makes possible and what testing exposed, not a metric I would have to invent.',
         ],
+      },
+      {
+        // The shop grid rather than the four skate atoms from the Components
+        // canvas. The atoms would show four types; this shows the same boot
+        // under two of them, which is the argument the Outcome above actually
+        // makes. Shoe-only is not in this crop, so the caption does not claim
+        // it: the copy above already names it.
+        kind: 'figure',
+        heading: 'The same boot on a different mount',
+        caption:
+          'The shop page after the extension round. The checkerboard boot is here as a quad and as an ice skate, the tartan as an inline and an ice, the colourblock as a quad and an inline. Nothing was redrawn to do that.',
+        src: '/figures/rollhaus-extension.jpg',
+        alt: 'A shop grid in three rows headed Quads, Inline and Ice, with three product cards in each. Several boots repeat between the rows with a different base fitted: one checkerboard boot appears both on four wheels and on a blade, and one tartan boot both on an inline frame and on a blade.',
+        width: 1401,
+        height: 1915,
       },
       {
         kind: 'prose',

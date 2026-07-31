@@ -23,6 +23,11 @@ const bodies = (project: (typeof projects)[number]) =>
         return section.items.flatMap((item) => [item.label, item.value]);
       case 'figure':
         return [section.caption, section.alt];
+      case 'comparison':
+        // Both alts and both labels, not just the caption. The label is the
+        // only thing telling a reader which state is which, so it is copy in
+        // the same sense the alt is.
+        return [section.caption, ...section.items.flatMap((s) => [s.label, s.alt])];
       case 'embed':
         return [section.caption];
       default: {
@@ -88,6 +93,22 @@ describe('project content', () => {
           if (section.kind === 'prose') {
             expect(section.body.length).toBeGreaterThan(0);
             for (const paragraph of section.body) expect(paragraph.length).toBeGreaterThan(0);
+          }
+          if (section.kind === 'comparison') {
+            // The type already fixes the pair at two. What it cannot say is
+            // that each state is actually pointing at something and named: an
+            // unlabelled state turns a comparison into two pictures.
+            for (const state of section.items) {
+              expect(state.label.length).toBeGreaterThan(0);
+              expect(state.alt.length).toBeGreaterThan(0);
+              expect(state.src.startsWith('/')).toBe(true);
+              expect(state.width).toBeGreaterThan(0);
+              expect(state.height).toBeGreaterThan(0);
+            }
+            // Two states of one screen have to be told apart by the label.
+            const [first, second] = section.items;
+            expect(first.label).not.toBe(second.label);
+            expect(first.src).not.toBe(second.src);
           }
           if (section.kind === 'constraints') {
             // A callout with no rows, or a labelled row with nothing in it, is
