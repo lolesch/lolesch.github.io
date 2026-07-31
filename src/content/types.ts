@@ -42,7 +42,14 @@ export type Project = {
   lenses: readonly Lens[];
   tier: Tier;
 
-  // The three fixed schema lines from CONTEXT.md. These are the tile.
+  // The card hook. Names a decision rather than describing the project: a tile
+  // that says what a project *was* is the old portfolio's failure in miniature
+  // (CONTEXT.md), and the three schema lines below now open the detail page
+  // instead of the card.
+  summary: string;
+
+  // The three fixed schema lines from CONTEXT.md. They opened the tile until
+  // 2026-07-31; the grid is image-led now, so they open the detail page.
   problem: string;
   whatIDid: string;
   whatChanged: string;

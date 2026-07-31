@@ -20,6 +20,8 @@ export const projects: readonly Project[] = [
     role: 'UX + design systems',
     lenses: ['UX/UI', 'Systems & Architecture'],
     tier: 'featured',
+    summary:
+      'A roller-skate configurator built on Figma variables and modes, so new skate types extend the system instead of forcing a redraw.',
     problem:
       "A custom roller-skate shop where a single product has dozens of configurations. Hand-building each variant doesn't scale, and early on every mid-build change cost us work.",
     whatIDid:
@@ -126,6 +128,8 @@ export const projects: readonly Project[] = [
     role: 'Direction, architecture, review',
     lenses: ['AI Workflow', 'Systems & Architecture', 'Games / XR'],
     tier: 'bridge',
+    summary:
+      'A tactile auto-battler where the inventory is the spell. Each item in a chain bends one part of an attack: what it targets, how it lands, what it spawns.',
     problem:
       'I wanted to find out what actually changes when AI does the implementation and I do the direction.',
     whatIDid:
@@ -170,6 +174,8 @@ export const projects: readonly Project[] = [
     role: 'Unity Developer',
     lenses: ['Games / XR', 'UX/UI'],
     tier: 'bridge',
+    summary:
+      'VR spellcasting and grabbing for Meta Quest. I owned UX and game feel: tuning gesture recognition, hand colliders and haptics until casting and grabbing felt right.',
     problem:
       "In VR you cast spells by gesture and pick objects up with your hands. Both have to work for people whose hands don't move the way yours do.",
     whatIDid:

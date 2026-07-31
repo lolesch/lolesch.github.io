@@ -50,6 +50,16 @@ describe('project content', () => {
         expect(project.whatChanged.length).toBeGreaterThan(0);
       });
 
+      it('carries a summary that is not a schema line', () => {
+        // The card hook is written for the card. Reusing a schema line here
+        // would put the same sentence in two places and make the detail page
+        // opener read as an echo.
+        expect(project.summary.length).toBeGreaterThan(0);
+        for (const line of [project.problem, project.whatIDid, project.whatChanged]) {
+          expect(project.summary).not.toBe(line);
+        }
+      });
+
       it('never restates a tile line verbatim in a section', () => {
         // The tile said it. The page has to earn its own words.
         const lines = [project.problem, project.whatIDid, project.whatChanged];
@@ -87,6 +97,7 @@ describe('project content', () => {
           project.year,
           project.context,
           project.role,
+          project.summary,
           project.problem,
           project.whatIDid,
           project.whatChanged,
