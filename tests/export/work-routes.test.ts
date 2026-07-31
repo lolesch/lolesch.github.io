@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { projects } from '../../src/content/projects';
-import { body, rendered } from './rendered';
+import { rendered, text } from './rendered';
 
 describe('work routes (Seam 2)', () => {
   for (const project of projects) {
@@ -23,14 +23,15 @@ describe('work routes (Seam 2)', () => {
         expect(rendered('out/index.html')).toContain(`href="/work/${project.slug}/"`);
       });
 
-      it('does not restate the tile lines the visitor just read', () => {
-        // The no-repeat rule checked against the artifact rather than the data,
-        // so a page that hardcodes a tile line outside the content model is
-        // caught too. Scoped to <body>, because the meta description in <head>
-        // reuses the Problem line on purpose.
-        const visible = body(page);
+      it('opens with the three schema lines the card no longer carries', () => {
+        // The inverse of the rule this guard held until 2026-07-31. The card
+        // used to carry these lines, so the page skipped them; the card now
+        // carries a summary and a thumbnail instead, which makes the page the
+        // only place they exist. Losing them here would reintroduce exactly the
+        // failure CONTEXT.md records the Tile Schema to prevent.
+        const visible = text(page);
         for (const line of [project.problem, project.whatIDid, project.whatChanged]) {
-          expect(visible, `${project.slug} restates a tile line on its page`).not.toContain(line);
+          expect(visible, `${project.slug} drops a schema line`).toContain(line);
         }
       });
     });

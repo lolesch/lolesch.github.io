@@ -49,10 +49,30 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </ul>
 
       {/*
-        The page renders the sections that exist and stops. It never restates
-        the three tile lines: the visitor just clicked them, so the page opens
-        where the tile stopped. A project with nothing verified to say yet is a
-        short page, which is the no-padding rule working.
+        The card carries a thumbnail and a summary, not these three lines, so
+        the page is where they live. Label/value pairs rather than prose for the
+        same reason the constraints callout is: the reader scans them before the
+        writing has to work. This inverts the rule that stood here until
+        2026-07-31, when the grid became image-led.
+      */}
+      <dl className="mt-gap space-y-gap border-l border-border pl-gutter text-body">
+        <div>
+          <dt className="text-meta text-muted">Problem</dt>
+          <dd>{project.problem}</dd>
+        </div>
+        <div>
+          <dt className="text-meta text-muted">What I did</dt>
+          <dd>{project.whatIDid}</dd>
+        </div>
+        <div>
+          <dt className="text-meta text-muted">What changed</dt>
+          <dd>{project.whatChanged}</dd>
+        </div>
+      </dl>
+
+      {/*
+        Then the sections that exist, and stop. A project with nothing verified
+        to say yet is a short page, which is the no-padding rule working.
       */}
       <ContentSections sections={project.sections} />
 
