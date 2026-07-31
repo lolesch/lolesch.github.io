@@ -1,8 +1,20 @@
 # Handoff: 2026-07-31, end of the review-triage and design-system-design session
 
 Date: 2026-07-31
-Status: **open.** Written so a cold session can take over without reading the
-transcript.
+Status: **both ranked actions are done.** Written so a cold session can take
+over without reading the transcript.
+
+> **Closed 2026-07-31, later the same day.** Action 1 shipped: the Track C CV is
+> live at `https://lolesch.github.io/cv/leonid-schreiber-ux-engineer.pdf` and
+> `tests/export/about.test.ts` runs 0 skipped. Action 2 shipped as
+> `docs/superpowers/plans/2026-07-31-design-system-route.md`, five tasks with
+> four verified spikes. **The next action is executing that plan**, which is the
+> last route in the locked v1 scope. Everything under "Open, roughly by value"
+> below is unchanged and still open. Two findings from the spikes are worth
+> carrying: `token-discipline.test.ts` scans `src/lib/` with no exemption and
+> fails on a full Primitive name even inside a comment, and the design-system
+> spec's hand-counted "13 Brand" is actually 14, which is why the plan computes
+> every number the page shows.
 
 ---
 
@@ -26,7 +38,9 @@ The site is live at `https://lolesch.github.io`, deployed from
 
 ## Do these two things, in this order
 
-### 1. Wire the CV link. Small, and it is the highest-value item on the site.
+*Both are done. Kept below as the record of what was asked and why.*
+
+### 1. Wire the CV link. Small, and it is the highest-value item on the site. **DONE**
 
 Follow **Task 6 of `docs/plans/2026-07-31-about-route.md`**, which is written
 step by step and was gated until today. Every precondition is now cleared:
@@ -47,7 +61,7 @@ download from a link to a 404.
 the plan: it asks the visitor to classify themselves, which is the v2 Router's
 job.
 
-### 2. Turn the design-system spec into an implementation plan.
+### 2. Turn the design-system spec into an implementation plan. **DONE**
 
 **Invoke `superpowers:writing-plans` against
 `docs/superpowers/specs/2026-07-31-design-system-route-design.md`.**
