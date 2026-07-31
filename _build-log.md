@@ -327,3 +327,35 @@ Leonid re-exported `CV Track C - UX Engineer` from Figma and Task 6 of `docs/pla
 **One CV, Track C. Rejected: offering both tracks side by side.** It would cover a Track B reviewer directly, and it asks the visitor to classify themselves, which is the job `CONTEXT.md` assigns to the v2 Router. One link matching what the rest of the site argues is the better answer until the Router exists.
 
 This closes the top finding of the 2026-07-31 review. A hiring manager who likes the site can now reach the document that shortlists him, which was the whole of that finding once the frontend half turned out to have shipped days earlier.
+
+---
+
+## 2026-07-31 — /design-system, and the exemption that was not needed
+
+The last route in the locked v1 scope. `docs/superpowers/plans/2026-07-31-design-system-route.md` ran end to end in five tasks. The page reads the generated stylesheet at build time and documents itself out of it: eleven Primitive colours, fourteen Brand tokens, eight Semantic roles, five space steps, seven type steps, three radii, and a contrast table measured on every build. **Every number on it is computed. None is authored.**
+
+**The resolver was extracted, not reimplemented.** `tests/unit/contrast.test.ts` already walked the `var()` chain correctly, so `src/lib/tokens.ts` and `src/lib/contrast.ts` are that code moved, and the guard now imports it. The proof that the move preserved behaviour is that all ten contrast case names and assertions are byte-identical through it. A second implementation would have let the table a reader sees and the table the build enforces disagree about a number, which is precisely the drift PRD story 20 is about.
+
+**No `token-discipline.test.ts` exemption was needed, and that is the design.** Primitive and Brand do not vary by theme, so rendering them from build-time resolved values is the *correct* rendering rather than a workaround, and the values arrive as data rather than as source literals. Semantic renders through the same Tailwind utilities every component uses, so it live-switches through the cascade. Confirmed in a browser in both themes: the eight Semantic swatches move, the eleven Primitive and fourteen Brand swatches hold exactly. **Rejected: exempting the route**, which is the obvious move and is wrong twice over, because it weakens the guard at the one place on the site that brags about it.
+
+**The guard caught this page's own code, twice.** `src/lib/tokens.ts` shipped a JSDoc example reading `#b45309`, and rule 4 bans a colour literal in application code including comments. Fixed by removing the example, not by exempting `src/lib/`. The layer classifier parses a token name into segments for the same reason: a spike showed a full Primitive name fails the scan even inside a comment. That spike also found a narrow hole, recorded rather than exploited: the offence pattern requires a character after the layer prefix, so a bare prefix string plus runtime composition would slip past rules 1 and 2. Not used, and named here so the next person to notice it knows it was seen.
+
+**The spec's hand-counted "13 Brand" was wrong. It is 14.** Nothing shipped broken, because the restraint line the spec fixed carries no numbers. But a hand-maintained count was already wrong two days after being written, on a page whose entire argument is that documentation cannot drift from what ships. That is the concrete reason every count is computed from `readTokens()`.
+
+**Two of the plan's own predictions about its guards were wrong, and both corrections are worth keeping.**
+
+Deleting `--ds-color-surface` from the dark token file was supposed to redden the new theme-varying guard. It did not: the guard compares `readTokens()` against an independent parse of the same file, so removing the token removes it from both sides. Only the older identical-keys assertion in `tokens.test.ts` caught it, which is the right division of labour. The new guard's red state comes from a broken resolver, and it was watched red that way instead, with the dark layer dropped.
+
+The load-bearing export assertion was supposed to take three cases down with it. It takes one. Setting the data step to `[]` and rebuilding produced a page that renders every heading, every paragraph, the full contrast table with real measured numbers, and **all eight Semantic swatches in their correct colours**, because those are fed from `src/content/` rather than from `readTokens()`. It was opened in a browser and screenshotted: only three `(0)` counts betray it. So `renders a resolved Primitive value` is not one of three guards on the data step. It is the only one, and the page it protects against is convincing enough to ship.
+
+**Drift moved, so the guard moved with it.** Rendering Semantic through utilities means a hand-written token-to-utility list, which is new drift surface. It is guarded in both directions against the generated CSS, and both directions were watched red: an undocumented token, then a documented phantom.
+
+**The nav guard moved out of `about.test.ts`** into `tests/export/nav.test.ts`. It globs every page and was never about-specific; a third route made that visible. Same precedent as `ProjectSections` becoming `ContentSections`. **This is a deviation from the spec**, which listed the nav assertion under the design-system suite; duplicating a globbed check would leave two lists of links to keep in step, which is the drift this route argues against.
+
+**Rejected, carried from the spec:** a component gallery (the components are thin and a gallery would pad, which `CONTEXT.md:72` bans), a Style Dictionary token manifest (no `$description` metadata exists to lose), importing the DTCG JSON (the dark build filters, so a token can exist in JSON and never ship), and any mention of Figma at all (ADR-0002's sync is deferred, guardrail 1).
+
+**The tone pass changed one line.** "because a number is not a thing you can judge" became "because the question is whether the steps are far enough apart to see". Tell #2: the first is a maxim shaped to sound like insight, the second is the actual reason. The restraint line ships unchanged in the wording the spec fixed, once, directly under the intro.
+
+**Known thin spot, stated rather than hidden.** `ENFORCED_RULES` in `src/content/design-system.ts` describes `token-discipline.test.ts` in prose, by hand. A fifth rule added to that test and not to this list would leave the page quietly out of date, and no guard catches it. Generating the descriptions was rejected: the page would then document itself rather than the code, and the `why` for each rule is the part worth reading and cannot be derived.
+
+49 unit, 88 export, 0 skipped, typecheck clean. v1's four routes are all shipped.
