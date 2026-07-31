@@ -1203,17 +1203,13 @@ Then open it and check one thing the local build cannot tell you: that the portr
 
 ---
 
-## Task 6 (GATED): The CV link
+## Task 6: The CV link (DONE 2026-07-31)
 
-**Blocked by precondition 2.** Leonid re-exports `CV Track C - UX Engineer` from Figma against the final portfolio URL. The current PDFs point theirs at `figma.com/proto/pmDcP36DoMbeP2qcYXJ6Zx/WebPage`, so shipping the existing file would hand a reviewer a document that contradicts the site they are reading.
+**Was blocked by precondition 2**, which cleared on 2026-07-31: Leonid re-exported `CV Track C - UX Engineer` against `https://lolesch.github.io`, the domain having been settled the same day. The old PDFs pointed their portfolio link at `figma.com/proto/pmDcP36DoMbeP2qcYXJ6Zx/WebPage`, so shipping one would have handed a reviewer a document that contradicted the site they were reading. Verified before copying and again on the deployed file. Logged in `_build-log.md` under "The CV link, unblocked".
 
-**Settle the domain first** if it is going to be settled at all. `_project/tasks.md:29`: the URL is baked into every sent CV, and this export is the step that bakes it in.
+**The steps as executed:**
 
-**Do not start until the re-exported PDF exists.** Check by opening it and reading the portfolio link.
-
-**When unblocked:**
-
-- [ ] **Step 1: Place the file**
+- [x] **Step 1: Place the file**
 
 ```bash
 mkdir -p public/cv
@@ -1222,7 +1218,7 @@ cp "<path to the re-exported PDF>" public/cv/leonid-schreiber-ux-engineer.pdf
 
 Lowercase, hyphenated, no spaces. The name is a URL.
 
-- [ ] **Step 2: Fill the record**
+- [x] **Step 2: Fill the record**
 
 Modify `src/content/about.ts`, replacing `cv: null`:
 
@@ -1237,13 +1233,13 @@ Modify `src/content/about.ts`, replacing `cv: null`:
 
 One CV, Track C. **Rejected: offering both tracks side by side.** It covers a Track B reviewer directly, and it asks the visitor to classify themselves, which is the job `CONTEXT.md` already assigns to the v2 Router. One link matching what the whole site argues is the better answer until the Router exists.
 
-- [ ] **Step 3: Run the guards that were skipped**
+- [x] **Step 3: Run the guards that were skipped**
 
 Run: `npm run test:export`
 
 Expected: green with **0 skipped**. The two `it.skipIf` cases in `tests/export/about.test.ts` now run: the file resolves on disk in `out/`, and the link carries `target="_blank"` and `rel="noopener noreferrer"`.
 
-- [ ] **Step 4: Watch the CV guard fail on purpose**
+- [x] **Step 4: Watch the CV guard fail on purpose**
 
 This is the favicon lesson, and it is the only reason this assertion is worth having. Temporarily rename the file:
 
@@ -1255,7 +1251,7 @@ Run: `npm run test:export`
 
 Expected: FAIL with `/cv/leonid-schreiber-ux-engineer.pdf is linked but not exported`. A guard that only asserted the link exists stays green here, which is the exact way a download link fails: invisible until someone clicks it. Restore and re-run.
 
-- [ ] **Step 5: Verify it live**
+- [x] **Step 5: Verify it live**
 
 Run: `npm test && npm run typecheck && npm run test:export`
 Expected: all green.
@@ -1276,7 +1272,7 @@ Expected: `200`.
 
 Then open the deployed PDF and confirm the portfolio link inside it points at the live site rather than the Figma prototype. That is the actual thing precondition 2 was about, and no test can check it.
 
-- [ ] **Step 6: Log it**
+- [x] **Step 6: Log it**
 
 Append to `_build-log.md`: the re-export happened, what URL is baked in, and whether the domain decision was taken or deferred. One paragraph.
 
