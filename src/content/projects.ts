@@ -176,10 +176,15 @@ export const projects: readonly Project[] = [
     tier: 'bridge',
     summary:
       'VR spellcasting and grabbing for Meta Quest. I owned UX and game feel: tuning gesture recognition, hand colliders and haptics until casting and grabbing felt right.',
+    // Corrected 2026-07-31. The recogniser was an existing plugin, which
+    // `cv/cv_track_b_content.md:74` in the sibling repo logged as the
+    // Thoughtfish accuracy fix back in June; `site_copy.md` dropped the
+    // qualifier and this record inherited it, leaving the portfolio as the only
+    // surface still claiming the system. Do not drop it again.
     problem:
-      "In VR you cast spells by gesture and pick objects up with your hands. Both have to work for people whose hands don't move the way yours do.",
+      'In VR you cast spells by gesture and pick objects up with your hands. Neither works if the player has to think about how to do it.',
     whatIDid:
-      "Designed the gesture set around simple, distinct shapes that survive being recognised imperfectly, and trained the recogniser across several people rather than only myself. Tuned the colliders on the in-game hand model so grabbing felt right, added haptics as success and warning signals, and built the input scheme to Meta Quest's guidelines.",
+      "Designed the gesture set around simple, distinct shapes on an existing recognition plugin, and trained the model across several people rather than only myself. Tuned the colliders on the in-game hand model so grabbing felt right, added haptics as success and warning signals, and built the input scheme to Meta Quest's guidelines.",
     whatChanged:
       "The interaction layer was playtested and merged to main. I left a year before Early Access, so I can't tell you what survived.",
     sections: [
@@ -193,11 +198,12 @@ export const projects: readonly Project[] = [
       },
       {
         kind: 'prose',
-        heading: 'Designing for hands that vary',
+        heading: 'Making it feel right',
         body: [
-          'Gesture recognition fails differently for different people. A shape I draw cleanly is a shape someone else draws at a different size, at a different speed, with a different tremor. So the gesture set is built from simple, distinct shapes chosen to stay distinguishable when they are recognised imperfectly, and the recogniser was trained across several people instead of only on me. Training on one person produces a system that works for one person.',
-          'Grabbing is the same problem approached from the other side. The colliders on the in-game hand model decide whether a pickup reads as contact or as a near miss, and getting that right is tuning rather than design: you adjust, you playtest, you adjust again. Haptics carry the result back to the player, one signal for a success and another for a warning.',
-          "The whole input scheme follows Meta Quest's guidelines, which set what a grab, a trigger and a menu call are expected to do on that hardware.",
+          'The recognition plugin was already in the project when I arrived. What was open was everything around it: which shapes the spells used, how much slack a shape got before it stopped counting, and how fast the game told you it had counted. That is the part I was hired for.',
+          'Simple, distinct shapes did most of the work, because a shape that stays distinguishable when it is drawn badly needs less tuning than one that does not. I trained the model across several people instead of only myself, which is the difference between a system that works and a system that works for the person who built it.',
+          'Grabbing is the same problem from the other side. The colliders on the in-game hand model decide whether a pickup reads as contact or as a near miss, and that is tuning rather than design: you adjust, you playtest, you adjust again. Haptics carry the result back, one signal for a success and another for a warning.',
+          "The input scheme follows Meta Quest's guidelines, which set what a grab, a trigger and a menu call are expected to do on that hardware. Deliberately conventional, so it is learnable.",
         ],
       },
       {
