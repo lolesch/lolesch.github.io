@@ -60,6 +60,16 @@ describe('project content', () => {
         }
       });
 
+      it('carries a thumbnail with alt text', () => {
+        // The thumb is inside the card's link target, so its alt is the copy a
+        // screen reader gets for the image half of that link. An empty alt here
+        // is not a decorative image, it is a missing description.
+        expect(project.thumb.src.startsWith('/')).toBe(true);
+        expect(project.thumb.alt.length).toBeGreaterThan(0);
+        expect(project.thumb.width).toBeGreaterThan(0);
+        expect(project.thumb.height).toBeGreaterThan(0);
+      });
+
       it('never restates a tile line verbatim in a section', () => {
         // The tile said it. The page has to earn its own words.
         const lines = [project.problem, project.whatIDid, project.whatChanged];
@@ -98,6 +108,7 @@ describe('project content', () => {
           project.context,
           project.role,
           project.summary,
+          project.thumb.alt,
           project.problem,
           project.whatIDid,
           project.whatChanged,

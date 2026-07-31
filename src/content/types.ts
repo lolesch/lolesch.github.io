@@ -48,6 +48,17 @@ export type Project = {
   // instead of the card.
   summary: string;
 
+  // Required, not optional. Every project appears in the grid and the grid is
+  // now image-led, so a missing thumb is a broken card rather than a plainer
+  // one. `alt` rides on the record for the same reason the figure kind carries
+  // one: it is copy, and the copy guards walk src/content/**.
+  thumb: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+
   // The three fixed schema lines from CONTEXT.md. They opened the tile until
   // 2026-07-31; the grid is image-led now, so they open the detail page.
   problem: string;
