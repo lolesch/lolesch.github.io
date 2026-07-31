@@ -141,7 +141,9 @@ export const projects: readonly Project[] = [
         kind: 'prose',
         heading: 'Context',
         body: [
-          'GlyphsHero is an auto battler I have been building alone since 2023. Unit placement, a unit bank, synergy effects, an inventory. It is also where the reusable systems I have carried from project to project for years currently live, so the architecture underneath it is older than the game on top of it.',
+          'GlyphsHero is a hex-grid auto battler I have been building alone since 2023. Into the Breach for the tactics, Noita for the way spells are assembled out of parts, Backpack Battles for the inventory that assembles them.',
+          'The idea it is built on is that your inventory is your spellbook. Items sit in a grid, adjacent items form a chain, and the chain is the attack. Rearranging your bag is how you change what you cast, so inventory management stops being bookkeeping and becomes the main decision.',
+          'It is also where the reusable systems I have carried from project to project for years currently live, so the architecture underneath it is older than the game on top of it.',
           'It doubles as the test rig. I wanted the test to run on a real codebase rather than a toy one, because a toy has no architecture to misread.',
         ],
       },
@@ -154,7 +156,16 @@ export const projects: readonly Project[] = [
       },
       {
         kind: 'prose',
-        heading: 'The loop',
+        heading: 'Why the axes are separate',
+        body: [
+          'The first version had an item type per behaviour: a piercing weapon, a splitting weapon, a homing weapon. Every new combination meant a new type, and the combinations multiply faster than you can author them.',
+          'Splitting an attack into independent axes fixed it. Target selection picks what the attack aims at, delivery decides which hexes it covers, propagation decides what it spawns on impact. An item reclassifies one axis and leaves the others alone, so a converter that turns a single-hex hit into a line does not need to know what payload is attached behind it.',
+          'The cost of that is a vocabulary you have to hold in your head, and I keep it written down rather than in my head: the domain glossary and nine ADRs live in the repo, and they are what stop the terms drifting while the code changes underneath them.',
+        ],
+      },
+      {
+        kind: 'prose',
+        heading: 'How it gets built',
         body: [
           'I write the design docs and the first architecture myself. No AI, or AI only for inspiration. The thinking has to be mine or there is nothing to delegate.',
           'Then I hand those documents back to a model and ask it to find the gaps and the contradictions, which is a different request from asking whether they are good.',
