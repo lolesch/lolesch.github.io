@@ -45,9 +45,9 @@ Every task's requirements implicitly include this section.
 Both are Leonid's. Neither blocks the whole plan.
 
 1. **The metalwork systems-origin sentence.** Decided 2026-07-29 (`_project/tasks.md:27`), never written. **Blocks Task 3 only.** Task 3 Step 1 puts three drafted candidates in front of him. Rejecting all three is a real outcome that clears the precondition by decision, not a failure.
-2. **The Track C CV re-export.** Both CV PDFs still point their portfolio link at `figma.com/proto/pmDcP36DoMbeP2qcYXJ6Zx/WebPage` (`_project/tasks.md:28`, verified 2026-07-29). **Blocks Task 6 only.** The page ships without it and gains the link later, because `about.cv` is nullable.
+2. **The Track C CV re-export.** Both CV PDFs still point their portfolio link at `figma.com/proto/pmDcP36DoMbeP2qcYXJ6Zx/WebPage` (`_project/tasks.md:28`, verified 2026-07-29). **Blocks Task 6 only.** The page ships without it and gains the link later, because `about.cv` is nullable. **Raised in priority 2026-07-31:** an outside review of the live site named the missing CV its top finding, on the grounds that a hiring manager who likes the site then has no way to get the document that shortlists him. The decision that was gating this is now taken (see below), so the only remaining step is Leonid exporting the PDF.
 
-**Related decision, worth taking before precondition 2.** `_project/tasks.md:29`: a paid domain has to be settled before the first application, because the URL is baked into every sent CV. The re-export is the step that bakes it in, so doing it against `lolesch.github.io` means doing it twice if a domain is bought soon.
+**Related decision, TAKEN 2026-07-31.** The URL is `https://lolesch.github.io`. Leonid re-confirmed the answer `portfolio_site_spec.md` §13 had already recorded on 2026-07-29, closing a contradiction with `_project/tasks.md:29`, which had gone on carrying "buy the domain before the first application" as open. The known cost is accepted: buying a domain later means re-exporting both PDFs a second time. So precondition 2 is now purely the manual Figma export, with nothing left to decide before it.
 
 ---
 

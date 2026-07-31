@@ -335,7 +335,12 @@ export const projects: readonly Project[] = [
         kind: 'prose',
         heading: 'Outcome',
         body: [
-          'The interaction layer was playtested and went into main. I left Thoughtfish in December 2024, and the game reached Early Access a year after that, so I cannot tell you which of those decisions survived the year in between.',
+          // The limitation is stated once, in `whatChanged`, which the detail
+          // page renders in the <dl> above this section. It said it. This
+          // paragraph gives the chronology that substantiates it and stops
+          // there. Restating the conclusion here is what guardrail 5 bans, and
+          // it read as a third hedge on a site that already carries two.
+          'I left Thoughtfish in December 2024, and the game reached Early Access a year after that.',
           'One thing on this project is not mine. It ran a hybrid OOP and ECS architecture, and the team had already done the optimisation work before I arrived: low-poly geometry, object pooling, simplified colliders. I worked next to that, not on it.',
         ],
       },

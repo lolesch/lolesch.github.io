@@ -293,3 +293,25 @@ The handoff spec located the four remaining assets and recorded their crop boxes
 38 unit tests, 77 export tests plus the same 2 skipped, typecheck clean. Checked in a browser at 1280 rather than against markup: the lazily loaded figures needed forcing to `eager` before a full-page capture showed anything, which is the lazy-loading working.
 
 **Still open.** The side-panel caption question, which needs Leonid to confirm against the Maze build. The two open items from the previous entry are unchanged and still Leonid's: the schema lines summarising the pages they open, and the How to God limitation stated twice.
+
+---
+
+## 2026-07-31 — An outside review of the live site, and the one finding that was not about the site
+
+A review of `https://lolesch.github.io` came in after the Rollhaus figures shipped. Four findings. Three hold, one was stale, and the highest-severity one turned out to be blocked on a decision rather than on any code here.
+
+**The missing CV is the top finding, and it is not a frontend gap.** `contact-links.tsx` has shipped a CV link since the About route landed: new tab, `noopener noreferrer`, an `sr-only` announcement of the target. It renders only when `about.cv` is non-null, and it is null on purpose. Both CV PDFs still point their footer portfolio link at the old Figma prototype, so shipping either one hands a reviewer a document that contradicts the site they are reading. The review's suggested fix, a placeholder pointing at the Track C PDF now, would cause exactly the failure the code comment predicts.
+
+**The real blocker was the domain, and it had already been decided twice.** `portfolio_site_spec.md` §13 settled it on 2026-07-29: github.io now, paid later, free domains rejected on revocation risk. `_project/tasks.md:29` still carried "buy the domain before the first application goes out" as open, contradicting it. Leonid re-confirmed `lolesch.github.io` on 2026-07-31 and the contradiction is closed. The cost is stated rather than hidden: the URL is baked into every sent CV, so buying a domain later means a second re-export. Taken anyway, because the CV link has been blocked on this for two days and shipping beats a cleaner URL. **Rejected: buying a domain first**, which is the tidier answer and delays the site's biggest conversion gap by days for a cosmetic gain.
+
+The export itself is a manual Figma step nobody but Leonid can run, so the site side stays parked at Task 6 of `docs/plans/2026-07-31-about-route.md`, which is written and waiting on the file.
+
+**Three hedges in a row, and one of them was already a guardrail violation.** Rollhaus says there are no live users, GlyphsHero says nothing is validated by use, How to God says it cannot say what survived. Each is true and each was written deliberately. Read back to back by a fast scanner they compound into a pattern, which is the review's actual point and a fair one. Only one was cut, and it was the one that did not need the judgment call: How to God stated its limitation in `whatChanged`, which the detail page renders in the `<dl>` near the top, and then restated it in Outcome further down. Same page, same reader, twice. Guardrail 5 says once, where it lands hardest. The tile line stays because it is what the scanner reads; the Outcome paragraph keeps the chronology that substantiates it and drops the conclusion.
+
+**Rejected: cutting the Rollhaus or GlyphsHero hedge as well.** Rollhaus's is load-bearing, it is what protects the course-project framing, and the review agrees. GlyphsHero's is the only place that page states its scope at all, so removing it trades a tone problem for an honesty problem. Three honest statements reading as a pattern is a real cost, but the answer to it is a project that has touched real users, not quieter language about the ones that have not.
+
+**The hero-line flag was stale, for the second time.** `hero.ts` records the approval and `_build-log.md:40-51` carries the full adjudication with two rejections. `_build-log.md:119` already logs a *previous* review raising this same closed flag and traces it to `_project/tasks.md`. The same file also still claimed Pages was never enabled and the site 404s. Two reviews, weeks apart, both misled by the same file, in a project whose most useful log entry to date is about exactly this. The earlier entry named the fix and nobody performed it: a task file read by two sides has to be written back to by both. It has now been written back, and it opens with a note saying why, so the next agent that closes an item there knows the cost of not recording it.
+
+**Not acted on: the lens filter.** Games/XR, UX/UI and AI Workflow sit tangled on one page and a Track A reader gets diluted signal. True, and already recorded as accepted risk. The Router is v2 and nothing about this review moves it forward.
+
+38 unit tests, typecheck clean.
