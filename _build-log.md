@@ -419,3 +419,17 @@ Six changes from a review by Leonid, plus two things measuring turned up on the 
 **Three new guards were watched failing before being believed.** Removing `page` from the wordmark and `section` from Work fails all three: Home marks nothing, the one-mark-per-page count drops to zero, and the project page loses its section marker. Reverted, and the suite is green again.
 
 61 unit, 97 export, 0 skipped, typecheck clean. Browser pass over all four routes in both themes: the switch moves in both directions, the wordmark and the three links each mark exactly their own route, and the project page marks Work.
+
+## 2026-08-01: Two corrections to the entry above, both from Leonid using it
+
+**The wordmark should never have carried the marker, and the entry above got the reasoning backwards.** It says Home is the work page and concludes that the wordmark is therefore Home's link. The first half is the point: Home *is* the work page, the grid is on it, and Work is what that location is called. The wordmark is the way back to it, not its name. What shipped meant clicking Work highlighted the site's own name, which is how Leonid found it. Work now carries `page` on `/` and `section` on `/work/<slug>`, and the wordmark carries neither. **Rejected: marking both,** which puts two links on one destination and makes the identity double as a location.
+
+The claim it replaces was that a fragment cannot claim to be the page. A fragment does not leave the page it points into, so `/#work` is `/`, and Home was never the exception it was recorded as being twice.
+
+**The switch label never changed, which was a deliberate choice that was wrong in use.** A switch names its setting and lets the knob carry on and off, so "Dark mode" was correct by the pattern and read as stuck by the person using it. The label now names the current mode and the accessible name continues into the action: "Light mode. Switch to dark mode". **Rejected: a visible label that changes while the accessible name stays fixed,** which reads well on both sides and fails SC 2.5.3, because a voice-control user says the words they can see.
+
+**The fix removed the component's state entirely.** The label had to be a constant precisely because React could not know the theme before hydration, so any changing string would have flashed. Shipping both labels and letting CSS show one removes the reason: no `useState`, no `useEffect`, no `aria-pressed` that is undefined until the client catches up. The attribute the pre-paint script writes is now the only source, for the colours, the knob and the words alike. `aria-pressed` is gone rather than kept, because "Light mode, not pressed" is a contradiction when light mode is what is on.
+
+**A reading that nearly became a bug report, for the second time today.** The page reader reported no accessible name on the button and on all four contact links. It reports one for every link whose text is a direct child and none for any link whose text sits one span deeper, including links that predate this work. Checked against the browser's own accessibility tree, every one of them names correctly and the `display:none` label and the `aria-hidden` icons are excluded as they should be. The tool was shallow. Yesterday's version of this was reading `transform` where Tailwind sets `translate`: when a reading says something is broken, confirm the reading before believing it.
+
+61 unit, 98 export, 0 skipped, typecheck clean.
