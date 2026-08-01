@@ -48,8 +48,12 @@ export function SiteNav() {
                 href={route.href}
                 aria-current={onIt ? 'page' : undefined}
                 // aria-current alone is invisible, so the state is carried
-                // visually too. A screen-reader-only cue is not a cue.
-                className={onIt ? 'underline underline-offset-4' : 'hover:underline'}
+                // visually too. A screen-reader-only cue is not a cue. The
+                // underline stays, so colour is never the only channel
+                // (SC 1.4.1) and the accent is the second one.
+                className={
+                  onIt ? 'text-accent underline underline-offset-4' : 'hover:underline'
+                }
               >
                 {route.label}
               </Link>

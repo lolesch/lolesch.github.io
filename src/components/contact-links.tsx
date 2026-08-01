@@ -20,7 +20,7 @@ export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[];
               rel={link.external ? 'noopener noreferrer' : undefined}
               // Matches the "Back to all work" link on a project page: always
               // underlined, no hover change. One link style on the site.
-              className="underline underline-offset-4"
+              className="text-accent underline underline-offset-4"
             >
               {link.value}
             </a>
@@ -39,7 +39,7 @@ export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[];
             // their call.
             target="_blank"
             rel="noopener noreferrer"
-            className="underline underline-offset-4"
+            className="text-accent underline underline-offset-4"
           >
             {cv.label}
             {/*

@@ -42,7 +42,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <ul className="mt-gap flex flex-wrap gap-tight">
         {project.lenses.map((lens) => (
-          <li key={lens} className="rounded-tag border border-border p-tight text-meta text-muted">
+          <li
+            key={lens}
+            // The same chip as the tile, in the same role. Text first, colour
+            // second, on `bg` because `capability` on `surface` is under AA.
+            className="rounded-tag border border-capability p-tight text-meta text-capability"
+          >
             {lens}
           </li>
         ))}
@@ -77,7 +82,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <ContentSections sections={project.sections} />
 
       <p className="mt-section text-body">
-        <Link href="/" className="underline underline-offset-4">
+        <Link href="/" className="text-accent underline underline-offset-4">
           Back to all work
         </Link>
       </p>
