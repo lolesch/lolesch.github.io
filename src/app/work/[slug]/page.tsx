@@ -42,9 +42,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {project.lenses.map((lens) => (
           <li
             key={lens}
-            // The same chip as the tile, in the same role. Text first, colour
-            // second, on `bg` because `capability` on `surface` is under AA.
-            className="rounded-tag border border-capability p-tight type-meta text-capability"
+            // The same chip as the tile, in the same role, down to the
+            // horizontal-only inset. Text first, colour second, on `bg` because
+            // `capability` on `surface` is under AA.
+            className="rounded-tag border border-capability px-stack type-meta text-capability"
           >
             {lens}
           </li>

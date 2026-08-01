@@ -64,7 +64,13 @@ export function ProjectTile({ project }: { project: Project }) {
               // role, because gold marks what someone was and green marks what
               // they can do. It sits on `bg` rather than inside a filled panel,
               // which is 4.02:1 in light.
-              className="rounded-tag border border-capability p-tight type-meta text-capability"
+              //
+              // Horizontal only. A uniform `tight` inset read as tall and
+              // narrow, because a full radius spends the horizontal space on
+              // the curve and `meta`'s line box already supplies the height. So
+              // the height comes from the role and the width is set here, which
+              // is the one of the two a capsule actually has to decide.
+              className="rounded-tag border border-capability px-stack type-meta text-capability"
             >
               {lens}
             </li>

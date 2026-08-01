@@ -37,7 +37,12 @@ export default function AboutPage() {
           // aspect would give a slight ellipse. The crop also removes the
           // photo's dark vignette corners, which as a rectangle would read as a
           // bright square with dirty corners on the dark theme.
-          className="size-[200px] shrink-0 rounded-full border border-border-media object-cover"
+          // border-4 rather than the 1px hairline it shipped with: `border`
+          // is the width the tile's bottom edge uses, and a ring around a
+          // portrait is doing a different job from an edge between two parts
+          // of a card. At 200px across, 4px is the width at which the frame
+          // reads as chosen rather than as the image having an outline.
+          className="size-[200px] shrink-0 rounded-full border-4 border-border-media object-cover"
         />
 
         <div className="flex-1 basis-64">

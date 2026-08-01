@@ -95,10 +95,20 @@ export type Project = {
   sections: readonly Section[];
 };
 
+// Resolves through a registry (ContactIconId -> SVG paths) in
+// src/components/contact-links.tsx, for the same reason FigureId does: the data
+// names an icon, it does not carry one. A union rather than a string, so an id
+// with no drawing behind it fails to compile instead of rendering an empty box.
+export type ContactIconId = 'email' | 'linkedin' | 'github' | 'itch';
+
 export type ContactLink = {
+  // Not rendered as a heading since 2026-08-01, when the icon took that job.
+  // It survives as the link's spoken prefix, because a picture is not an
+  // accessible name and "lolesch.itch.io" alone leaves the icon unannounced.
   label: string; // "Email", "LinkedIn"
-  value: string; // what the visitor reads, and the link's accessible name
+  value: string; // what the visitor reads, and the rest of the accessible name
   href: string;
+  icon: ContactIconId;
   // Marks a link that leaves the site, which gets rel="noopener noreferrer".
   // false for mailto, which opens no page at all.
   external: boolean;
