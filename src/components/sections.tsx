@@ -41,11 +41,12 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
 
     case 'constraints':
       return (
-        // Bordered rather than filled, for the reason the tile is: `muted` on
-        // `surface` measures 4.40:1 in light, under AA, and every value here
-        // sits under a muted label. On `bg` both pairs are already in the
-        // contrast table. The decorative `border` token is correct because a
-        // callout is not a control.
+        // Bordered rather than filled, for the reason the tile is. `muted` on
+        // `surface` clears AA on the CV palette and is in the contrast table,
+        // so this could be filled now; it stays bordered because a page of
+        // filled panels is the clutter CONTEXT.md's one anti-brand constraint
+        // bans. The decorative `border` token is correct because a callout is
+        // not a control.
         <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter text-body sm:grid-cols-2">
           {section.items.map((item) => (
             <div key={item.label}>

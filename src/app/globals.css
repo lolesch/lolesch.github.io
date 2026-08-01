@@ -20,6 +20,13 @@
   --color-fg: var(--ds-color-fg);
   --color-muted: var(--ds-color-muted);
   --color-accent: var(--ds-color-accent);
+  /*
+   * The second accent, with its own job rather than a second look: gold marks
+   * a role, green marks a capability. It exists because the lens chips render
+   * it. A colour nothing renders would fail the restraint claim on
+   * /design-system the same way an unused token does.
+   */
+  --color-capability: var(--ds-color-capability);
   --color-border: var(--ds-color-border);
   --color-surface: var(--ds-color-surface);
   /*

@@ -1,21 +1,22 @@
 {
   "brand": {
     "$type": "color",
-    "ink":     { "$value": "{primitive.neutral.1000}" },
-    "paper":   { "$value": "{primitive.neutral.0}" },
-    "shade":   { "$value": "{primitive.neutral.100}" },
-    "quiet":   { "$value": "{primitive.neutral.500}" },
-    "rule":    { "$value": "{primitive.neutral.300}" },
-    "accent":  { "$value": "{primitive.amber.700}" },
-    "edge":    { "$value": "{primitive.neutral.500}" },
+    "ink":        { "$value": "{primitive.neutral.1000}" },
+    "paper":      { "$value": "{primitive.neutral.0}" },
+    "shade":      { "$value": "{primitive.neutral.50}" },
+    "quiet":      { "$value": "{primitive.neutral.800}" },
+    "rule":       { "$value": "{primitive.neutral.300}" },
+    "edge":       { "$value": "{primitive.neutral.500}" },
+    "accent":     { "$value": "{primitive.gold.500}" },
+    "capability": { "$value": "{primitive.green.600}" },
 
-    "ink-inverse":    { "$value": "{primitive.neutral.50}" },
-    "paper-inverse":  { "$value": "{primitive.neutral.900}" },
-    "shade-inverse":  { "$value": "{primitive.neutral.800}" },
-    "quiet-inverse":  { "$value": "{primitive.neutral.300}" },
-    "rule-inverse":   { "$value": "{primitive.neutral.700}" },
-    "accent-inverse": { "$value": "{primitive.amber.400}" },
-
-    "edge-inverse":   { "$value": "{primitive.neutral.500}" }
+    "ink-inverse":        { "$value": "{primitive.neutral.0}" },
+    "paper-inverse":      { "$value": "{primitive.neutral.1000}" },
+    "shade-inverse":      { "$value": "{primitive.neutral.950}" },
+    "quiet-inverse":      { "$value": "{primitive.neutral.500}" },
+    "rule-inverse":       { "$value": "{primitive.neutral.800}" },
+    "edge-inverse":       { "$value": "{primitive.neutral.700}" },
+    "accent-inverse":     { "$value": "{primitive.gold.300}" },
+    "capability-inverse": { "$value": "{primitive.green.400}" }
   }
 }

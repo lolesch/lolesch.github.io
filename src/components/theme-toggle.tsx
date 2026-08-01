@@ -28,10 +28,10 @@ export function ThemeToggle() {
       aria-pressed={theme === 'dark' ? true : theme === 'light' ? false : undefined}
       // border-interactive is the token for exactly this: WCAG 2.2 SC 1.4.11
       // wants 3:1 for a control's boundary, and `border` is the decorative-rule
-      // token at 1.48:1. This previously borrowed `muted`, which is a *text*
+      // token at 1.61:1. This previously borrowed `muted`, which is a *text*
       // colour, and measured 11.99:1 in dark. That is a loud hairline on a site
-      // whose one anti-brand constraint is "never cluttered". Now 4.83:1 light
-      // and 3.67:1 dark, held there by tests/unit/contrast.test.ts.
+      // whose one anti-brand constraint is "never cluttered". Now 3.03:1 light
+      // and 3.04:1 dark, held there by tests/unit/contrast.test.ts.
       className="rounded-control border border-border-interactive p-tight text-meta text-muted hover:border-fg hover:text-fg"
     >
       {theme === 'dark' ? 'Light' : 'Dark'} mode

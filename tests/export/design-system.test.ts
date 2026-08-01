@@ -53,7 +53,7 @@ describe('the data step actually ran', () => {
   // always will. tests/unit/design-system.test.ts is what ties this value to
   // the generated CSS.
   it('renders a resolved Primitive value', () => {
-    expect(body(PAGE)).toContain('#b45309');
+    expect(body(PAGE)).toContain('#ac6513');
   });
 
   it('renders the Semantic layer through its Tailwind utility, not a fixed value', () => {

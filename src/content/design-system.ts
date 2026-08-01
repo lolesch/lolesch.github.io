@@ -17,8 +17,8 @@ export type SemanticColour = {
  * same set in both directions, so adding a token without documenting it fails
  * the build and documenting one that no longer exists fails the build.
  *
- * Uniform bg-* on purpose. Three of the eight are border roles, and rendering
- * those as a ring while the other five are fills would make the reader compare
+ * Uniform bg-* on purpose. Three of the nine are border roles, and rendering
+ * those as a ring while the other six are fills would make the reader compare
  * two things at once. The swatch shows the colour; the role line says what it
  * is for.
  */
@@ -27,6 +27,7 @@ export const SEMANTIC_COLOURS: readonly SemanticColour[] = [
   { token: '--ds-color-fg', utility: 'bg-fg', role: 'Body text' },
   { token: '--ds-color-muted', utility: 'bg-muted', role: 'Metadata and captions' },
   { token: '--ds-color-accent', utility: 'bg-accent', role: 'Links and emphasis' },
+  { token: '--ds-color-capability', utility: 'bg-capability', role: 'Capability tags' },
   { token: '--ds-color-surface', utility: 'bg-surface', role: 'Raised panel fill' },
   { token: '--ds-color-border', utility: 'bg-border', role: 'Decorative hairline' },
   {
@@ -59,16 +60,31 @@ export type ContrastPair = {
  * rendered, or that a rendered pair is listed. It is the honest limit of the
  * table and it travels with the list rather than being stated on the page.
  *
- * Measured 2026-07-30 and deliberately absent: --ds-color-muted on
- * --ds-color-surface is 4.40:1 in light, under AA, and
- * --ds-color-border-interactive on surface is 3.08:1 in dark. Nothing renders
- * on surface today, which is why tiles are bordered rather than filled. Add
- * both pairs here the moment something does.
+ * Measured 2026-08-01 against the CV palette and deliberately absent:
+ * --ds-color-accent on --ds-color-surface is 4.05:1 in light and
+ * --ds-color-capability on surface is 4.02:1, both under AA, so accent text and
+ * lens chips sit on --ds-color-bg and never inside a filled panel.
+ * --ds-color-border-interactive on surface is 2.71:1 light and 2.89:1 dark,
+ * under the 3:1 boundary, so a control does not sit on a panel either. Add any
+ * of them here the moment something renders them.
  */
 export const CONTRAST_PAIRS: readonly ContrastPair[] = [
   { fg: '--ds-color-fg', bg: '--ds-color-bg', min: 4.5, role: 'body text' },
   { fg: '--ds-color-muted', bg: '--ds-color-bg', min: 4.5, role: 'metadata text' },
   { fg: '--ds-color-accent', bg: '--ds-color-bg', min: 4.5, role: 'accent text' },
+  { fg: '--ds-color-capability', bg: '--ds-color-bg', min: 4.5, role: 'capability tag text' },
+  {
+    fg: '--ds-color-muted',
+    bg: '--ds-color-surface',
+    min: 4.5,
+    // The Rollhaus figure has filled its step panels with `surface` and
+    // captioned them in `muted` since 2026-07-31, and this pair was not listed
+    // until 2026-08-01. On the zinc palette it measured 4.40:1 in light, under
+    // AA, and three comments in this repo asserted that nothing renders on
+    // `surface`. Listing it is what stops the next palette shipping the same
+    // way.
+    role: 'metadata text on a raised panel',
+  },
   {
     fg: '--ds-color-border-interactive',
     bg: '--ds-color-bg',
@@ -158,7 +174,7 @@ export const designSystem: {
     body: [
       'Tokens without enforcement are a naming convention. Four rules run in the test suite on every build, over every file under src and public.',
       'This page is inside them, with no exemption. It renders the two fixed layers from values read at build time, and the Semantic layer through the same utilities every component uses, which is why the swatches below switch with the theme and the ones above them do not.',
-      'Three of the eight Semantic roles are borders, and two of them resolve to the same value today. One is the decorative hairline, one is the 3:1 boundary that identifies a control, and one frames a photograph. Two roles that agree can diverge later without touching a component, which is the whole point of naming the job rather than the colour.',
+      'Three of the nine Semantic roles are borders, and two of them resolve to the same value today. One is the decorative hairline, one is the 3:1 boundary that identifies a control, and one frames a photograph. Two roles that agree can diverge later without touching a component, which is the whole point of naming the job rather than the colour.',
     ],
   },
 

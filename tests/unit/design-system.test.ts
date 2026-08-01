@@ -66,8 +66,8 @@ describe('the token model', () => {
     // returning the first var() it meets.
     const accent = TOKENS.find((token) => token.name === '--ds-color-accent');
     expect(accent?.reference).toBe('--ds-brand-accent');
-    expect(accent?.value).toBe('#b45309');
-    expect(resolve('--ds-color-accent', lightVars())).toBe('#b45309');
+    expect(accent?.value).toBe('#ac6513');
+    expect(resolve('--ds-color-accent', lightVars())).toBe('#ac6513');
   });
 
   // A token may legitimately point at a variable this system does not own.

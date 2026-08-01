@@ -7,8 +7,10 @@ export function ProjectTile({ project }: { project: Project }) {
     <article
       // position: relative so the link's ::after can cover the whole card, and
       // :has() so focus is visible on the card rather than only on the heading
-      // text. Bordered rather than filled: `muted` on `surface` measures 4.40:1
-      // in light, under AA, and this tile carries a muted metadata line.
+      // text. Bordered rather than filled, and now for a different reason than
+      // when it was written: `muted` on `surface` cleared AA when the CV palette
+      // landed, so the constraint that decided this is the lens chip, which
+      // measures 4.02:1 on `surface` in light and has to sit on `bg`.
       className="relative flex h-full flex-col overflow-hidden rounded-card border border-border-interactive has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-border-interactive"
     >
       {/*

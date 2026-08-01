@@ -1,12 +1,13 @@
 {
   "color": {
     "$type": "color",
-    "bg":      { "$value": "{brand.paper-inverse}" },
-    "fg":      { "$value": "{brand.ink-inverse}" },
-    "muted":   { "$value": "{brand.quiet-inverse}" },
-    "accent":  { "$value": "{brand.accent-inverse}" },
-    "border":  { "$value": "{brand.rule-inverse}" },
-    "surface": { "$value": "{brand.shade-inverse}" },
+    "bg":         { "$value": "{brand.paper-inverse}" },
+    "fg":         { "$value": "{brand.ink-inverse}" },
+    "muted":      { "$value": "{brand.quiet-inverse}" },
+    "accent":     { "$value": "{brand.accent-inverse}" },
+    "capability": { "$value": "{brand.capability-inverse}" },
+    "border":     { "$value": "{brand.rule-inverse}" },
+    "surface":    { "$value": "{brand.shade-inverse}" },
 
     "border-interactive": { "$value": "{brand.edge-inverse}" },
     "border-media": { "$value": "{brand.edge-inverse}" }
