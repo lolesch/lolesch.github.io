@@ -18,7 +18,7 @@ type Offence = {
   exempt?: (path: string) => boolean;
 };
 
-// Four ways application code actually escapes the Semantic layer.
+// Five ways application code actually escapes the Semantic layer.
 const OFFENCES: Offence[] = [
   {
     pattern: /--ds-(?:primitive|brand)-[\w-]+/g,
@@ -48,6 +48,19 @@ const OFFENCES: Offence[] = [
     // src/content/** is exempt because a diagram that depicts the Rollhaus
     // brand palette is *about* those colours. They are content, not styling.
     exempt: (path) => path.startsWith('src/content/'),
+  },
+  {
+    // The four properties a type role carries alongside its size. Reaching for
+    // one of them on its own composes a sixth role nobody named, which is
+    // exactly how src/components/work-grid.tsx shipped an h2 without
+    // `leading-tight` beside seven that had it, and nothing could catch it.
+    //
+    // text-balance is deliberately absent: wrapping is a hint about this
+    // sentence, not a type decision the system should own. text-transform is
+    // absent for the opposite reason: `type-eyebrow` already carries it.
+    pattern:
+      /\b(?:leading|tracking)-[\w.\[\]/-]+|\bfont-(?:serif|sans|mono|thin|extralight|light|normal|medium|semibold|bold|extrabold|black)\b/g,
+    why: 'sets a type property outside a role',
   },
 ];
 

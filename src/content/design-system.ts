@@ -143,7 +143,7 @@ export type EnforcedRule = {
   why: string;
 };
 
-// The four things tests/unit/token-discipline.test.ts bans. Kept in step with
+// The five things tests/unit/token-discipline.test.ts bans. Kept in step with
 // that file by hand, which is honest: a guard that generated its own
 // description would document itself rather than the code.
 export const ENFORCED_RULES: readonly EnforcedRule[] = [
@@ -162,6 +162,10 @@ export const ENFORCED_RULES: readonly EnforcedRule[] = [
   {
     rule: 'No colour literal in application code.',
     why: "Content is exempt, because a diagram of another product's palette is about those colours rather than styled by them. Everywhere else a hex is a token that was never minted.",
+  },
+  {
+    rule: 'No component may set a font family, weight, line height or letter spacing on its own.',
+    why: 'A type role carries all five decisions together, so a call site names a job and gets the whole of it. Reaching for one of them separately composes a role nobody named, which is how one heading on this site rendered at the wrong line height beside seven that did not.',
   },
 ];
 
@@ -207,7 +211,7 @@ export const designSystem: {
     kind: 'prose',
     heading: 'The rules that hold it together',
     body: [
-      'Tokens without enforcement are a naming convention. Four rules run in the test suite on every build, over every file under src and public.',
+      'Tokens without enforcement are a naming convention. Five rules run in the test suite on every build, over every file under src and public.',
       'This page is inside them, with no exemption. It renders the two fixed layers from values read at build time, and the Semantic layer through the same utilities every component uses, which is why the swatches below switch with the theme and the ones above them do not.',
       'Three of the nine Semantic roles are borders, and two of them resolve to the same value today. One is the decorative hairline, one is the 3:1 boundary that identifies a control, and one frames a photograph. Two roles that agree can diverge later without touching a component, which is the whole point of naming the job rather than the colour.',
     ],

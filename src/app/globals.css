@@ -52,29 +52,29 @@
   --spacing-gap: var(--ds-space-gap);
   --spacing-tight: var(--ds-space-tight);
 
-  /* Font size only: these emit no line-height, unlike Tailwind's text-4xl. */
-  --text-display: var(--ds-text-display);
-  --text-title: var(--ds-text-title);
-  --text-heading: var(--ds-text-heading);
-  --text-subheading: var(--ds-text-subheading);
-  --text-lead: var(--ds-text-lead);
-  --text-body: var(--ds-text-body);
-  --text-meta: var(--ds-text-meta);
-
   --radius-card: var(--ds-radius-card);
   --radius-control: var(--ds-radius-control);
   --radius-tag: var(--ds-radius-tag);
 
-  --font-serif: var(--font-headline);
-  --font-sans: var(--font-body);
+  /*
+   * The size ramp is deliberately not bridged. --ds-text-* still exists and is
+   * what a role's size property references, but there is no `text-heading`
+   * utility to reach it with, and no serif or sans family utility either. A
+   * component picks a role or nothing. That is what the note this replaces was
+   * describing as a hazard: these emitted a size and no line height, unlike
+   * Tailwind's own text-4xl, and the four remaining decisions were copy-pasted
+   * at the call site until one copy was wrong.
+   */
 }
 
 /*
  * One utility per typographic role (ADR-0003's adapter layer, applied to type).
  * Each carries all five decisions a piece of text makes, so a call site names a
  * job and gets the whole of it rather than a size plus four things it has to
- * remember. That is the drift this closes: one h2 on this site shipped without
- * `leading-tight` for two days and nothing could catch it.
+ * remember. That is the drift this closes: one h2 on this site shipped with no
+ * line-height class for two days, beside seven that had one, and nothing could
+ * catch it. The class cannot be named here, because rule five of
+ * tests/unit/token-discipline.test.ts bans the literal and it reads comments.
  *
  * Every declaration is a var(--ds-type-*) with one exception, marked below.
  */
