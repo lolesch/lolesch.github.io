@@ -9,6 +9,11 @@ const base = [
   'tokens/brand/**/*.json',
   'tokens/semantic/space.json',
   'tokens/semantic/text.json',
+  // Reads text.json, so it has to come after it in this list for the reference
+  // to resolve by name rather than by file order. Style Dictionary flattens
+  // every source before resolving, so the order is documentation rather than a
+  // dependency, and it is written down because the next family may not be.
+  'tokens/semantic/type.json',
   'tokens/semantic/radius.json',
 ];
 

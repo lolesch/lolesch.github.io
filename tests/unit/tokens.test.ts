@@ -20,6 +20,27 @@ describe('token pipeline (Seam 1)', () => {
     expect(light).toMatch(/--ds-brand-paper:\s*var\(--ds-primitive-neutral-0\)/);
   });
 
+  it('runs a type role through the size ramp rather than around it', () => {
+    // Four links: role property -> size ramp -> Primitive -> literal. The ramp
+    // stays in the chain once nothing calls it directly, which is the whole
+    // reason it is not deleted: it is what a role's size is expressed in.
+    expect(light).toMatch(/--ds-type-heading-size:\s*var\(--ds-text-heading\)/);
+    expect(light).toMatch(/--ds-text-heading:\s*var\(--ds-primitive-font-size-500\)/);
+  });
+
+  it('points a role family at the variable next/font declares', () => {
+    // The one place a token legitimately leaves this system. src/lib/tokens.ts
+    // stops here rather than throwing, and layout.tsx puts the variable on
+    // <html> so :root can see it.
+    expect(light).toMatch(/--ds-primitive-font-family-serif:\s*var\(--font-headline\)/);
+  });
+
+  it('declares no type token in the dark override', () => {
+    // Type does not vary by theme. If it ever does, that is a decision, and it
+    // fails here first.
+    expect(dark).not.toMatch(/--ds-type-/);
+  });
+
   it('re-declares only the Semantic layer for dark', () => {
     expect(dark).toContain('[data-theme="dark"]');
     expect(dark).toMatch(/--ds-color-bg:\s*var\(--ds-brand-paper-inverse\)/);

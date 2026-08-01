@@ -86,10 +86,11 @@ const layerOf = (name: string): Layer => {
   const [head] = segmentsOf(name);
   if (head === 'primitive') return 'primitive';
   if (head === 'brand') return 'brand';
-  // Deliberately the catch-all: `color`, `space`, `text` and `radius` are all
-  // Semantic, and a future family should land here without a code change. The
-  // family guard in tests/unit/design-system.test.ts is what stops this arm
-  // swallowing a genuinely unknown prefix.
+  // Deliberately the catch-all: `color`, `space`, `text`, `type` and `radius`
+  // are all Semantic, and a future family should land here without a code
+  // change. `type` proved that in one commit and this comment was the only edit
+  // it needed. The family guard in tests/unit/design-system.test.ts is what
+  // stops this arm swallowing a genuinely unknown prefix.
   return 'semantic';
 };
 

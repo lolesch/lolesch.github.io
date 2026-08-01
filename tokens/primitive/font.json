@@ -10,6 +10,31 @@
         "500": { "$value": "1.5rem" },
         "600": { "$value": "2rem" },
         "700": { "$value": "3rem" }
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "regular": { "$value": 400 },
+        "medium": { "$value": 500 },
+        "bold": { "$value": 700 }
+      },
+      "leading": {
+        "$type": "number",
+        "tight": { "$value": 1.1 },
+        "snug": { "$value": 1.25 },
+        "normal": { "$value": 1.5 },
+        "relaxed": { "$value": 1.65 }
+      },
+      "tracking": {
+        "$type": "dimension",
+        "tight": { "$value": "-0.02em" },
+        "none": { "$value": "0em" },
+        "wide": { "$value": "0.1em" }
+      },
+      "family": {
+        "$type": "fontFamily",
+        "serif": { "$value": "var(--font-headline)" },
+        "sans": { "$value": "var(--font-body)" },
+        "mono": { "$value": ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"] }
       }
     }
   }
