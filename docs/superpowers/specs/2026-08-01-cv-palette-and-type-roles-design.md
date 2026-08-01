@@ -168,12 +168,16 @@ Four minted greys, each with a reason:
 - `#666666`, because CV `#4D4D4D` measures **2.07** on `#181A1B`, well under.
 - `#201e1c`, per decision 3.
 
-**Open question for review.** `#949494` also serves as dark-mode muted text at 5.76:1,
-which would let one primitive do both jobs. The alternative keeps the CV's `#999999`
-for dark muted at 6.13:1 and ships two greys 2% apart in lightness, one used only in
-light and one only in dark. Recommendation: merge to `#949494`, because a system whose
-pitch is hygiene should not ship near-duplicate primitives. Cost: a small deviation from
-the CV. This spec assumes the merge.
+**`#999999` is merged into `#949494`.** Approved 2026-08-01. One primitive does both
+jobs: the light control boundary at 3.03:1, and dark muted text at 5.76:1. Keeping the
+CV's `#999999` for dark muted would have read 6.13:1, a ratio nothing needed, at the
+price of shipping two greys 2% apart in lightness with one used only in light and one
+only in dark. A system whose pitch is hygiene should not carry near-duplicate
+primitives.
+
+**Rejected:** keeping `#999999` for CV fidelity. The deviation is recorded here rather
+than absorbed silently, because it is the one place the palette departs from its source
+for a reason internal to the site.
 
 ### Brand
 
