@@ -40,11 +40,16 @@ describe('static export (Seam 2)', () => {
     );
   });
 
-  it('renders the hero headline on the display token, not a Tailwind built-in', () => {
+  it('renders the hero headline on the display role, not a Tailwind built-in', () => {
     // The walking skeleton used text-4xl/sm:text-5xl and recorded that this
     // plan replaces them. Asserting on the class asserts the thing promised.
+    //
+    // Moved from sm:text-display to sm:type-display on 2026-08-01: the bare
+    // size utility carried one of the five decisions a heading makes and left
+    // the other four at the call site. The role carries all five, and the size
+    // ramp is no longer reachable as a utility at all.
     const h1 = raw(HOME).match(/<h1[^>]*>/)?.[0] ?? '';
-    expect(h1).toContain('sm:text-display');
+    expect(h1).toContain('sm:type-display');
     expect(h1).not.toContain('text-4xl');
     expect(h1).not.toContain('text-5xl');
   });

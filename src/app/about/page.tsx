@@ -41,8 +41,8 @@ export default function AboutPage() {
         />
 
         <div className="flex-1 basis-64">
-          <h1 className="font-serif text-title leading-tight tracking-tight text-balance">About</h1>
-          <p className="mt-gap text-lead text-muted">{about.intro}</p>
+          <h1 className="type-title text-balance">About</h1>
+          <p className="mt-gap type-lead text-muted">{about.intro}</p>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
  */
 function Prose({ body }: { body: readonly string[] }) {
   return (
-    <div className="mt-gap space-y-gap text-body">
+    <div className="mt-gap space-y-gap type-body">
       {body.map((paragraph) => (
         <p key={paragraph.slice(0, 32)}>{paragraph}</p>
       ))}
@@ -45,18 +45,16 @@ export default function DesignSystemPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
-      <h1 className="font-serif text-title leading-tight tracking-tight text-balance">
-        Design System
-      </h1>
-      <p className="mt-gap text-lead text-muted">{designSystem.intro}</p>
+      <h1 className="type-title text-balance">Design System</h1>
+      <p className="mt-gap type-lead text-muted">{designSystem.intro}</p>
       {/*
         The restraint line, once, directly under the intro so it is read before
         the reader has counted anything. It is a decision, not a caption.
       */}
-      <p className="mt-gap text-body">{designSystem.restraint}</p>
+      <p className="mt-gap type-body">{designSystem.restraint}</p>
 
       <section aria-labelledby="layers" className="mt-section">
-        <h2 id="layers" className="font-serif text-heading leading-tight">
+        <h2 id="layers" className="type-heading">
           {designSystem.layers.heading}
         </h2>
         <Prose body={designSystem.layers.body} />
@@ -66,39 +64,39 @@ export default function DesignSystemPage() {
           "13 Brand" was already wrong two days later, on a page whose argument
           is that documentation cannot drift from what ships.
         */}
-        <h3 className="mt-section text-subheading">Primitive ({primitiveColour.length})</h3>
+        <h3 className="mt-section type-subheading">Primitive ({primitiveColour.length})</h3>
         <FixedLayer tokens={primitiveColour} />
 
-        <h3 className="mt-section text-subheading">Brand ({brand.length})</h3>
+        <h3 className="mt-section type-subheading">Brand ({brand.length})</h3>
         <FixedLayer tokens={brand} />
 
-        <h3 className="mt-section text-subheading">Semantic ({SEMANTIC_COLOURS.length})</h3>
+        <h3 className="mt-section type-subheading">Semantic ({SEMANTIC_COLOURS.length})</h3>
         <SemanticLayer entries={SEMANTIC_COLOURS} tokens={tokens} />
       </section>
 
       <section aria-labelledby="families" className="mt-section">
-        <h2 id="families" className="font-serif text-heading leading-tight">
+        <h2 id="families" className="type-heading">
           {designSystem.families.heading}
         </h2>
         <Prose body={designSystem.families.body} />
 
-        <h3 className="mt-section text-subheading">Space ({of('semantic', 'space').length})</h3>
+        <h3 className="mt-section type-subheading">Space ({of('semantic', 'space').length})</h3>
         <SpaceScale tokens={of('semantic', 'space')} />
 
-        <h3 className="mt-section text-subheading">Type ({of('semantic', 'text').length})</h3>
+        <h3 className="mt-section type-subheading">Type ({of('semantic', 'text').length})</h3>
         <TypeScale tokens={of('semantic', 'text')} />
 
-        <h3 className="mt-section text-subheading">Radius ({of('semantic', 'radius').length})</h3>
+        <h3 className="mt-section type-subheading">Radius ({of('semantic', 'radius').length})</h3>
         <RadiusScale tokens={of('semantic', 'radius')} />
       </section>
 
       <section aria-labelledby="rules" className="mt-section">
-        <h2 id="rules" className="font-serif text-heading leading-tight">
+        <h2 id="rules" className="type-heading">
           {designSystem.rules.heading}
         </h2>
         <Prose body={designSystem.rules.body} />
 
-        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter text-body">
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
           {ENFORCED_RULES.map((rule) => (
             <div key={rule.rule}>
               <dt>{rule.rule}</dt>
@@ -109,7 +107,7 @@ export default function DesignSystemPage() {
       </section>
 
       <section aria-labelledby="contrast" className="mt-section">
-        <h2 id="contrast" className="font-serif text-heading leading-tight">
+        <h2 id="contrast" className="type-heading">
           {designSystem.contrast.heading}
         </h2>
         <Prose body={designSystem.contrast.body} />
@@ -117,7 +115,7 @@ export default function DesignSystemPage() {
       </section>
 
       <section aria-labelledby="built" className="mt-section">
-        <h2 id="built" className="font-serif text-heading leading-tight">
+        <h2 id="built" className="type-heading">
           {designSystem.built.heading}
         </h2>
         <Prose body={designSystem.built.body} />

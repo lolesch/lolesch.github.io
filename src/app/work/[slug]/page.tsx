@@ -32,13 +32,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
-      <p className="text-meta text-muted">
+      <p className="type-meta text-muted">
         {project.year} · {project.context} · {project.role}
       </p>
 
-      <h1 className="mt-tight font-serif text-title leading-tight tracking-tight text-balance">
-        {project.title}
-      </h1>
+      <h1 className="mt-tight type-title text-balance">{project.title}</h1>
 
       <ul className="mt-gap flex flex-wrap gap-tight">
         {project.lenses.map((lens) => (
@@ -46,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             key={lens}
             // The same chip as the tile, in the same role. Text first, colour
             // second, on `bg` because `capability` on `surface` is under AA.
-            className="rounded-tag border border-capability p-tight text-meta text-capability"
+            className="rounded-tag border border-capability p-tight type-meta text-capability"
           >
             {lens}
           </li>
@@ -60,17 +58,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         writing has to work. This inverts the rule that stood here until
         2026-07-31, when the grid became image-led.
       */}
-      <dl className="mt-gap space-y-gap border-l border-border pl-gutter text-body">
+      <dl className="mt-gap space-y-gap border-l border-border pl-gutter type-body">
         <div>
-          <dt className="text-meta text-muted">Problem</dt>
+          <dt className="type-meta text-muted">Problem</dt>
           <dd>{project.problem}</dd>
         </div>
         <div>
-          <dt className="text-meta text-muted">What I did</dt>
+          <dt className="type-meta text-muted">What I did</dt>
           <dd>{project.whatIDid}</dd>
         </div>
         <div>
-          <dt className="text-meta text-muted">What changed</dt>
+          <dt className="type-meta text-muted">What changed</dt>
           <dd>{project.whatChanged}</dd>
         </div>
       </dl>
@@ -81,7 +79,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       */}
       <ContentSections sections={project.sections} />
 
-      <p className="mt-section text-body">
+      <p className="mt-section type-body">
         <Link href="/" className="text-accent underline underline-offset-4">
           Back to all work
         </Link>
