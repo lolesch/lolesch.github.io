@@ -6,9 +6,9 @@ import { glyphsheroChain as fig } from '@/content/figures/glyphshero-chain';
 
 export function GlyphsheroChain() {
   return (
-    <div className="rounded-card border border-border p-gutter text-body">
-      <p className="font-serif text-subheading leading-tight">{fig.title}</p>
-      <p className="mt-tight text-meta text-muted">{fig.standfirst}</p>
+    <div className="rounded-card border border-border p-gutter type-body">
+      <p className="type-subheading">{fig.title}</p>
+      <p className="mt-tight type-meta text-muted">{fig.standfirst}</p>
 
       {/*
         A real table, because this is tabular data: three chains against three
@@ -25,7 +25,7 @@ export function GlyphsheroChain() {
             <tr>
               <th
                 scope="col"
-                className="p-tight text-meta font-bold tracking-widest text-muted uppercase"
+                className="p-tight type-eyebrow text-muted"
               >
                 Chain
               </th>
@@ -33,7 +33,7 @@ export function GlyphsheroChain() {
                 <th
                   key={axis}
                   scope="col"
-                  className="p-tight text-meta font-bold tracking-widest text-muted uppercase"
+                  className="p-tight type-eyebrow text-muted"
                 >
                   {axis}
                 </th>
@@ -43,11 +43,13 @@ export function GlyphsheroChain() {
           <tbody>
             {fig.rows.map((row) => (
               <tr key={row.chain.join('+')} className="border-t border-border">
-                <th scope="row" className="p-tight text-meta font-normal">
+                <th scope="row" className="p-tight type-meta">
                   {row.chain.map((item, index) => (
                     <span key={item}>
                       {index > 0 ? ' + ' : ''}
-                      <span className={item === row.added ? 'font-bold' : undefined}>{item}</span>
+                      <span className={item === row.added ? 'type-emphasis' : undefined}>
+                        {item}
+                      </span>
                     </span>
                   ))}
                 </th>
@@ -62,7 +64,7 @@ export function GlyphsheroChain() {
                     {index === row.changed ? (
                       <>
                         <span className="sr-only">changed to </span>
-                        <span className="font-bold">{value}</span>
+                        <span className="type-emphasis">{value}</span>
                       </>
                     ) : (
                       <span className="text-muted">{value}</span>
@@ -75,7 +77,7 @@ export function GlyphsheroChain() {
         </table>
       </div>
 
-      <p className="mt-gap text-meta text-muted">{fig.footnote}</p>
+      <p className="mt-gap type-meta text-muted">{fig.footnote}</p>
     </div>
   );
 }

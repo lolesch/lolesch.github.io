@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
 import { FixedLayer, SemanticLayer } from '@/components/design-system/colour';
 import { ContrastTable } from '@/components/design-system/contrast-table';
-import { RadiusScale, SpaceScale, TypeScale } from '@/components/design-system/scales';
-import { designSystem, ENFORCED_RULES, SEMANTIC_COLOURS } from '@/content/design-system';
+import { RadiusScale, SpaceScale, TypeRoles, TypeScale } from '@/components/design-system/scales';
+import {
+  designSystem,
+  ENFORCED_RULES,
+  SEMANTIC_COLOURS,
+  TYPE_ROLES,
+} from '@/content/design-system';
 import { type Layer, readTokens } from '@/lib/tokens';
 
 export const metadata: Metadata = {
@@ -83,8 +88,11 @@ export default function DesignSystemPage() {
         <h3 className="mt-section type-subheading">Space ({of('semantic', 'space').length})</h3>
         <SpaceScale tokens={of('semantic', 'space')} />
 
-        <h3 className="mt-section type-subheading">Type ({of('semantic', 'text').length})</h3>
+        <h3 className="mt-section type-subheading">Type sizes ({of('semantic', 'text').length})</h3>
         <TypeScale tokens={of('semantic', 'text')} />
+
+        <h3 className="mt-section type-subheading">Type roles ({TYPE_ROLES.length})</h3>
+        <TypeRoles roles={TYPE_ROLES} tokens={tokens} />
 
         <h3 className="mt-section type-subheading">Radius ({of('semantic', 'radius').length})</h3>
         <RadiusScale tokens={of('semantic', 'radius')} />

@@ -37,8 +37,8 @@ function Row({
     <li className="flex items-center gap-gap">
       {children}
       <span className="min-w-0">
-        <code className="block truncate text-meta">{name}</code>
-        <span className="block text-meta text-muted">{meta}</span>
+        <code className="block truncate type-code">{name}</code>
+        <span className="block type-meta text-muted">{meta}</span>
       </span>
     </li>
   );
@@ -93,14 +93,14 @@ export function SemanticLayer({
               className={`block size-10 shrink-0 rounded-control border border-border ${entry.utility}`}
             />
             <span className="min-w-0">
-              <code className="block truncate text-meta">{entry.token}</code>
-              <span className="block text-meta text-muted">{entry.role}</span>
+              <code className="block truncate type-code">{entry.token}</code>
+              <span className="block type-meta text-muted">{entry.role}</span>
               {/*
                 Both references, because this is the only layer that has two.
                 Rendered from the data rather than authored, so a token that
                 stops varying by theme loses its second line by itself.
               */}
-              <span className="block text-meta text-muted">
+              <span className="block type-meta text-muted">
                 light {token?.reference} · dark {token?.darkReference}
               </span>
             </span>

@@ -10,7 +10,7 @@ import {
 // whose argument is that it has one.
 
 const Label = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-meta font-bold tracking-widest text-muted uppercase">{children}</p>
+  <p className="type-eyebrow text-muted">{children}</p>
 );
 
 const Step = ({ children }: { children: React.ReactNode }) => (
@@ -18,16 +18,16 @@ const Step = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Arrow = ({ label }: { label: string }) => (
-  <p className="py-tight pl-gutter text-meta text-muted" aria-hidden="true">
+  <p className="py-tight pl-gutter type-meta text-muted" aria-hidden="true">
     {label}
   </p>
 );
 
 export function RollhausArchitecture() {
   return (
-    <div className="rounded-card border border-border p-gutter text-body">
-      <p className="font-serif text-subheading leading-tight">{fig.title}</p>
-      <p className="mt-tight text-meta text-muted">{fig.standfirst}</p>
+    <div className="rounded-card border border-border p-gutter type-body">
+      <p className="type-subheading">{fig.title}</p>
+      <p className="mt-tight type-meta text-muted">{fig.standfirst}</p>
 
       <div className="mt-gap grid gap-gap md:grid-cols-[1.55fr_1fr]">
         <div>
@@ -36,15 +36,15 @@ export function RollhausArchitecture() {
             {fig.flow.map((step) => (
               <li key={step.title}>
                 <Step>
-                  <p className="font-bold">{step.title}</p>
-                  <p className="mt-tight text-meta text-muted">{step.detail}</p>
+                  <p className="type-emphasis">{step.title}</p>
+                  <p className="mt-tight type-meta text-muted">{step.detail}</p>
 
                   {'chips' in step && (
                     <ul className="mt-tight flex flex-wrap gap-tight">
                       {step.chips.map((chip) => (
                         <li
                           key={chip.text}
-                          className="rounded-tag border border-border p-tight text-meta"
+                          className="rounded-tag border border-border p-tight type-meta"
                           // The selected chip is depicted in the Rollhaus brand
                           // yellow, because which colour it is *is* the point.
                           style={
@@ -68,7 +68,7 @@ export function RollhausArchitecture() {
                       {step.variables.map((variable) => (
                         <li
                           key={variable.name}
-                          className="rounded-control p-tight font-mono text-meta"
+                          className="rounded-control p-tight type-code"
                           style={{
                             background: rollhausPalette.neutrals[4].value,
                             color: rollhausPalette.neutrals[0].value,
@@ -90,7 +90,7 @@ export function RollhausArchitecture() {
         <div>
           <Label>{fig.tokensLabel}</Label>
           <div className="mt-tight rounded-card border border-border bg-surface p-gutter">
-            <p className="font-bold text-meta">Colour</p>
+            <p className="type-meta type-emphasis">Colour</p>
             {/*
               A grid rather than a wrapping flex row: the swatches are one
               scale, and a scale that breaks across two lines at a narrow column
@@ -114,8 +114,8 @@ export function RollhausArchitecture() {
 
             {fig.tokenGroups.map((group) => (
               <div key={group.name} className="mt-gap">
-                <p className="font-bold text-meta">{group.name}</p>
-                <p className="mt-tight text-meta text-muted">{group.detail}</p>
+                <p className="type-meta type-emphasis">{group.name}</p>
+                <p className="mt-tight type-meta text-muted">{group.detail}</p>
               </div>
             ))}
           </div>
@@ -128,9 +128,9 @@ export function RollhausArchitecture() {
           {[fig.composition.base, fig.composition.slotted].map((card) => (
             <div
               key={card.name}
-              className="flex-1 basis-40 rounded-control border border-border p-tight text-meta"
+              className="flex-1 basis-40 rounded-control border border-border p-tight type-meta"
             >
-              <p className="font-bold">{card.name}</p>
+              <p className="type-emphasis">{card.name}</p>
               {card.slots.map((slot) => (
                 <p
                   key={slot}
@@ -142,7 +142,7 @@ export function RollhausArchitecture() {
             </div>
           ))}
         </div>
-        <p className="mt-tight text-meta text-muted">
+        <p className="mt-tight type-meta text-muted">
           Reused across <b className="text-fg">{fig.composition.reusedOn}</b>.{' '}
           {fig.composition.note}
         </p>
@@ -155,10 +155,10 @@ export function RollhausArchitecture() {
         style={{ borderLeft: `6px solid ${rollhausPalette.brand}` }}
       >
         <Label>{fig.extend.label}</Label>
-        <p className="mt-tight text-meta">{fig.extend.body}</p>
+        <p className="mt-tight type-meta">{fig.extend.body}</p>
       </div>
 
-      <p className="mt-gap text-meta text-muted">{fig.footnote}</p>
+      <p className="mt-gap type-meta text-muted">{fig.footnote}</p>
     </div>
   );
 }

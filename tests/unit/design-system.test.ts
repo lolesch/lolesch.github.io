@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { CONTRAST_PAIRS, SEMANTIC_COLOURS } from '../../src/content/design-system';
+import { CONTRAST_PAIRS, SEMANTIC_COLOURS, TYPE_ROLES } from '../../src/content/design-system';
 import { lightVars, readTokens, resolve } from '../../src/lib/tokens';
 
 const TOKENS = readTokens();
@@ -113,6 +113,37 @@ describe('the documented Semantic list cannot drift from the tokens', () => {
 
   it('gives every documented token a distinct utility', () => {
     const utilities = SEMANTIC_COLOURS.map((entry) => entry.utility);
+    expect(new Set(utilities).size).toBe(utilities.length);
+  });
+});
+
+describe('the documented type roles cannot drift from the tokens', () => {
+  // --ds-type-<role>-<property>. Every role name is a single segment, which is
+  // why `subheading` is one word and not `sub-heading`.
+  const ROLE = /^--ds-type-([a-z]+)-/;
+  const declared = [
+    ...new Set(
+      TOKENS.filter((token) => token.family === 'type').map(
+        (token) => token.name.match(ROLE)?.[1] ?? token.name,
+      ),
+    ),
+  ].sort();
+  const documented = TYPE_ROLES.map((entry) => entry.role).sort();
+
+  it('finds a real number of roles, so the cases below are not vacuous', () => {
+    expect(declared.length).toBeGreaterThan(5);
+  });
+
+  it('documents every type role the generated CSS declares', () => {
+    expect(declared.filter((role) => !documented.includes(role))).toEqual([]);
+  });
+
+  it('documents nothing the generated CSS does not declare', () => {
+    expect(documented.filter((role) => !declared.includes(role))).toEqual([]);
+  });
+
+  it('gives every documented role a distinct utility', () => {
+    const utilities = TYPE_ROLES.map((entry) => entry.utility);
     expect(new Set(utilities).size).toBe(utilities.length);
   });
 });

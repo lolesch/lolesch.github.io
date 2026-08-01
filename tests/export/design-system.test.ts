@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { designSystem, SEMANTIC_COLOURS } from '../../src/content/design-system';
+import { designSystem, SEMANTIC_COLOURS, TYPE_ROLES } from '../../src/content/design-system';
 import { body, rendered, text } from './rendered';
 
 const PAGE = 'out/design-system/index.html';
@@ -68,6 +68,18 @@ describe('the data step actually ran', () => {
     const visible = body(PAGE);
     for (const entry of SEMANTIC_COLOURS) {
       expect(visible, `${entry.token} is documented but its swatch is missing`).toContain(
+        entry.utility,
+      );
+    }
+  });
+
+  it('renders every documented type role through its own utility', () => {
+    // The type half of the Semantic-utility case above. A specimen described
+    // rather than set would prove nothing about the roles, so the assertion is
+    // that the class reached the markup.
+    const visible = body(PAGE);
+    for (const entry of TYPE_ROLES) {
+      expect(visible, `${entry.role} is documented but its specimen is missing`).toContain(
         entry.utility,
       );
     }

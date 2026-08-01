@@ -42,6 +42,40 @@ export const SEMANTIC_COLOURS: readonly SemanticColour[] = [
   },
 ];
 
+export type TypeRole = {
+  /** The role, matching the `--ds-type-<role>-*` group in the generated CSS. */
+  role: string;
+  /** The utility that renders it, literal so Tailwind generates it. */
+  utility: string;
+  /** What the role is for. Copy, which is why this list lives in content. */
+  job: string;
+};
+
+/*
+ * Every typographic role, with the utility that renders its specimen. Guarded
+ * in both directions against the `type` family in the generated CSS, for the
+ * same reason and by the same shape of test as SEMANTIC_COLOURS: a hand-written
+ * token-to-utility list is drift surface, and the utility name has to be a
+ * literal or Tailwind never generates the class.
+ *
+ * Ordered by size rather than alphabetically, so the list reads as a scale.
+ * `emphasis` is last because it has no size: it is the one role that sets a
+ * single property.
+ */
+export const TYPE_ROLES: readonly TypeRole[] = [
+  { role: 'display', utility: 'type-display', job: 'The home headline, once there is room for it' },
+  { role: 'title', utility: 'type-title', job: 'The h1 on every route' },
+  { role: 'heading', utility: 'type-heading', job: 'Section headings' },
+  { role: 'subheading', utility: 'type-subheading', job: 'Card titles and figure titles' },
+  { role: 'lead', utility: 'type-lead', job: 'The opening line under an h1' },
+  { role: 'wordmark', utility: 'type-wordmark', job: 'The name in the header' },
+  { role: 'body', utility: 'type-body', job: 'Running prose' },
+  { role: 'meta', utility: 'type-meta', job: 'Captions, metadata lines and chips' },
+  { role: 'eyebrow', utility: 'type-eyebrow', job: 'The uppercase label above a group' },
+  { role: 'code', utility: 'type-code', job: 'Token names and code specimens' },
+  { role: 'emphasis', utility: 'type-emphasis', job: 'The one value that changed, inside a line' },
+];
+
 export type ContrastPair = {
   fg: string;
   bg: string;
@@ -165,6 +199,7 @@ export const designSystem: {
     heading: 'Space, type and radius',
     body: [
       'The same three layers carry everything else. These are shown at the size they render rather than as a table of numbers, because the question is whether the steps are far enough apart to see.',
+      'Type is two things. A size ramp, and the roles built on it: each role fixes a size, a weight, a line height, a letter spacing and a family together, so a call site names a job and gets all five rather than a size plus four things it has to remember.',
     ],
   },
 

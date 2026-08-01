@@ -24,17 +24,21 @@ export function ContrastTable() {
     // overflow-x-auto so a narrow viewport scrolls the table rather than the
     // page. Three columns is the minimum this can be and still say anything.
     <div className="mt-gap overflow-x-auto">
-      <table className="w-full border-collapse text-body">
+      <table className="w-full border-collapse type-body">
         <thead>
-          <tr className="border-b border-border text-left text-meta text-muted">
-            <th scope="col" className="py-tight pr-gap font-normal">
+          {/* type-meta carries weight 400, so the browser's bold th is reset by
+              the role rather than by a separate weight class beside it. The
+              class it replaced cannot be named here: the rule coming in the
+              next commit bans the literal, and it reads comments. */}
+          <tr className="border-b border-border text-left type-meta text-muted">
+            <th scope="col" className="py-tight pr-gap">
               Pair
             </th>
-            <th scope="col" className="py-tight pr-gap font-normal">
+            <th scope="col" className="py-tight pr-gap">
               Required
             </th>
             {themes.map(([theme]) => (
-              <th key={theme} scope="col" className="py-tight pr-gap font-normal">
+              <th key={theme} scope="col" className="py-tight pr-gap">
                 {theme}
               </th>
             ))}
@@ -43,7 +47,7 @@ export function ContrastTable() {
         <tbody>
           {rows.map(({ pair, measured }) => (
             <tr key={pair.role} className="border-b border-border align-top">
-              <th scope="row" className="py-tight pr-gap font-normal">
+              <th scope="row" className="py-tight pr-gap type-body">
                 {pair.role}
               </th>
               <td className="py-tight pr-gap text-muted">{pair.min}:1</td>
