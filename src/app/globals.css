@@ -69,8 +69,131 @@
   --font-sans: var(--font-body);
 }
 
-/* The one global rule. Everything else is a utility. */
+/*
+ * One utility per typographic role (ADR-0003's adapter layer, applied to type).
+ * Each carries all five decisions a piece of text makes, so a call site names a
+ * job and gets the whole of it rather than a size plus four things it has to
+ * remember. That is the drift this closes: one h2 on this site shipped without
+ * `leading-tight` for two days and nothing could catch it.
+ *
+ * Every declaration is a var(--ds-type-*) with one exception, marked below.
+ */
+@utility type-display {
+  font-family: var(--ds-type-display-family);
+  font-size: var(--ds-type-display-size);
+  font-weight: var(--ds-type-display-weight);
+  line-height: var(--ds-type-display-leading);
+  letter-spacing: var(--ds-type-display-tracking);
+}
+
+@utility type-title {
+  font-family: var(--ds-type-title-family);
+  font-size: var(--ds-type-title-size);
+  font-weight: var(--ds-type-title-weight);
+  line-height: var(--ds-type-title-leading);
+  letter-spacing: var(--ds-type-title-tracking);
+}
+
+@utility type-heading {
+  font-family: var(--ds-type-heading-family);
+  font-size: var(--ds-type-heading-size);
+  font-weight: var(--ds-type-heading-weight);
+  line-height: var(--ds-type-heading-leading);
+  letter-spacing: var(--ds-type-heading-tracking);
+}
+
+@utility type-subheading {
+  font-family: var(--ds-type-subheading-family);
+  font-size: var(--ds-type-subheading-size);
+  font-weight: var(--ds-type-subheading-weight);
+  line-height: var(--ds-type-subheading-leading);
+  letter-spacing: var(--ds-type-subheading-tracking);
+}
+
+/* The site name in the header: a serif at body size, which no other role is. */
+@utility type-wordmark {
+  font-family: var(--ds-type-wordmark-family);
+  font-size: var(--ds-type-wordmark-size);
+  font-weight: var(--ds-type-wordmark-weight);
+  line-height: var(--ds-type-wordmark-leading);
+  letter-spacing: var(--ds-type-wordmark-tracking);
+}
+
+@utility type-lead {
+  font-family: var(--ds-type-lead-family);
+  font-size: var(--ds-type-lead-size);
+  font-weight: var(--ds-type-lead-weight);
+  line-height: var(--ds-type-lead-leading);
+  letter-spacing: var(--ds-type-lead-tracking);
+}
+
+@utility type-body {
+  font-family: var(--ds-type-body-family);
+  font-size: var(--ds-type-body-size);
+  font-weight: var(--ds-type-body-weight);
+  line-height: var(--ds-type-body-leading);
+  letter-spacing: var(--ds-type-body-tracking);
+}
+
+@utility type-meta {
+  font-family: var(--ds-type-meta-family);
+  font-size: var(--ds-type-meta-size);
+  font-weight: var(--ds-type-meta-weight);
+  line-height: var(--ds-type-meta-leading);
+  letter-spacing: var(--ds-type-meta-tracking);
+}
+
+@utility type-eyebrow {
+  font-family: var(--ds-type-eyebrow-family);
+  font-size: var(--ds-type-eyebrow-size);
+  font-weight: var(--ds-type-eyebrow-weight);
+  line-height: var(--ds-type-eyebrow-leading);
+  letter-spacing: var(--ds-type-eyebrow-tracking);
+  /*
+   * The one literal in this block. There is no token for it because a case
+   * transform is not a value that could ever be themed, and an eyebrow that is
+   * not uppercase is a different role. Leaving it at the call site was rejected:
+   * a role that produces four fifths of a look invites the last fifth to be
+   * improvised, which is the failure all of this is closing.
+   */
+  text-transform: uppercase;
+}
+
+/*
+ * Monospace specimens: token names on /design-system and the Figma variable
+ * chips in the Rollhaus figure. It exists because those are <code> elements
+ * that get monospace from Tailwind's preflight, and putting `type-meta` on them
+ * would set them in the sans family without anyone noticing.
+ */
+@utility type-code {
+  font-family: var(--ds-type-code-family);
+  font-size: var(--ds-type-code-size);
+  font-weight: var(--ds-type-code-weight);
+  line-height: var(--ds-type-code-leading);
+  letter-spacing: var(--ds-type-code-tracking);
+}
+
+/*
+ * Weight only, and that is the role rather than an omission: emphasis marks a
+ * word inside a line it must not otherwise disturb. The other four properties
+ * inherit, which is what a CSS property does when nothing sets it, so there is
+ * nothing to declare.
+ */
+@utility type-emphasis {
+  font-weight: var(--ds-type-emphasis-weight);
+}
+
+/*
+ * The one global rule. Everything else is a utility.
+ *
+ * The family is here rather than on a class because every page needs a default
+ * and the alternative is a `type-body` on <body> that every role then has to
+ * out-specify. Size and line height are deliberately absent: a role sets those
+ * where text actually is, and setting them here would make the role's line
+ * height look inherited rather than chosen.
+ */
 body {
   background-color: var(--ds-color-bg);
   color: var(--ds-color-fg);
+  font-family: var(--ds-type-body-family);
 }

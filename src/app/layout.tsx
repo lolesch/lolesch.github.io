@@ -38,11 +38,25 @@ const themeInit = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="light"
+      // On <html> rather than <body>, which is where next/font's own examples
+      // put it. A custom property is substituted where it is declared, and the
+      // font family Primitives are declared in :root. With these one element
+      // lower, those tokens would compute to nothing and every role's family
+      // would silently fall back to the browser default.
+      //
+      // The tokens are described rather than named here on purpose: the
+      // discipline guard reads comments, and it caught the first draft of this
+      // one. See the same note at the top of src/lib/tokens.ts.
+      className={`${headline.variable} ${body.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
-      <body className={`${headline.variable} ${body.variable} font-sans`}>
+      <body>
         <SiteHeader />
         {children}
       </body>
