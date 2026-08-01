@@ -10,7 +10,7 @@ export function SiteHeader() {
     // and a "Dark mode" button do not fit on one line, and wrapping is a better
     // answer than hiding one of them behind a menu nobody asked for.
     <header className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-tight px-gutter pt-gutter">
-      <Link href="/" className="font-serif text-body hover:underline">
+      <Link href="/" className="type-wordmark hover:underline">
         Leonid Schreiber
       </Link>
       <div className="flex items-center gap-gap">

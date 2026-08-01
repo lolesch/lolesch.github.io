@@ -3,14 +3,14 @@ import type { About, ContactLink } from '@/content/types';
 export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[]; cv: About['cv'] }) {
   return (
     <section aria-labelledby="contact" className="mt-section">
-      <h2 id="contact" className="font-serif text-heading leading-tight">
+      <h2 id="contact" className="type-heading">
         Contact
       </h2>
 
-      <ul className="mt-gap grid gap-gap text-body sm:grid-cols-2">
+      <ul className="mt-gap grid gap-gap type-body sm:grid-cols-2">
         {contact.map((link) => (
           <li key={link.href}>
-            <p className="text-meta text-muted">{link.label}</p>
+            <p className="type-meta text-muted">{link.label}</p>
             <a
               href={link.href}
               // Same tab, deliberately. The visitor chose to leave, and taking
@@ -29,7 +29,7 @@ export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[];
       </ul>
 
       {cv ? (
-        <p className="mt-gap text-body">
+        <p className="mt-gap type-body">
           <a
             href={cv.href}
             // The CV is the one link that opens elsewhere. A PDF replacing the

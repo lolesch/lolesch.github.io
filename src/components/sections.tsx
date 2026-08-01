@@ -20,7 +20,7 @@ export function ContentSections({ sections }: { sections: readonly Section[] }) 
     <>
       {sections.map((section, index) => (
         <section key={section.heading} className="mt-section">
-          <h2 className="font-serif text-heading leading-tight">{section.heading}</h2>
+          <h2 className="type-heading">{section.heading}</h2>
           <SectionBody section={section} priority={index === lead} />
         </section>
       ))}
@@ -32,7 +32,7 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
   switch (section.kind) {
     case 'prose':
       return (
-        <div className="mt-gap space-y-gap text-body">
+        <div className="mt-gap space-y-gap type-body">
           {section.body.map((paragraph) => (
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}
@@ -47,10 +47,10 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
         // filled panels is the clutter CONTEXT.md's one anti-brand constraint
         // bans. The decorative `border` token is correct because a callout is
         // not a control.
-        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter text-body sm:grid-cols-2">
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body sm:grid-cols-2">
           {section.items.map((item) => (
             <div key={item.label}>
-              <dt className="text-meta text-muted">{item.label}</dt>
+              <dt className="type-meta text-muted">{item.label}</dt>
               <dd>{item.value}</dd>
             </div>
           ))}
@@ -68,7 +68,7 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
             priority={priority}
             className="h-auto w-full rounded-card border border-border"
           />
-          <figcaption className="mt-tight text-meta text-muted">{section.caption}</figcaption>
+          <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
         </figure>
       );
 
@@ -98,11 +98,11 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
                   sizes="(max-width: 40rem) 100vw, 22rem"
                   className="h-auto w-full rounded-card border border-border"
                 />
-                <figcaption className="mt-tight text-meta text-muted">{state.label}</figcaption>
+                <figcaption className="mt-tight type-meta text-muted">{state.label}</figcaption>
               </figure>
             ))}
           </div>
-          <figcaption className="mt-gap text-meta text-muted">{section.caption}</figcaption>
+          <figcaption className="mt-gap type-meta text-muted">{section.caption}</figcaption>
         </figure>
       );
 
@@ -111,7 +111,7 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
       return (
         <figure className="mt-gap">
           <Figure />
-          <figcaption className="mt-tight text-meta text-muted">{section.caption}</figcaption>
+          <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
         </figure>
       );
     }

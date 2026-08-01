@@ -32,7 +32,7 @@ export function ThemeToggle() {
       // colour, and measured 11.99:1 in dark. That is a loud hairline on a site
       // whose one anti-brand constraint is "never cluttered". Now 3.03:1 light
       // and 3.04:1 dark, held there by tests/unit/contrast.test.ts.
-      className="rounded-control border border-border-interactive p-tight text-meta text-muted hover:border-fg hover:text-fg"
+      className="rounded-control border border-border-interactive p-tight type-meta text-muted hover:border-fg hover:text-fg"
     >
       {theme === 'dark' ? 'Light' : 'Dark'} mode
     </button>

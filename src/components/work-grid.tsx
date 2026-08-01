@@ -4,7 +4,7 @@ import { projects } from '@/content/projects';
 export function WorkGrid() {
   return (
     <section aria-labelledby="work" className="mt-section">
-      <h2 id="work" className="font-serif text-heading">
+      <h2 id="work" className="type-heading">
         Work
       </h2>
 

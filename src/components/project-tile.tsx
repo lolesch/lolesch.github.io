@@ -37,11 +37,11 @@ export function ProjectTile({ project }: { project: Project }) {
       </div>
 
       <div className="flex flex-col gap-tight p-gutter">
-        <p className="text-meta text-muted">
+        <p className="type-meta text-muted">
           {project.year} · {project.context} · {project.role}
         </p>
 
-        <h3 className="font-serif text-subheading leading-tight">
+        <h3 className="type-subheading">
           <Link
             href={`/work/${project.slug}/`}
             // The whole card is the click target. The link name stays the
@@ -64,14 +64,14 @@ export function ProjectTile({ project }: { project: Project }) {
               // role, because gold marks what someone was and green marks what
               // they can do. It sits on `bg` rather than inside a filled panel,
               // which is 4.02:1 in light.
-              className="rounded-tag border border-capability p-tight text-meta text-capability"
+              className="rounded-tag border border-capability p-tight type-meta text-capability"
             >
               {lens}
             </li>
           ))}
         </ul>
 
-        <p className="text-body">{project.summary}</p>
+        <p className="type-body">{project.summary}</p>
       </div>
     </article>
   );

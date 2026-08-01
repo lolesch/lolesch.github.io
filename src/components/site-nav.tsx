@@ -28,7 +28,7 @@ export function SiteNav() {
         not fit one line at 320px. The header wraps too, so this wraps inside a
         row that has already wrapped, which is what keeps nothing clipped.
       */}
-      <ul className="flex flex-wrap gap-gap text-body">
+      <ul className="flex flex-wrap gap-gap type-body">
         <li>
           {/*
             A fragment into Home rather than its own route, so it works from
