@@ -70,6 +70,19 @@ describe('the token model', () => {
     expect(resolve('--ds-color-accent', lightVars())).toBe('#b45309');
   });
 
+  // A token may legitimately point at a variable this system does not own.
+  // --ds-primitive-font-family-serif holds var(--font-headline), which
+  // next/font declares on <html>. That is a leaf here: this file resolves the
+  // token graph, not the whole page cascade. Following it would throw, because
+  // the generated stylesheet has no such declaration and never will.
+  it('stops at a var() that is not a token in this system', () => {
+    const vars = new Map([
+      ['--ds-type-body-family', 'var(--ds-primitive-font-family-sans)'],
+      ['--ds-primitive-font-family-sans', 'var(--font-body)'],
+    ]);
+    expect(resolve('--ds-type-body-family', vars)).toBe('var(--font-body)');
+  });
+
   it('throws on a token that is not declared, rather than returning a fallback', () => {
     // A page whose data step quietly returned nothing still renders every
     // heading and a set of neat empty boxes. Throwing is the feature.

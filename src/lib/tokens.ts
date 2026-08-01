@@ -52,12 +52,18 @@ export const declarations = (css: string): Map<string, string> => {
   return out;
 };
 
+// Only a reference to another token in this system is followed. A value that
+// points at a variable the framework adapter owns, which is how the font
+// families reach next/font, is a leaf: it resolves in the browser one element
+// lower than :root and there is nothing here to walk to.
+const REFERENCE = /^var\((--ds-[\w-]+)\)$/;
+
 // Walks the chain the way a browser would. Throws rather than falling back:
 // see the guard in tests/unit/design-system.test.ts for why that is the feature.
 export const resolve = (name: string, vars: Map<string, string>): string => {
   const value = vars.get(name);
   if (value === undefined) throw new Error(`${name} is not declared in the generated tokens`);
-  const reference = value.match(/^var\((--[\w-]+)\)$/);
+  const reference = value.match(REFERENCE);
   return reference ? resolve(reference[1], vars) : value;
 };
 
@@ -67,7 +73,7 @@ export const lightVars = () => declarations(read('tokens.css'));
 // replacing it. That is exactly what the CSS cascade does at runtime.
 export const darkVars = () => new Map([...lightVars(), ...declarations(read('tokens.dark.css'))]);
 
-const referenceOf = (value: string) => value.match(/^var\((--[\w-]+)\)$/)?.[1] ?? null;
+const referenceOf = (value: string) => value.match(REFERENCE)?.[1] ?? null;
 
 const PREFIX = '--ds-';
 
