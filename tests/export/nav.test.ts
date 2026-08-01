@@ -9,12 +9,20 @@ import { body } from './rendered';
  * them at once.
  */
 
-// The four the PRD specifies: three links plus the wordmark.
+// The four the PRD specifies: three links plus the wordmark. The wordmark is
+// matched on its text rather than on href="/", which a project page also ships
+// on "Back to all work" and would pass without a header at all.
 const LINKS = [
+  ['the wordmark', '>Leonid Schreiber</a>'],
   ['Work', 'href="/#work"'],
   ['Design System', 'href="/design-system/"'],
   ['About', 'href="/about/"'],
 ] as const;
+
+// Every route a link stands for. The 404 pages are deliberately absent: they
+// correspond to no nav entry, and marking one would be a claim about where the
+// visitor is that is not true.
+const ROUTES = ['out/index.html', 'out/design-system/index.html', 'out/about/index.html'] as const;
 
 describe('site navigation', () => {
   // The 404 pages carry the header too and are included on purpose: a visitor
@@ -28,17 +36,36 @@ describe('site navigation', () => {
   for (const page of pages) {
     it(`${page} carries every nav link`, () => {
       const visible = body(page);
-      for (const [label, href] of LINKS) {
-        expect(visible, `no ${label} link`).toContain(href);
+      for (const [label, marker] of LINKS) {
+        expect(visible, `no ${label} link`).toContain(marker);
       }
     });
   }
 
-  it('marks each route link as current on its own page and nowhere else', () => {
-    expect(body('out/about/index.html')).toContain('aria-current="page"');
-    expect(body('out/design-system/index.html')).toContain('aria-current="page"');
-    // Work is a fragment link into Home, which has no unambiguous current
-    // state, so Home marks nothing.
-    expect(body('out/index.html')).not.toContain('aria-current="page"');
+  it('marks the current route on every route page, Home included', () => {
+    // Home was the exception until 2026-08-01. Work is a fragment into it and
+    // could not claim to be the page, so the one route every visitor lands on
+    // first was the one that highlighted nothing. The wordmark is a route link
+    // now, and it is what carries Home.
+    for (const page of ROUTES) {
+      expect(body(page), `${page} marks nothing as current`).toContain('aria-current="page"');
+    }
+  });
+
+  it('marks exactly one link per page, so two never claim the same place', () => {
+    for (const page of ROUTES) {
+      const marks = body(page).match(/aria-current=/g) ?? [];
+      expect(marks.length, `${page} marks ${marks.length} links`).toBe(1);
+    }
+  });
+
+  it('marks a project page as inside Work rather than as Work itself', () => {
+    // /work/<slug> has no link of its own and highlighted nothing until
+    // 2026-08-01. `true` rather than `page`, because the visitor is under Work
+    // and is not on /#work: the distinction is the whole reason both exist.
+    const page = globSync('out/work/*/index.html')[0];
+    expect(page, 'no project page was exported').toBeDefined();
+    expect(body(page)).toContain('aria-current="true"');
+    expect(body(page)).not.toContain('aria-current="page"');
   });
 });

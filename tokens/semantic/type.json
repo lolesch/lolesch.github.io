@@ -33,7 +33,7 @@
       "weight":   { "$type": "fontWeight", "$value": "{primitive.font.weight.medium}" },
       "leading":  { "$type": "number",     "$value": "{primitive.font.leading.snug}" },
       "tracking": { "$type": "dimension",  "$value": "{primitive.font.tracking.none}" },
-      "family":   { "$type": "fontFamily", "$value": "{primitive.font.family.serif}" }
+      "family":   { "$type": "fontFamily", "$value": "{primitive.font.family.sans}" }
     },
     "lead": {
       "size":     { "$type": "dimension",  "$value": "{text.lead}" },

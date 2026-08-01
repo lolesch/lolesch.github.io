@@ -9,6 +9,21 @@
 @import "../styles/generated/tokens.dark.css";
 
 /*
+ * Tailwind's own `dark` variant follows prefers-color-scheme, which on this
+ * site is a lie: the theme is whatever data-theme says, and the toggle writes
+ * that. Redefining it rather than adding a second name means there is one way
+ * to ask, and it is the correct one.
+ *
+ * Almost nothing should need it. Colour varies by theme inside the Semantic
+ * layer, with no component involved, and that is the point of the whole
+ * arrangement. The one legitimate use is a component whose *geometry* reads
+ * the setting: the theme toggle's knob sits on the side the setting is on, and
+ * driving that from the attribute rather than from React state is what stops a
+ * returning visitor seeing it start on the wrong side.
+ */
+@custom-variant dark (&:where([data-theme="dark"] *));
+
+/*
  * The framework adapter (CONTEXT.md, ADR-0003).
  * `inline` is required: it makes utilities reference --ds-* directly instead of
  * Tailwind minting its own :root variables, which is what lets the
@@ -110,7 +125,14 @@
   letter-spacing: var(--ds-type-subheading-tracking);
 }
 
-/* The site name in the header: a serif at body size, which no other role is. */
+/*
+ * The site name in the header. It was set in the headline family until
+ * 2026-08-01, when the header row was unified and the name moved onto the
+ * running-text family with the links beside it. What still makes it a role
+ * rather than `type-body` is the heavier weight and the tighter line box: at
+ * one size in one family, weight is the whole of the difference between the
+ * name and the links, which is the distinction that survived the change.
+ */
 @utility type-wordmark {
   font-family: var(--ds-type-wordmark-family);
   font-size: var(--ds-type-wordmark-size);
