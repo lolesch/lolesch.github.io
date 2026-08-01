@@ -1,44 +1,51 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-type Theme = 'light' | 'dark';
-
+/*
+ * No state and no effect, which is the second half of the fix that put the knob
+ * on data-theme. The theme lives on <html>, written before first paint by the
+ * script in the root layout, and everything this control shows is derived from
+ * it in CSS. Reading it back into React gave the server a value it cannot know
+ * and the first render a state it then had to correct, which is why the label
+ * had to be a constant to avoid flashing: it was the only string safe to render
+ * before hydration told it the truth.
+ */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme | null>(null);
-
-  // Read what the pre-paint script already decided, rather than deciding again.
-  useEffect(() => {
-    setTheme((document.documentElement.dataset.theme as Theme) ?? 'light');
-  }, []);
-
   function toggle() {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     localStorage.setItem('theme', next);
-    setTheme(next);
   }
 
   return (
     <button
       type="button"
       onClick={toggle}
-      // aria-pressed stays undefined until the client knows the real theme, so
-      // the button never announces a state that contradicts what is on screen.
-      aria-pressed={theme === 'dark' ? true : theme === 'light' ? false : undefined}
+      // No aria-pressed. The accessible name below states the mode and the
+      // action outright, which is more than a pressed state says and is never
+      // wrong in one theme: "Light mode, not pressed" is a contradiction,
+      // because light mode is exactly what is on.
+      //
       // 1.5rem tall, which is the 24px floor for a target (WCAG 2.2 SC 2.5.8).
       // The switch sets that height and the label rides in the same row, so the
       // whole control is the target rather than the graphic alone.
       className="group flex items-center gap-tight rounded-control type-meta text-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-interactive"
     >
       {/*
-        The label names the setting, not the action. It read "Light mode" while
-        the site was dark, which is what a button that performs an action says;
-        a control that reports a state has to name the state it is of. The
-        switch beside it carries on and off, so the label no longer has to
-        change at all, and the text no longer swaps at hydration.
+        Both labels ship and CSS shows one, so the control reads correctly at
+        first paint instead of after hydration. Each span only ever sets itself
+        to display:none and never competes to set it back, so there is no pair
+        of equal-specificity rules racing to decide which one wins.
+
+        The name gives the mode and then the action. That is what a screen
+        reader needs, and it is what SC 2.5.3 needs: the visible words are the
+        start of the accessible name rather than a different string from it.
       */}
-      Dark mode
+      <span className="dark:hidden">
+        Light mode<span className="sr-only">. Switch to dark mode</span>
+      </span>
+      <span className="not-dark:hidden">
+        Dark mode<span className="sr-only">. Switch to light mode</span>
+      </span>
 
       {/*
         A track and a knob. What this replaces was a bordered rectangle with a
@@ -55,14 +62,6 @@ export function ThemeToggle() {
         aria-hidden="true"
         className="flex h-gap w-[2.5rem] items-center rounded-tag border border-border-interactive p-[0.125rem] group-hover:border-fg"
       >
-        {/*
-          Positioned from data-theme rather than from React state, so a
-          returning visitor whose stored theme is dark never sees the knob start
-          on the left and jump. That attribute is on <html> before first paint,
-          set by the script in the root layout, which is the same reason the
-          colours do not flash either. No base translate is declared, so there
-          is one declaration rather than two racing on equal specificity.
-        */}
         <span className="size-[1.125rem] rounded-tag bg-fg transition-transform motion-reduce:transition-none dark:translate-x-stack" />
       </span>
     </button>
