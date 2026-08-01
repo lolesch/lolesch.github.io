@@ -43,12 +43,23 @@ describe('site navigation', () => {
   }
 
   it('marks the current route on every route page, Home included', () => {
-    // Home was the exception until 2026-08-01. Work is a fragment into it and
-    // could not claim to be the page, so the one route every visitor lands on
-    // first was the one that highlighted nothing. The wordmark is a route link
-    // now, and it is what carries Home.
+    // Home was the exception until 2026-08-01, because Work is a fragment into
+    // it and was read as unable to claim the page. A fragment does not leave
+    // the page it points into, so Work is the page on '/', and Home is not an
+    // exception at all.
     for (const page of ROUTES) {
       expect(body(page), `${page} marks nothing as current`).toContain('aria-current="page"');
+    }
+  });
+
+  it('never marks the wordmark, wherever the visitor is', () => {
+    // It is the way back, not a place you can be: Home is the work page, and
+    // Work is what that location is called. This briefly marked the wordmark on
+    // '/' instead, so clicking Work highlighted the site's own name.
+    for (const page of pages) {
+      const tag = body(page).match(/<a[^>]*>Leonid Schreiber<\/a>/)?.[0] ?? '';
+      expect(tag, `${page} has no wordmark`).not.toBe('');
+      expect(tag, `${page} marks the wordmark`).not.toContain('aria-current');
     }
   });
 

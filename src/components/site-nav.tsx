@@ -15,29 +15,30 @@ type NavLink = {
 };
 
 /*
- * The wordmark is a NavLink like the others rather than its own block in
- * site-header.tsx, which is where it lived until 2026-08-01. It is a link to a
- * route, it needs the same current-page marker, and the current-page logic is
- * identical for every link: a second copy of that ternary is where the second
- * one quietly differs. It is exported separately only because it sits at the
+ * The wordmark carries no `page` and no `section`, so it is never marked. It is
+ * the way back, not a place you can be: Home *is* the work page, the grid is on
+ * it, and Work is what that location is called. Marking both would put two
+ * links on one destination, and marking the name would make the site's identity
+ * double as a location.
+ *
+ * It is still a NavLink rather than its own block in site-header.tsx, because
+ * everything else about it is a nav link and the alternative is a second copy
+ * of the logic below. It is exported separately only because it sits at the
  * other end of the header.
  */
 const WORDMARK: NavLink = {
   href: '/',
   label: 'Leonid Schreiber',
-  page: '/',
   role: 'type-wordmark',
 };
 
 const ROUTES: readonly NavLink[] = [
   /*
-   * Work is a fragment into Home, so it is never the current *page*: Home's
-   * work grid already carries <h2 id="work">, and the wordmark above marks
-   * Home itself. What Work is, is the section a project detail page sits
-   * inside. Without `section`, /work/<slug> would be the one route on the site
-   * that highlights nothing.
+   * Work is both. On '/' it is the page: the href is a fragment, and a fragment
+   * does not leave the page it points into. On /work/<slug> it is the section
+   * the visitor is inside, which is a weaker claim and gets the weaker marker.
    */
-  { href: '/#work', label: 'Work', section: '/work', role: 'type-body' },
+  { href: '/#work', label: 'Work', page: '/', section: '/work', role: 'type-body' },
   { href: '/design-system/', label: 'Design System', page: '/design-system', role: 'type-body' },
   { href: '/about/', label: 'About', page: '/about', role: 'type-body' },
 ];
