@@ -66,7 +66,7 @@ FIGURES = [
         "crop": [22, 295, 2830, 2050],
         "width": 1120,
         "why": (
-            "The work-grid card. The editor viewport below the browser chrome, "
+            "The project-grid card. The editor viewport below the browser chrome, "
             "cropped to 16:10 because the tile fixes that ratio and crops with "
             "object-cover, so framing it here is the only way to control it. "
             "Top edge sits just under the site logo rather than through it, "

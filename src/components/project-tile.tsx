@@ -28,22 +28,42 @@ export function ProjectTile({ project }: { project: Project }) {
           src={project.thumb.src}
           alt={project.thumb.alt}
           fill
-          // The grid is auto-fill with a 17rem minimum, so a tile is never wider
-          // than roughly a third of a 3xl container. Telling the browser that
-          // stops it shipping a full-width source for a card-sized slot.
-          sizes="(max-width: 40rem) 100vw, 20rem"
+          // The grid is auto-fill with a 22rem minimum on a 61rem content box,
+          // so a tile is 29.75rem at its widest and full-width below roughly
+          // 48rem, where the second column stops fitting. Telling the browser
+          // that stops it shipping a full-width source for a card-sized slot.
+          // Both numbers track src/components/project-grid.tsx: change the
+          // track minimum and these move with it.
+          sizes="(max-width: 48rem) 100vw, 30rem"
           className="object-cover"
         />
       </div>
 
       <div className="flex flex-col gap-tight p-gutter">
+        {/*
+          Two of the three schema fields, not all three. `role` came off on
+          2026-08-02 because the chips below already say it and say it better:
+          Rollhaus read "UX + design systems" here and then "UX/UI" and
+          "Systems & Architecture" one line down, which is the same claim in two
+          voices. The lenses are also the site's own taxonomy, the thing the v2
+          Router will filter on, so between the two the chips are the one that
+          has a second job.
+
+          `year` and `context` stay. Neither is duplicated anywhere on the card,
+          and "Course project, pair" is the honest label guardrail 5 asks for on
+          the surface most people will read instead of the page. There is a
+          guard on it in tests/export/static-export.test.ts.
+
+          `role` is not lost: the detail page still opens with all three, which
+          is where full attribution belongs and where nobody is scanning.
+        */}
         <p className="type-meta text-muted">
-          {project.year} · {project.context} · {project.role}
+          {project.year} · {project.context}
         </p>
 
         <h3 className="type-subheading">
           <Link
-            href={`/work/${project.slug}/`}
+            href={`/projects/${project.slug}/`}
             // The whole card is the click target. The link name stays the
             // project title, which is what a screen reader reads out of a link
             // list. Wrapping the card in one <a> instead would flatten the

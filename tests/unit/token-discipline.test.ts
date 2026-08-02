@@ -52,7 +52,7 @@ const OFFENCES: Offence[] = [
   {
     // The four properties a type role carries alongside its size. Reaching for
     // one of them on its own composes a sixth role nobody named, which is
-    // exactly how src/components/work-grid.tsx shipped an h2 without
+    // exactly how src/components/project-grid.tsx shipped an h2 without
     // `leading-tight` beside seven that had it, and nothing could catch it.
     //
     // text-balance is deliberately absent: wrapping is a hint about this

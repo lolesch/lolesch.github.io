@@ -58,7 +58,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <SiteHeader />
-        {children}
+        {/*
+          The frame, once, rather than on each page's <main>. Every route sits
+          in the same 64rem box with the same gutter, so a page decides only how
+          wide its own content is inside that: `measure` for the ones that are
+          reading, nothing for Home, which has a grid that takes the lot.
+
+          Hoisted here on 2026-08-02 because the alternative was `frame mx-auto
+          px-gutter` repeated on four <main> elements, each with a `measure`
+          wrapper inside it. This way the left edge of every page is decided in
+          one place, and it is the same edge the header's wordmark sits on.
+        */}
+        <div className="frame mx-auto px-gutter">{children}</div>
       </body>
     </html>
   );

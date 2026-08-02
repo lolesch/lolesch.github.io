@@ -79,7 +79,7 @@ describe('static export (Seam 2)', () => {
     expect(existsSync(`out${path}`), `${path} is linked but not exported`).toBe(true);
   });
 
-  it('puts the work grid on Home, directly under the hero', () => {
+  it('puts the project grid on Home, directly under the hero', () => {
     const html = rendered(HOME);
     expect(html).toContain('Rollhaus');
     expect(html).toContain('GlyphsHero');
@@ -88,7 +88,7 @@ describe('static export (Seam 2)', () => {
 
   it('names every tile link after the project, never "read more"', () => {
     const links = [
-      ...rendered(HOME).matchAll(/<a[^>]*href="\/work\/([^"]+)\/"[^>]*>([\s\S]*?)<\/a>/g),
+      ...rendered(HOME).matchAll(/<a[^>]*href="\/projects\/([^"]+)\/"[^>]*>([\s\S]*?)<\/a>/g),
     ];
     expect(links.length).toBeGreaterThanOrEqual(3);
     for (const [, slug, text] of links) {

@@ -91,7 +91,7 @@ export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[];
               <Icon id={link.icon} />
               {/*
                 The underline is on the text rather than on the link, so it does
-                not run under the icon. Matches the "Back to all work" link on a
+                not run under the icon. Matches the "Back to all projects" link on a
                 project page: always underlined, no hover change. One link style
                 on the site.
               */}

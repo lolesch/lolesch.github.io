@@ -14,7 +14,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
+    /*
+     * `measure` and nothing else. The frame and the gutter are on the layout,
+     * so this page says only how wide its own reading is, and it sits flush
+     * left inside that frame rather than centred in the viewport. Centring it
+     * would put the text 8rem inside the wordmark above it.
+     */
+    <main className="measure pt-gap pb-section">
       <div className="flex flex-wrap items-center gap-gap">
         <Image
           src={about.portrait.src}

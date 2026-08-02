@@ -22,7 +22,7 @@ describe('embedded figures (Seam 2)', () => {
 
   for (const { project, section } of embeds) {
     describe(`${project.slug} / ${section.figure}`, () => {
-      const page = `out/work/${project.slug}/index.html`;
+      const page = `out/projects/${project.slug}/index.html`;
 
       it('renders its heading and caption', () => {
         const visible = body(page);
@@ -33,7 +33,7 @@ describe('embedded figures (Seam 2)', () => {
   }
 
   it('renders the Rollhaus diagram, honest limitation included', () => {
-    const visible = body('out/work/rollhaus/index.html');
+    const visible = body('out/projects/rollhaus/index.html');
     expect(visible).toContain(rollhausArchitecture.title);
     // The footnote is the one place the ad hoc naming limitation is stated.
     // Drop it in a refactor and the page starts overclaiming, quietly.
@@ -120,7 +120,7 @@ describe('image figures (Seam 2)', () => {
 
   for (const { project, index, state } of IMAGES) {
     describe(`${project.slug} / ${state.src}`, () => {
-      const page = `out/work/${project.slug}/index.html`;
+      const page = `out/projects/${project.slug}/index.html`;
 
       it('renders its heading and caption', () => {
         const visible = body(page);

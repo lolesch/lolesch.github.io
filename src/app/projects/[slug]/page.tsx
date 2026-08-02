@@ -5,7 +5,7 @@ import { ContentSections } from '@/components/sections';
 import { projects } from '@/content/projects';
 
 // trailingSlash: true is already set, so the export emits
-// out/work/<slug>/index.html rather than out/work/<slug>.html.
+// out/projects/<slug>/index.html rather than out/projects/<slug>.html.
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
@@ -31,7 +31,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound();
 
   return (
-    <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
+    <main className="measure pt-gap pb-section">
+      {/*
+        All three, unlike the card, which dropped `role` on 2026-08-02 because
+        the chips below it were already saying the same thing. Here it stays:
+        this is the page that carries the full attribution, the reader has
+        stopped scanning, and the two are far enough apart in the reading to be
+        a statement and its summary rather than an echo.
+      */}
       <p className="type-meta text-muted">
         {project.year} · {project.context} · {project.role}
       </p>
@@ -82,7 +89,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <p className="mt-section type-body">
         <Link href="/" className="text-accent underline underline-offset-4">
-          Back to all work
+          Back to all projects
         </Link>
       </p>
     </main>

@@ -3,10 +3,10 @@ import { describe, expect, it } from 'vitest';
 import { projects } from '../../src/content/projects';
 import { rendered, text } from './rendered';
 
-describe('work routes (Seam 2)', () => {
+describe('project routes (Seam 2)', () => {
   for (const project of projects) {
     describe(project.slug, () => {
-      const page = `out/work/${project.slug}/index.html`;
+      const page = `out/projects/${project.slug}/index.html`;
 
       it('exports an index.html', () => {
         expect(existsSync(page), `${page} was not exported`).toBe(true);
@@ -20,7 +20,7 @@ describe('work routes (Seam 2)', () => {
       });
 
       it('is linked from the home page', () => {
-        expect(rendered('out/index.html')).toContain(`href="/work/${project.slug}/"`);
+        expect(rendered('out/index.html')).toContain(`href="/projects/${project.slug}/"`);
       });
 
       it('opens with the three schema lines the card no longer carries', () => {

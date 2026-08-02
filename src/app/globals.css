@@ -83,6 +83,51 @@
 }
 
 /*
+ * Two page widths, named, because there are now two and they were one.
+ *
+ * `frame` is the page container: the header row, and any content that earns the
+ * full width. `measure` is the reading column, which is the width it has always
+ * been. Splitting them is what let the project grid stop squeezing two cards
+ * into a container sized for a paragraph, without making the paragraphs longer
+ * than anyone wants to read.
+ *
+ * Both are literals rather than var(--ds-*), and that is a gap rather than a
+ * decision: there is no Semantic family for layout widths yet, so adding one
+ * means a new family, a guard in tests/unit/design-system.test.ts and a section
+ * on /design-system. Named here first so the two values live in one place
+ * instead of five, which is the drift the type roles below exist to stop.
+ */
+@utility frame {
+  max-width: 64rem;
+}
+
+@utility measure {
+  max-width: 48rem;
+}
+
+/*
+ * The header is sticky, so an in-page jump lands underneath it unless the
+ * scroll stops short by the header's height.
+ *
+ * One value, and that is the collapsing nav paying for itself a second time.
+ * While the header wrapped, its height ran from 75px on a desktop row to 186px
+ * at 320px, and covering that needed a tier per breakpoint, each one a
+ * measurement of another component that would go stale in silence. A bar that
+ * is one row everywhere is one number: 88px at its tallest, where the menu
+ * button is the tallest thing in it, against 75px from `sm` up.
+ *
+ * Erring long leaves a little dead space above the target, which is cosmetic.
+ * Erring short puts the heading behind the bar, which is the defect, and the
+ * first draft of this shipped at 6rem and did exactly that on every phone.
+ *
+ * A literal for the same reason `frame` and `measure` above are: there is no
+ * Semantic family for layout geometry yet.
+ */
+html {
+  scroll-padding-top: 7rem;
+}
+
+/*
  * One utility per typographic role (ADR-0003's adapter layer, applied to type).
  * Each carries all five decisions a piece of text makes, so a call site names a
  * job and gets the whole of it rather than a size plus four things it has to

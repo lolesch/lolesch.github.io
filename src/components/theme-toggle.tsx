@@ -39,11 +39,19 @@ export function ThemeToggle() {
         The name gives the mode and then the action. That is what a screen
         reader needs, and it is what SC 2.5.3 needs: the visible words are the
         start of the accessible name rather than a different string from it.
+
+        `sr-only` below `sm`, so the words leave the screen and stay in the
+        name. Below that width the bar is the wordmark, a menu button and this,
+        and the label is about 70px the 320px row does not have. SC 2.5.3 is
+        satisfied either way: with no visible label there is nothing for the
+        name to disagree with, and the name itself is unchanged. What the label
+        was defending against is also gone at that width, because the three nav
+        links it could be mistaken for are behind the menu button.
       */}
-      <span className="dark:hidden">
+      <span className="sr-only sm:not-sr-only dark:hidden">
         Light mode<span className="sr-only">. Switch to dark mode</span>
       </span>
-      <span className="not-dark:hidden">
+      <span className="sr-only sm:not-sr-only not-dark:hidden">
         Dark mode<span className="sr-only">. Switch to light mode</span>
       </span>
 

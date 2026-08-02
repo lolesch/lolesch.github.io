@@ -49,7 +49,7 @@ export default function DesignSystemPage() {
   const brand = of('brand');
 
   return (
-    <main className="mx-auto max-w-3xl px-gutter pt-gap pb-section">
+    <main className="measure pt-gap pb-section">
       <h1 className="type-title text-balance">Design System</h1>
       <p className="mt-gap type-lead text-muted">{designSystem.intro}</p>
       {/*

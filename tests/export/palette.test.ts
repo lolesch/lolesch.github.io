@@ -16,7 +16,7 @@ describe('the accents render outside /design-system', () => {
 
   for (const project of projects) {
     it(`puts the capability role on the lens chips of ${project.slug}`, () => {
-      expect(body(`out/work/${project.slug}/index.html`)).toContain('text-capability');
+      expect(body(`out/projects/${project.slug}/index.html`)).toContain('text-capability');
     });
   }
 
@@ -25,6 +25,6 @@ describe('the accents render outside /design-system', () => {
   });
 
   it('puts the accent role on the way back out of a project page', () => {
-    expect(body(`out/work/${projects[0].slug}/index.html`)).toContain('text-accent');
+    expect(body(`out/projects/${projects[0].slug}/index.html`)).toContain('text-accent');
   });
 });
