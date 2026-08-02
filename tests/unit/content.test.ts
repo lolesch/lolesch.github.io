@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest';
 // Relative rather than the @/ alias: vitest.config.mts declares no path
 // aliases, and adding one to run a test is a worse trade than a relative path.
-import { projects } from '../../src/content/projects';
+import { fermentor, projects } from '../../src/content/projects';
+import type { Project } from '../../src/content/types';
+
+// Every record that has been written, including the ones not in the array yet.
+// FerMentor is authored and held back until its thumbnail exists, and a record
+// waiting on an asset is exactly the one most likely to drift: nothing renders
+// it, so nothing would catch an em-dash or an empty section in it until the day
+// it ships. The thumbnail rules run separately below, over the shipped array.
+const AUTHORED: readonly Omit<Project, 'thumb'>[] = [...projects, fermentor];
 
 // Every string a visitor reads inside a section, whatever kind it is. A new
 // section kind whose copy is not reachable from here ships past every rule
@@ -14,7 +22,7 @@ import { projects } from '../../src/content/projects';
 // `alt` is copy: it reaches screen readers and it sits in the exported HTML.
 // With every kind named explicitly and `never` closing the switch, adding an
 // arm to `Section` fails typecheck here until its copy is accounted for.
-const bodies = (project: (typeof projects)[number]) =>
+const bodies = (project: Omit<Project, 'thumb'>) =>
   project.sections.flatMap((section): string[] => {
     switch (section.kind) {
       case 'prose':
@@ -43,11 +51,31 @@ describe('project content', () => {
   });
 
   it('gives every project a unique slug', () => {
-    const slugs = projects.map((project) => project.slug);
+    // Across everything authored, not just what ships: a held-back record that
+    // collides with a live slug would take the route with it when it lands.
+    const slugs = AUTHORED.map((project) => project.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
   for (const project of projects) {
+    describe(`${project.slug} thumbnail`, () => {
+      it('carries a thumbnail with alt text', () => {
+        // The thumb is inside the card's link target, so its alt is the copy a
+        // screen reader gets for the image half of that link. An empty alt here
+        // is not a decorative image, it is a missing description.
+        expect(project.thumb.src.startsWith('/')).toBe(true);
+        expect(project.thumb.alt.length).toBeGreaterThan(0);
+        expect(project.thumb.width).toBeGreaterThan(0);
+        expect(project.thumb.height).toBeGreaterThan(0);
+      });
+
+      it('uses no em-dash in its alt text', () => {
+        expect(project.thumb.alt).not.toContain('—');
+      });
+    });
+  }
+
+  for (const project of AUTHORED) {
     describe(project.slug, () => {
       it('fills all three schema lines', () => {
         expect(project.problem.length).toBeGreaterThan(0);
@@ -63,16 +91,6 @@ describe('project content', () => {
         for (const line of [project.problem, project.whatIDid, project.whatChanged]) {
           expect(project.summary).not.toBe(line);
         }
-      });
-
-      it('carries a thumbnail with alt text', () => {
-        // The thumb is inside the card's link target, so its alt is the copy a
-        // screen reader gets for the image half of that link. An empty alt here
-        // is not a decorative image, it is a missing description.
-        expect(project.thumb.src.startsWith('/')).toBe(true);
-        expect(project.thumb.alt.length).toBeGreaterThan(0);
-        expect(project.thumb.width).toBeGreaterThan(0);
-        expect(project.thumb.height).toBeGreaterThan(0);
       });
 
       it('never restates a tile line verbatim in a section', () => {
@@ -129,7 +147,6 @@ describe('project content', () => {
           project.context,
           project.role,
           project.summary,
-          project.thumb.alt,
           project.problem,
           project.whatIDid,
           project.whatChanged,

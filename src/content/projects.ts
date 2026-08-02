@@ -1,6 +1,133 @@
 import type { Project } from './types';
 
 /**
+ * FerMentor, authored 2026-08-02 to the design in
+ * `docs/superpowers/specs/2026-08-02-fermentor-case-study-design.md`.
+ *
+ * Complete except for its thumbnail, and held out of `projects` below until
+ * that exists. `Omit<Project, 'thumb'>` rather than a placeholder on purpose:
+ * the record needs a real `width` and `height`, those come off the exported
+ * image, and inventing a pair would ship layout shift on the one card whose
+ * job is to look finished. Deploy runs on every push to main, so a thumb
+ * pointing at nothing is a broken card in production rather than a plainer one.
+ *
+ * To land it: export `Capstone_Fermentor (Components).pdf` into
+ * `job-search/portfolio/projects/fermentor/source/`, add a crop to
+ * `scripts/extract-figures.py`, then add `thumb` here and spread this into the
+ * array. Sections 4 and 8 of the spec, the research board and the screens, are
+ * blocked on the same two exports and are not written below.
+ *
+ * Sources: `job-search/portfolio/projects/fermentor/fermentor_source_of_truth.md`,
+ * which wins on any disagreement, plus the four facts Leonid resolved on
+ * 2026-08-02 and recorded in the spec.
+ */
+export const fermentor: Omit<Project, 'thumb'> = {
+  slug: 'fermentor',
+  title: 'FerMentor',
+  year: '2026',
+  // Leonid's wording, 2026-08-02. Leads with what he owned and puts the shared
+  // part where it belongs, as the qualifier. The course label it does not carry
+  // is carried by the Constraints callout below, per guardrail 5.
+  context: 'Solo, after shared research',
+  role: 'Research, framing, product design',
+  lenses: ['UX/UI', 'Systems & Architecture'],
+  tier: 'featured',
+  summary:
+    'A fermentation app for beginners, built on a stage model that predicts what a batch should look like right now, so checking one does not mean opening it.',
+  problem:
+    'Fermentation beginners cannot tell whether what they are seeing is normal, and opening the jar to find out is the thing most likely to ruin it.',
+  whatIDid:
+    'Reframed a confidence problem into a state and timing problem, then built the product on a stage model carrying the observable signals for each stage. The screens run on a Figma variable system.',
+  // The no-testing limitation is stated here, once, and the Outcome section
+  // deliberately does not restate it. Same call as how-to-god below: the detail
+  // page renders these three lines in a <dl> above the sections, so a section
+  // repeating one is the apology loop, tone tell #10.
+  whatChanged:
+    'A clickable full flow, built on a model that answers what this should look like right now instead of listing steps. No usability testing: the capstone ran out of time.',
+  sections: [
+    {
+      kind: 'constraints',
+      heading: 'Constraints',
+      items: [
+        { label: 'When', value: 'SPICED capstone, to May 2026' },
+        { label: 'Team', value: 'Shared research with Leith Gow, then two separate products' },
+        { label: 'Platform', value: 'Mobile, iOS' },
+        { label: 'Tools', value: 'Figma variables and components, FigJam for research' },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Context',
+      body: [
+        'Fermentation runs on its own. Bacteria and yeast break down what you give them in an anaerobic environment, and in the right conditions the process needs almost no intervention, so most of the work is waiting and knowing when to stop. That is what makes it a bad fit for a recipe. Temperature and the state of the culture move the timing, the end point is not a clock, and the reliable way to check is to open the jar, which is also the fastest way to contaminate it.',
+        'The capstone did not start here. We took a time management app and then a gardening companion through idea evaluation, pain points and problem statements before dropping both, and the board records the arc as too broad, then similar but specific, then fermentation. It won on practical grounds: Leith had the experience and the equipment, and the process looked simple enough to model. The cons we wrote down at the time were that it might be too simple and might not have enough variables in it.',
+        'Leith Gow and I ran the research together. Partway through it became clear the findings were pulling toward two different people. His was an experienced fermenter losing track across several batches at once. Mine was a beginner in the first month, who has no baseline to compare anything against. Rather than average them into one product we split there, and from that point the two designs share a research phase and nothing else.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The reframe',
+      body: [
+        'The obvious framing is that beginners lack confidence. It is true, and it is not something you can build against, because a lack of confidence is a symptom. What I wrote on the research board is that ambiguous signals, high consequences and low expertise together produce it, which turns the question into which of those three a product can actually move.',
+        'So I wrote three candidate framings with the reasoning for each, rather than picking one and defending it afterwards. The first put the cause in state and timing: users cannot reliably read where the process is or judge when to act. The second put it in invisible variables, temperature and microbial activity being hard to observe, which is why results resist prediction. The third put it in decision-making during execution: not knowing when to act, which signals to trust, or how to evaluate progress without risking the batch.',
+        'The third is the most behaviourally precise and the second explains the most, but the first is the one that names something a product can change. You cannot make microbial activity visible to someone looking at a jar. You can make the state legible and the timing predictable. That is the framing that shipped: fermentation beginners need to know what to expect, because variable conditions and unclear progress make it hard to decide whether action is required or what that action should be.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Who it is for',
+      body: [
+        'Lukas Weber, 32, a product designer who started fermenting vegetables a few months ago for a more balanced diet. He likes making things himself, he follows the general guidelines, and he is still in the phase of working out what the right timing and conditions are. His line on the persona card: "I know the steps, but I\'m never fully sure if now is the right moment to do something or just leave it."',
+        'He is a proto persona, assembled from desk research and three interviews, two of those with experts rather than with beginners. That is a thinner evidence base than a researched persona and it is worth naming, because every decision downstream inherits it.',
+        'What he needs is narrow enough to design against. An indication of the state his ferment is in. Guidance on what to expect at that state. Help deciding whether action is required at all. The damage is done by his own mental model, which is reasonable and which costs him batches: if he is not sure what is happening he waits, because intervening at the wrong moment might ruin it. Waiting is the safe move right up until it is not.',
+      ],
+    },
+    {
+      kind: 'embed',
+      heading: 'What the product had to know',
+      caption:
+        'The stage model as it was written for the capstone, ported onto the tokens this site runs on, so it follows the theme.',
+      figure: 'fermentor-stages',
+    },
+    {
+      kind: 'prose',
+      heading: 'From model to product',
+      body: [
+        'A model is only worth anything if the user meets it somewhere. In FerMentor that place is a single control on the batch detail screen, a SHOW ME button sitting on whichever step is currently in progress.',
+        'It answers the question a step list cannot. Steps tell you where you are in a sequence. SHOW ME tells you what this stage should look like right now, for this batch and the conditions it was set up under, so the user compares instead of guessing. That is the difference between instruction and prediction, and it is most of the product in one control.',
+        'The other half is the order you are allowed to check in. The research finding that intervening carries contamination risk has a design consequence that follows directly: assessment is ordered so the jar stays shut as long as possible. Appearance first. Smell and texture only if appearance was not enough. Opening is the last resort rather than the reflex, which is the inverse of what a beginner does when they are unsure.',
+        'Logging follows the same rule. Structured choices per sensory category rather than a free text field, so what the user observed can be read against the model instead of only recorded next to it.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The system',
+      body: [
+        'The screens run on Figma variables rather than colour styles, so a change to a token updates everywhere that token is used. The component library is organised as an explicit hierarchy, from sub atomic through atomic, molecule, organism and template to the screens themselves, with one frame holding every component and every state laid out together.',
+        'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Outcome',
+      body: [
+        'What shipped is a prototype covering the full flow, clickable end to end. The cold open and install, a dashboard carrying both the next actions with their countdowns and the batches in progress, the batch detail with the stage stack and SHOW ME on the current step, and the logging and evaluation path back out of it.',
+        'The dashboard is where the model becomes visible without being explained. Each batch card carries a progress bar that moves through its range as the estimated end approaches and passes, and the next action list is sorted by what is closest to needing something. A batch that has gone past its window says so plainly rather than sitting quietly in a grid.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Learnings',
+      body: [
+        'The framing work was the most valuable part of the project and the cheapest to redo. Three problem statements with the reasoning written under each took an afternoon, and everything after it inherited that choice. I would spend that afternoon again on anything ambiguous.',
+        'Splitting rather than averaging was right, and I would do it sooner. We spent time trying to serve an expert and a beginner with one product before admitting they wanted different things, and the products both got better the moment we stopped.',
+        'A domain model is design work. Most of what makes FerMentor answerable is not on a screen at all, it is the list of stages and the signals attached to each one. I spent longer on that than on any interface, and the screens got simpler every time the model got sharper.',
+      ],
+    },
+  ],
+};
+
+/**
  * The three schema lines on each record are frozen copy, reproduced character
  * for character from `job-search/portfolio/site_copy.md` §5, tone-checked
  * 2026-07-28. Do not reword them here.
