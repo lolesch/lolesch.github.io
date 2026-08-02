@@ -34,6 +34,41 @@ describe('project routes (Seam 2)', () => {
           expect(visible, `${project.slug} drops a schema line`).toContain(line);
         }
       });
+
+      // A section link is the one piece of evidence on these pages that lives
+      // on someone else's domain, so the markup is all this suite can prove.
+      // Whether the URL still resolves is a manual check, and the CV guard
+      // lesson from 2026-07-31 is why it stays on the release checklist: a link
+      // fails invisibly while the markup around it stays perfect.
+      const links = project.sections.flatMap((section) =>
+        section.kind === 'prose' && section.link ? [section.link] : [],
+      );
+
+      for (const link of links) {
+        describe(link.href, () => {
+          // React escapes `&` inside an attribute, so the URL in the markup is
+          // not the URL on the record. Encoding the needle is the narrow fix;
+          // decoding the whole document instead would turn any escaped angle
+          // bracket in the page copy into markup this regex could match.
+          const attribute = link.href.replace(/&/g, '&amp;');
+          const pattern = new RegExp(
+            `<a[^>]*href="${attribute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`,
+          );
+          const tag = () => rendered(page).match(pattern)?.[0] ?? '';
+
+          it('renders as an anchor carrying its label', () => {
+            expect(tag(), `no link to ${link.href}`).not.toBe('');
+            expect(text(page)).toContain(link.label);
+          });
+
+          it('opens in a new tab, so the case study is not replaced by it', () => {
+            // Same call the CV link makes. A reader part-way through a page
+            // should not lose it to a prototype they wanted to glance at.
+            expect(tag()).toContain('target="_blank"');
+            expect(tag()).toContain('noopener');
+          });
+        });
+      }
     });
   }
 });

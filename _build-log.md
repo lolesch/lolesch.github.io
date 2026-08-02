@@ -481,3 +481,25 @@ Implements `docs/superpowers/specs/2026-08-02-fermentor-case-study-design.md`. N
 Verified by temporarily putting the record in the array with a throwaway thumb, building, and reverting: the route generates, all seven stages and both annotations reach the HTML, and the export suite goes 99 to 106 green. The file was diffed against its pre-verification copy afterwards to confirm the revert was exact.
 
 69 unit, 99 export, 0 skipped, typecheck clean, build green at three routes.
+
+## 2026-08-03: FerMentor lands, and the extraction script follows the sibling repo
+
+Leonid supplied the Figma exports, the prototype link and the span, which unblocked everything the entry above was holding back. The record is in the array, second, and the page ships at `/projects/fermentor/`.
+
+**The extraction script was broken and is fixed, and the fix verified itself.** `SOURCES` pointed at `case_studies/assets`, which the sibling repo replaced with a folder per project. The layouts inside are not consistent, Rollhaus keeping PDFs in `source/` and PNGs in `assets/` while FerMentor keeps everything at the project root, so `find_source` looks in all three and takes the first hit rather than encoding the layout per figure. The PNG renames were confirmed by dimensions before being trusted, `Editor.png` to `rollhaus_editor_quad.png` at the 2916x2086 with alpha the script already documented. **The proof is that all six Rollhaus figures regenerate byte-identical**, which is the only thing that could distinguish a real fix from a plausible one. The previous entry called this unfixable without guessing; it was fixable by checking.
+
+**Six FerMentor figures, each chosen against an alternative.** The thumb is three batch-detail screens rather than the dashboard group, because a dashboard reads as any list app while this one carries SHOW ME, the overdue banner and the Ready state. The framings figure is the research board column with its reasoning paragraphs, tall and narrow because the column is; cropping wider would pull in the neighbouring columns and make it a picture of a board rather than of an argument. The two dashboard states use identical crop boxes for the reason the Rollhaus editor pair does, so the only difference between the images is what the interface says.
+
+**The predict and report cards are a `comparison` of two halves of one exchange, not two states of one screen.** That stretches the kind and is still right: the claim is in the difference, and the category column is identical and in the same order on both sides, which is the appearance-first rule made visible rather than asserted. On the source canvas they sit far apart with dead space between them, so shipping the phone that carries them would have shipped mostly empty canvas.
+
+**`prose` sections can carry one outward link now, which is a type change made for a real thing rather than in advance.** Same `{label, href}` shape as `About['cv']`, same `target="_blank"` and `rel="noopener noreferrer"`, same reason: a prototype the reader cannot open is a claim rather than evidence, and a PDF or a Figma file replacing the page is a dead end for someone part-way through it.
+
+**Two guards were watched failing, and the first attempt at watching proved nothing.** Breaking the href in the record and rebuilding still passed, because the test builds its regex from the same record: both sides moved together. That is the honest limit of this guard and it is written into the test. Stripping `target="_blank"` out of the renderer is the failure it can actually see, and it fails on that. Whether the URL resolves stays a manual check, which is the CV lesson from 2026-07-31.
+
+**A latent bug in the figure guards surfaced.** The alt assertion read `body`, which is raw markup, so it only ever worked because no alt on the site contained a quote or an apostrophe. The first alt with quotes in it failed against correct markup. It reads `text` now, which decodes what React escaped, and that is what the helper's own docstring says it is for.
+
+**The AI disclosure moved to where the claim is made.** The framings figure shows its reasoning addressing Leonid in the second person, so the prose says the options were drafted with AI to pressure-test them and the paragraph after it argues the choice. Cropping the tell out would have been hiding it. This is disclosure at the point of claim, which guardrail 2 allows; a workflow narrative is what it bans, and there is none.
+
+**Three limitations, unchanged from the plan, each in one place:** no usability testing in `whatChanged`, the proto persona in Who it is for, the taxonomy provenance in the figure footnote. Nothing echoes in the Learnings.
+
+67 unit, 132 export, 0 skipped, typecheck clean. Four routes, FerMentor second behind Rollhaus.

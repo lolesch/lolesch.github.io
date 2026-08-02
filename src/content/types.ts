@@ -12,8 +12,15 @@ export type FigureId = 'rollhaus-architecture' | 'glyphshero-chain' | 'fermentor
 // A page renders the sections that exist and stops. There is no fixed template
 // and no required section: CONTEXT.md's rule is that a section exists only if
 // it has substance, never padded to look complete.
+// The one outward link a section may carry, same shape as About['cv'] and for
+// the same reason: the record says what it points at, the component knows how
+// it opens. Optional, because most sections have nothing to link to and none is
+// improved by being handed something. It exists because a prototype the reader
+// cannot open is a claim rather than evidence.
+export type SectionLink = { label: string; href: string };
+
 export type Section =
-  | { kind: 'prose'; heading: string; body: readonly string[] }
+  | { kind: 'prose'; heading: string; body: readonly string[]; link?: SectionLink }
   // The time/team/tools callout CONTEXT.md lists as pending polish on the case
   // study template. Label/value pairs rather than prose, because the reader
   // scans them: they answer "what was this" before the writing has to.

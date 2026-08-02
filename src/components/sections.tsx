@@ -36,6 +36,22 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
           {section.body.map((paragraph) => (
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}
+          {section.link ? (
+            <p>
+              <a
+                href={section.link.href}
+                // Everything a section links to lives on someone else's domain,
+                // so this is the same call the CV link makes: open elsewhere
+                // rather than replace a page the reader was part-way through.
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline underline-offset-4"
+              >
+                {section.link.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </p>
+          ) : null}
         </div>
       );
 

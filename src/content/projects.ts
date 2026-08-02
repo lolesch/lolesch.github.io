@@ -4,24 +4,19 @@ import type { Project } from './types';
  * FerMentor, authored 2026-08-02 to the design in
  * `docs/superpowers/specs/2026-08-02-fermentor-case-study-design.md`.
  *
- * Complete except for its thumbnail, and held out of `projects` below until
- * that exists. `Omit<Project, 'thumb'>` rather than a placeholder on purpose:
- * the record needs a real `width` and `height`, those come off the exported
- * image, and inventing a pair would ship layout shift on the one card whose
- * job is to look finished. Deploy runs on every push to main, so a thumb
- * pointing at nothing is a broken card in production rather than a plainer one.
+ * Written before its images existed and held outside the array for a day, on
+ * the rule that a required thumb cannot be filled with invented dimensions.
+ * Landed the same day once Leonid exported the Figma canvases; every crop is
+ * recorded in `scripts/extract-figures.py` with the reason for its framing.
  *
- * To land it: export `Capstone_Fermentor (Components).pdf` into
- * `job-search/portfolio/projects/fermentor/source/`, add a crop to
- * `scripts/extract-figures.py`, then add `thumb` here and spread this into the
- * array. Sections 4 and 8 of the spec, the research board and the screens, are
- * blocked on the same two exports and are not written below.
+ * Declared here rather than inline because it is long enough that the array
+ * below stops being readable as an ordering when it is pasted into it.
  *
  * Sources: `job-search/portfolio/projects/fermentor/fermentor_source_of_truth.md`,
  * which wins on any disagreement, plus the four facts Leonid resolved on
- * 2026-08-02 and recorded in the spec.
+ * 2026-08-02 and the 5 week span he confirmed on 2026-08-03.
  */
-export const fermentor: Omit<Project, 'thumb'> = {
+const fermentor: Project = {
   slug: 'fermentor',
   title: 'FerMentor',
   year: '2026',
@@ -34,6 +29,16 @@ export const fermentor: Omit<Project, 'thumb'> = {
   tier: 'featured',
   summary:
     'A fermentation app for beginners, built on a stage model that predicts what a batch should look like right now, so checking one does not mean opening it.',
+  // Three batch-detail screens rather than the dashboard group, framed to 16:10
+  // in `scripts/extract-figures.py` for the reason the Rollhaus thumb is. A
+  // dashboard reads as any list app. This carries SHOW ME, the overdue banner
+  // and the Ready state, which is what the summary above claims the product is.
+  thumb: {
+    src: '/figures/fermentor-thumb.png',
+    alt: 'Three phone screens side by side on a dark canvas. The first tracks a Kimchi batch through five steps with a SHOW ME button on the step in progress, the second shows a Cauliflower batch under a red "Maturing overtime, action required" banner, and the third has reached Ready with buttons to keep maturing or store.',
+    width: 1121,
+    height: 700,
+  },
   problem:
     'Fermentation beginners cannot tell whether what they are seeing is normal, and opening the jar to find out is the thing most likely to ruin it.',
   whatIDid:
@@ -49,7 +54,7 @@ export const fermentor: Omit<Project, 'thumb'> = {
       kind: 'constraints',
       heading: 'Constraints',
       items: [
-        { label: 'When', value: 'SPICED capstone, to May 2026' },
+        { label: 'Duration', value: '5 weeks, SPICED capstone, to May 2026' },
         { label: 'Team', value: 'Shared research with Leith Gow, then two separate products' },
         { label: 'Platform', value: 'Mobile, iOS' },
         { label: 'Tools', value: 'Figma variables and components, FigJam for research' },
@@ -69,9 +74,28 @@ export const fermentor: Omit<Project, 'thumb'> = {
       heading: 'The reframe',
       body: [
         'The obvious framing is that beginners lack confidence. It is true, and it is not something you can build against, because a lack of confidence is a symptom. What I wrote on the research board is that ambiguous signals, high consequences and low expertise together produce it, which turns the question into which of those three a product can actually move.',
-        'So I wrote three candidate framings with the reasoning for each, rather than picking one and defending it afterwards. The first put the cause in state and timing: users cannot reliably read where the process is or judge when to act. The second put it in invisible variables, temperature and microbial activity being hard to observe, which is why results resist prediction. The third put it in decision-making during execution: not knowing when to act, which signals to trust, or how to evaluate progress without risking the batch.',
+        // The second-person voice in the figure below ("evidenced in your
+        // research") makes the AI drafting visible to anyone who reads it, so
+        // the claim here is written to match rather than to survive the image.
+        // Disclosure at the point of the claim, which is what guardrail 2
+        // allows; a workflow narrative is what it bans.
+        'So I put three candidate framings side by side, each with its reasoning written out, drafted with AI to pressure-test them rather than to settle them. The first put the cause in state and timing: users cannot reliably read where the process is or judge when to act. The second put it in invisible variables, temperature and microbial activity being hard to observe, which is why results resist prediction. The third put it in decision-making during execution: not knowing when to act, which signals to trust, or how to evaluate progress without risking the batch.',
         'The third is the most behaviourally precise and the second explains the most, but the first is the one that names something a product can change. You cannot make microbial activity visible to someone looking at a jar. You can make the state legible and the timing predictable. That is the framing that shipped: fermentation beginners need to know what to expect, because variable conditions and unclear progress make it hard to decide whether action is required or what that action should be.',
       ],
+    },
+    {
+      // The artifact rather than the write-up's summary of it. The reasoning
+      // paragraphs are the point: three framings without them is a list of
+      // options, and what makes this worth showing is that each one was argued
+      // before one was picked.
+      kind: 'figure',
+      heading: 'The three framings, as they were written',
+      caption:
+        'The candidate problem framings on the research board. Option 1 became the shipped statement, on the argument in the paragraph above rather than the one written here.',
+      src: '/figures/fermentor-framings.png',
+      alt: 'A column from the research board holding three options. Option 1, confidence as a result of uncertainty in state and timing. Option 2, confidence as a result of invisible variables and unpredictability. Option 3, confidence as a breakdown in decision-making during execution. Each carries a problem statement and a Reasoning paragraph weighing it, and the third closes on a list of when to act, what signals to trust, and fear of interference.',
+      width: 1101,
+      height: 2811,
     },
     {
       kind: 'prose',
@@ -100,6 +124,33 @@ export const fermentor: Omit<Project, 'thumb'> = {
       ],
     },
     {
+      // Two halves of one exchange rather than two states of one screen, which
+      // stretches the kind slightly and is still the right one: the claim lives
+      // in the difference between them, and split across two sections a reader
+      // compares from memory. What makes the pair work is the category column,
+      // identical and in the same order on both sides.
+      kind: 'comparison',
+      heading: 'Predict, then report',
+      caption:
+        'The system commits to what this stage should look like before the user says what they see, and both sides speak in the same three categories in the same order. The observation here does not match the prediction, which is the case the product is actually for.',
+      items: [
+        {
+          label: 'What the system expects',
+          src: '/figures/fermentor-predict.png',
+          alt: 'A card headed "What you should see", listing Brine as slightly cloudy, Surface as fine bubbles and Appearance as bright red, above an Adjust button and a Confirm button.',
+          width: 801,
+          height: 441,
+        },
+        {
+          label: 'What the user reports',
+          src: '/figures/fermentor-report.png',
+          alt: 'A card headed "Enter your visual observation", reading "Before we enter the next stage, we need to assess the current state." The same three categories follow as dropdowns, set to opaque and settled, thin white film, and translucent, above a Confirm button.',
+          width: 801,
+          height: 539,
+        },
+      ],
+    },
+    {
       kind: 'prose',
       heading: 'The system',
       body: [
@@ -113,6 +164,36 @@ export const fermentor: Omit<Project, 'thumb'> = {
       body: [
         'What shipped is a prototype covering the full flow, clickable end to end. The cold open and install, a dashboard carrying both the next actions with their countdowns and the batches in progress, the batch detail with the stage stack and SHOW ME on the current step, and the logging and evaluation path back out of it.',
         'The dashboard is where the model becomes visible without being explained. Each batch card carries a progress bar that moves through its range as the estimated end approaches and passes, and the next action list is sorted by what is closest to needing something. A batch that has gone past its window says so plainly rather than sitting quietly in a grid.',
+      ],
+      link: {
+        label: 'Open the prototype in Figma',
+        href: 'https://www.figma.com/proto/Pbd2s3zJgdo5q2d15lvqjE/Capstone_Design_Leonid?node-id=2110-8314&starting-point-node-id=2110%3A8314',
+      },
+    },
+    {
+      // The pair is dated by its own content: the two countdowns that are not
+      // the subject move 6d to 4d and 11d to 9d, so the caption does not have
+      // to assert how much time passed. Identical crop boxes, for the reason
+      // the Rollhaus editor pair uses identical crops.
+      kind: 'comparison',
+      heading: 'The same three batches, two days apart',
+      caption:
+        'Nothing here was edited between the two. Time passing is the only input, and the interface goes from counting down to asking for something, while the Cauliflower bar runs past the end of its range.',
+      items: [
+        {
+          label: 'Two days out',
+          src: '/figures/fermentor-dash-early.png',
+          alt: 'A dashboard headed Next Action, listing Cauliflower preservation in 2 days with a warning icon, Observe your Carrots in 6 days, and Kimchi taste test in 11 days. Below, under My Batches, cards for Kimchi, Carrots and Cauliflower each carry a progress bar still inside its green range.',
+          width: 701,
+          height: 1508,
+        },
+        {
+          label: 'Two days later',
+          src: '/figures/fermentor-dash-late.png',
+          alt: 'The same dashboard with the top row replaced by Maturing overtime, act now, on a red band. The other two rows have counted down to 4 days and 9 days, and the Cauliflower progress bar has run past green into orange.',
+          width: 701,
+          height: 1511,
+        },
       ],
     },
     {
@@ -334,6 +415,11 @@ export const projects: readonly Project[] = [
       },
     ],
   },
+  // Second, after Rollhaus. Array order is display order and Rollhaus stays the
+  // lead because the site is Track C primary: it leads with the system, this
+  // leads with the framing. Both are featured tier and nothing sorts by tier
+  // yet, so the order here is the only thing deciding which is read first.
+  fermentor,
   {
     slug: 'glyphshero',
     title: 'GlyphsHero',

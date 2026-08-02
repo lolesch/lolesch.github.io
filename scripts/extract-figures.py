@@ -50,11 +50,39 @@ REPO = Path(__file__).resolve().parent.parent
 
 # The sibling repo holding the Figma exports. Not vendored, not required to
 # build the site: only to regenerate a figure.
-SOURCES = REPO.parent / "job-search" / "portfolio" / "case_studies" / "assets"
+#
+# Per project since 2026-08-02, when the sibling repo moved from one flat
+# `case_studies/assets` folder to a folder per project. The layout inside is not
+# consistent between them: Rollhaus keeps its PDFs in `source/` and its PNGs in
+# `assets/`, FerMentor keeps everything at the project root. Rather than encode
+# that per figure, `find_source` looks in all three and takes the first hit,
+# which costs nothing and survives the next reorganisation.
+PROJECTS = REPO.parent / "job-search" / "portfolio" / "projects"
+
+SUBDIRS = ("source", "assets", "")
+
+
+def find_source(figure):
+    """Absolute path to a figure's source file, existing or not."""
+    base = PROJECTS / figure["project"]
+    name = figure.get("png") or figure["pdf"]
+    for subdir in SUBDIRS:
+        candidate = base / subdir / name if subdir else base / name
+        if candidate.exists():
+            return candidate
+    return base / name
+
 
 LOFI = "Project3_Rollhaus (Lo-Fi).pdf"
 HIFI = "Project3_Rollhaus (Hi-Fi).pdf"
 COMPONENTS = "Project3_Rollhaus (Components).pdf"
+
+# The FerMentor exports, whole Figma canvases rather than decks, so `page` is
+# always 0 and there is nothing to select but a region. `Screens.pdf` is the
+# Components page's Screens frame at 4986x5158pt; the planning board is a FigJam
+# export at 21472x48681pt, which is why its fractions carry five decimals.
+SCREENS = "Screens.pdf"
+PLANNING = "Capstone Task & Planning Group 2.pdf"
 
 # The Figma section outline, a dashed violet rectangle, sits a few points
 # outside each frame on the Components canvas. Every box below is pulled in to
@@ -62,7 +90,8 @@ COMPONENTS = "Project3_Rollhaus (Components).pdf"
 FIGURES = [
     {
         "out": "public/figures/rollhaus-thumb.jpg",
-        "png": "Editor.png",
+        "project": "rollhaus",
+        "png": "rollhaus_editor_quad.png",
         "crop": [22, 295, 2830, 2050],
         "width": 1120,
         "why": (
@@ -78,7 +107,8 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-editor-quad.jpg",
-        "png": "Editor.png",
+        "project": "rollhaus",
+        "png": "rollhaus_editor_quad.png",
         "crop": [22, 18, 2886, 2050],
         "width": 1400,
         "why": (
@@ -91,7 +121,8 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-editor-inline.jpg",
-        "png": "Editor-1.png",
+        "project": "rollhaus",
+        "png": "rollhaus_editor_02.png",
         "crop": [22, 18, 2886, 2050],
         "width": 1400,
         "why": (
@@ -105,6 +136,7 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-panel-before.jpg",
+        "project": "rollhaus",
         "pdf": COMPONENTS,
         "page": 0,
         "clip": [0.1050, 0.2996, 0.1415, 0.4195],
@@ -125,6 +157,7 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-panel-after.jpg",
+        "project": "rollhaus",
         "pdf": COMPONENTS,
         "page": 0,
         "clip": [0.0218, 0.4679, 0.0684, 0.5932],
@@ -138,6 +171,7 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-extension.jpg",
+        "project": "rollhaus",
         "pdf": HIFI,
         "page": 0,
         "clip": [0.0891, 0.7188, 0.1995, 0.9524],
@@ -154,6 +188,7 @@ FIGURES = [
     },
     {
         "out": "public/figures/rollhaus-options.png",
+        "project": "rollhaus",
         "pdf": LOFI,
         "page": 0,
         "clip": [0.7006, 0.1351, 0.7654, 0.2471],
@@ -164,6 +199,105 @@ FIGURES = [
             "plate and its 'Customization Options' title tab, so it reads as "
             "the note it is. The empty upper third is the note's own layout and "
             "is kept rather than cropped into, which would cut its corners off."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-thumb.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.03490, 0.70668, 0.31569, 0.87631],
+        "width": 1120,
+        "why": (
+            "The project-grid card, three batch-detail screens on the canvas "
+            "background, cropped to 16:10 for the same reason the Rollhaus thumb "
+            "is: the tile fixes that ratio and crops with object-cover. Three "
+            "portrait phones is what makes 16:10 land honestly here, and two "
+            "would leave margins doing nothing. Chosen over the dashboard group, "
+            "which reads as any list app; this one carries SHOW ME, the overdue "
+            "banner and the Ready state, so the card shows the product's "
+            "argument rather than its navigation."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-framings.png",
+        "project": "fermentor",
+        "pdf": PLANNING,
+        "page": 0,
+        "clip": [0.48621, 0.49157, 0.54490, 0.55771],
+        "width": 1100,
+        "why": (
+            "The three candidate problem framings on the UX Research board, each "
+            "with its written reasoning, which is the artifact behind the reframe "
+            "section. Tall and narrow because the column is: cropping it wider "
+            "would pull in the neighbouring Problem Statement and HMW columns "
+            "and make it a picture of a board rather than of an argument."
+        ),
+        "open": (
+            "The reasoning paragraphs address Leonid in the second person "
+            "('evidenced in your research'), which is visible in the crop and is "
+            "the AI-assisted drafting the case study discloses in prose. Left in "
+            "rather than cropped out: removing it would be hiding the thing the "
+            "copy already states."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-predict.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.31588, 0.71001, 0.39009, 0.74952],
+        "width": 800,
+        "why": (
+            "Left half of the SHOW ME exchange: what the system says to expect "
+            "at this stage, as Brine, Surface and Appearance. Cropped to the card "
+            "alone rather than shown on the phone, because its pair below is a "
+            "separate overlay and the two only read as one exchange at the same "
+            "size. The dead canvas between them on the source page is why."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-report.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.31588, 0.82590, 0.39009, 0.87418],
+        "width": 800,
+        "why": (
+            "Right half of the same exchange: what the user reports back, in the "
+            "same three categories and the same order, through dropdowns rather "
+            "than a text field. The matching order is the appearance-first "
+            "assessment rule made visible, so both crops keep the full category "
+            "column even though it costs some height."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-dash-early.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.13498, 0.28131, 0.21380, 0.44532],
+        "width": 700,
+        "why": (
+            "Left half of the dashboard comparison, two days before the "
+            "Cauliflower window closes. Same three batches as its pair, same "
+            "crop box, so the only thing that differs between the two images is "
+            "what the interface is saying."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-dash-late.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.22603, 0.28131, 0.30465, 0.44532],
+        "width": 700,
+        "why": (
+            "Right half, two days later: the top row has gone from a countdown "
+            "to 'act now', and the Cauliflower bar has run past its range. The "
+            "other two countdowns move 6d to 4d and 11d to 9d, which is what "
+            "dates the pair at two days and stops the caption having to assert "
+            "it. Identical crop box to the early state, deliberately."
         ),
     },
 ]
@@ -194,7 +328,7 @@ def render(figure, out_path):
     quality = {"jpg_quality": 86} if out_path.suffix == ".jpg" else {}
 
     if "png" in figure:
-        src = fitz.Pixmap(SOURCES / figure["png"])
+        src = fitz.Pixmap(find_source(figure))
         x0, y0, x1, y1 = figure["crop"]
         box = fitz.Rect(x0, y0, x1, y1)
 
@@ -211,7 +345,7 @@ def render(figure, out_path):
         pix.save(out_path, **quality)
         return f"{pix.width}x{pix.height} from {src.width}x{src.height} source"
 
-    doc = fitz.open(SOURCES / figure["pdf"])
+    doc = fitz.open(find_source(figure))
     page = doc[figure["page"]]
 
     if "xref" in figure:
@@ -256,7 +390,7 @@ def extract(figure, *, dry_run):
     if dry_run:
         return True
 
-    src_path = SOURCES / (figure.get("png") or figure["pdf"])
+    src_path = find_source(figure)
     if not src_path.exists():
         print(f"  SKIP   source not found: {src_path}", file=sys.stderr)
         return False

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { rollhausArchitecture } from '../../src/content/figures/rollhaus-architecture';
 import { projects } from '../../src/content/projects';
 import type { Section } from '../../src/content/types';
-import { body } from './rendered';
+import { body, text } from './rendered';
 
 // The `embed` arm resolves a FigureId through a registry at render time. The
 // typecheck proves the registry has an entry for every id; it cannot prove the
@@ -129,7 +129,11 @@ describe('image figures (Seam 2)', () => {
       });
 
       it('carries its alt text, which is the copy a screen reader gets', () => {
-        expect(body(page)).toContain(state.alt);
+        // `text`, not `body`: alt is an attribute, so React escapes the quotes
+        // and apostrophes in it. Against raw markup this assertion passed only
+        // for as long as no alt on the site contained either, which is a guard
+        // that works until the first time it matters.
+        expect(text(page)).toContain(state.alt);
       });
 
       if (state.label !== null) {
