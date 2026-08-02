@@ -41,11 +41,13 @@ The UI control that switches between light and dark mode. Ships in v1. Driven by
 The four pages that ship at launch, each one full (no skeleton/"coming soon" pages):
 
 - `/` — Home: hero + Rollhaus card
-- `/work/rollhaus` — Project Detail: the hero case study
+- `/projects/rollhaus` — Project Detail: the hero case study
 - `/design-system` — Design System: full docs, live system the site runs on
 - `/about` — About + Contact merged: the craft-origin arc + email/LinkedIn/GitHub/CV download
 
-URL structure is forward-designed: `/work/rollhaus` lets a `/work` listing page slot in at v2 without breaking the case study URL. Deferred to v2: `/work` listing (a list of one is just a link), Playground/Experiments.
+URL structure is forward-designed: `/projects/rollhaus` lets a `/projects` listing page slot in at v2 without breaking the case study URL. Deferred to v2: `/projects` listing (a list of one is just a link), Playground/Experiments.
+
+**Named Work until 2026-08-02**, in the nav label and in the route alike. "Work" reads as employment, which is the wrong promise on a grid where most entries are not jobs. The route moved with the label rather than leaving the URL arguing with the nav. Nothing is deployed at the old paths, so no redirect is owed.
 
 ## Tile Schema
 

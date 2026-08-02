@@ -246,7 +246,10 @@ drafting, per guardrail 5.
 
 The work is done when, from a clean state:
 
-- `npm run build` passes with the new route at `out/work/fermentor/index.html`.
+- `npm run build` passes with the new route at `out/projects/fermentor/index.html`.
+  The Work → Projects rename was in flight uncommitted when this spec was
+  written and is assumed landed; if it is reverted, this is
+  `out/work/fermentor/index.html` and nothing else in this spec changes.
 - Typecheck is clean and the existing suites stay green: 61 unit, 98 export, 0
   skipped as of 2026-08-01.
 - `token-discipline.test.ts` passes over the new content and figure files.
@@ -262,7 +265,7 @@ The work is done when, from a clean state:
 
 - The remaining inventory projects. Breadth is a separate pass and a separate
   spec.
-- The `/work` listing route. Still v2, and a list of four is closer to earning
-  one than a list of one was.
+- The `/projects` listing route. Still v2, and a list of four is closer to
+  earning one than a list of one was.
 - Any change to the Router, tiers or lens sorting. `tier` rides on the record and
   nothing sorts by it yet, which stays true.
