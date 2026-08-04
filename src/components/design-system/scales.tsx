@@ -51,10 +51,38 @@ export function TypeScale({ tokens }: { tokens: readonly Token[] }) {
 /*
  * The roles, each rendered through its own utility. This is the type half of
  * what the Semantic colour row does: the specimen is not described, it is set.
- * The properties beside it are read out of the generated CSS, so a role that
- * gains or loses one says so here without an edit.
+ *
+ * Split in two on 2026-08-04. Every role used to print its five token
+ * properties directly underneath it, which is eleven roles times five lines of
+ * token names, and it was roughly a third of the page. The specimen and the job
+ * stay here, because showing the scale *is* the design work. The properties move
+ * into TypeRoleProperties below, behind a disclosure, where they are still proof
+ * and no longer the thing a reader has to scroll past.
  */
-export function TypeRoles({
+export function TypeRoles({ roles }: { roles: readonly TypeRole[] }) {
+  return (
+    <ul className="mt-gap space-y-gap">
+      {roles.map((entry) => (
+        <li key={entry.role}>
+          <p className={entry.utility}>{entry.role}</p>
+          <p className="mt-tight type-meta text-muted">{entry.job}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/*
+ * What each role actually sets, read out of the generated CSS. A role that gains
+ * or loses a property says so here with no edit, which is the claim the intro
+ * makes about the whole page.
+ *
+ * A table rather than the old per-role list, because behind a disclosure the
+ * reader who opens it is comparing roles against each other. That is the
+ * question the shape should answer, and eleven separate lists answered a
+ * different one.
+ */
+export function TypeRoleProperties({
   roles,
   tokens,
 }: {
@@ -62,26 +90,45 @@ export function TypeRoles({
   tokens: readonly Token[];
 }) {
   return (
-    <ul className="mt-gap space-y-gap">
-      {roles.map((entry) => (
-        <li key={entry.role}>
-          <p className={entry.utility}>{entry.role}</p>
-          <p className="mt-tight type-meta text-muted">{entry.job}</p>
-          <ul className="mt-tight flex flex-wrap gap-gap">
-            {tokens
-              .filter((token) => token.name.startsWith(`--ds-type-${entry.role}-`))
-              .map((token) => (
-                <li key={token.name} className="type-meta text-muted">
-                  <code className="type-code">
-                    {token.name.replace(`--ds-type-${entry.role}-`, '')}
-                  </code>{' '}
-                  {token.reference ?? token.value}
-                </li>
-              ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
+    // Scrolls inside itself rather than widening the page. Five columns of token
+    // references do not fit a phone and never will.
+    <div className="mt-gap overflow-x-auto">
+      <table className="w-full text-left type-meta text-muted">
+        <thead>
+          <tr>
+            <th scope="col" className="pe-gap pb-tight">
+              Role
+            </th>
+            <th scope="col" className="pe-gap pb-tight">
+              Sets
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {roles.map((entry) => (
+            <tr key={entry.role} className="border-t border-border">
+              <th scope="row" className="pe-gap py-tight align-top">
+                <code className="type-code">{entry.role}</code>
+              </th>
+              <td className="py-tight">
+                <ul className="flex flex-wrap gap-gap">
+                  {tokens
+                    .filter((token) => token.name.startsWith(`--ds-type-${entry.role}-`))
+                    .map((token) => (
+                      <li key={token.name}>
+                        <code className="type-code">
+                          {token.name.replace(`--ds-type-${entry.role}-`, '')}
+                        </code>{' '}
+                        {token.reference ?? token.value}
+                      </li>
+                    ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

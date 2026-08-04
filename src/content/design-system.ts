@@ -169,9 +169,51 @@ export const ENFORCED_RULES: readonly EnforcedRule[] = [
   },
 ];
 
+export type Pillar = {
+  /** The decision, stated as a rule. */
+  title: string;
+  /** What it buys, and what it costs. One sentence each way where both apply. */
+  body: string;
+};
+
+/*
+ * Added 2026-08-04, at the top of the page, above every swatch.
+ *
+ * The page used to open on 12 Primitives and answer "what tokens exist". The
+ * question a reader actually arrives with is which decisions hold this together
+ * and what they bought, and that was answerable only by reading five sections of
+ * prose interleaved with tables. These are those decisions, stated once.
+ *
+ * Four, not more. Each one is enforced somewhere further down the page, so a
+ * pillar that could not point at its own proof did not get written: "tokens are
+ * themeable" and "the scale is consistent" were both drafted and cut for that
+ * reason. Tone tell #3 is the risk this section runs, and the defence is that
+ * every line below names a mechanism rather than a virtue.
+ */
+export const PILLARS: readonly Pillar[] = [
+  {
+    title: 'A component may touch one layer, and it is the layer with a job attached.',
+    body: 'Primitive is a value, Brand names it in this site\'s voice, Semantic names what it is for. Reaching past Semantic means a colour was chosen for how it looks, and nothing above can move it again. The cost is a name for everything, including the two border roles that resolve to the same value today.',
+  },
+  {
+    title: 'A type role carries five decisions, not one.',
+    body: 'Size, weight, line height, letter spacing and family are fixed together, so a call site names a job and gets all of it. There is no size utility to reach for on its own. This exists because one heading on this site shipped at the wrong line height beside seven that did not, and nothing could catch it.',
+  },
+  {
+    title: 'The rules run in the test suite, not in a document.',
+    body: 'Five of them, over every file under src and public, on every build. Tokens without enforcement are a naming convention, and a convention is what everyone follows until the week they are busy.',
+  },
+  {
+    title: 'Contrast is computed, never asserted.',
+    body: 'Every pair the site renders is measured from the resolved token values in both themes, by the same function on this page and in the tests. A palette change that breaks a ratio fails the build. A pair nothing renders is not listed, because an unrendered pair passing tells you nothing.',
+  },
+];
+
 export const designSystem: {
   intro: string;
   restraint: string;
+  pillars: Prose;
+  inPlace: Prose;
   layers: Prose;
   families: Prose;
   rules: Prose;
@@ -188,13 +230,31 @@ export const designSystem: {
   restraint:
     'This system covers what the site renders and stops there. Tokens nothing uses are inventory rather than a system.',
 
+  pillars: {
+    kind: 'prose',
+    heading: 'What holds it together',
+    body: [
+      'Four decisions, each enforced somewhere below rather than promised here.',
+    ],
+  },
+
+  inPlace: {
+    kind: 'prose',
+    heading: 'The system in place',
+    body: [
+      'Every control below is the component that ships elsewhere on this site, imported rather than rebuilt for this page. The lens chips are the ones on the project cards, the switch is the one in the header, and throwing it moves the Semantic swatches further down while the two layers above them hold still.',
+      'Hover them, and tab through them. States are live here rather than pinned as separate styles, which would mean keeping a second copy of each one in step with the first.',
+    ],
+  },
+
   layers: {
     kind: 'prose',
     heading: 'Three layers, one direction',
     body: [
       "A Primitive is a raw value with no opinion about where it goes. A Brand token gives that value a name in this site's voice. A Semantic token names a job, and it is the only layer a component is allowed to touch.",
       'The chain stays visible in the file the browser receives, because the build emits each layer as a reference to the one below rather than flattening it to a value. Change a Brand token and every Semantic role above it moves, with no component involved.',
-      'Only the Semantic row varies by theme. The two rows above it are the same in light and dark, which is why they are shown here as fixed values and the row below them is not. Switch the theme and watch which row moves.',
+      'Body text is the shortest example. Three names resolve to one value, and each name answers a different question: what the number is, what this site calls it, and what it is for.',
+      'Only the Semantic row varies by theme, so it is the first link that re-points in dark and nothing below it moves. That is also why the two fixed layers are shown here as values and the Semantic row is not. Switch the theme and watch which one changes.',
     ],
   },
 
@@ -203,7 +263,7 @@ export const designSystem: {
     heading: 'Space, type and radius',
     body: [
       'The same three layers carry everything else. These are shown at the size they render rather than as a table of numbers, because the question is whether the steps are far enough apart to see.',
-      'Type is two things. A size ramp, and the roles built on it: each role fixes a size, a weight, a line height, a letter spacing and a family together, so a call site names a job and gets all five rather than a size plus four things it has to remember.',
+      'Type is two things. A size ramp, and the roles built on it. Each role is set below in the utility that renders it, so what you are reading is the role rather than a description of one, and the five properties each one fixes are in the table under them.',
     ],
   },
 

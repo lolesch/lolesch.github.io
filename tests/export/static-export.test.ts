@@ -18,26 +18,32 @@ describe('static export (Seam 2)', () => {
   });
 
   it('pre-renders the approved hero headline as the h1', () => {
-    // Read the <h1> specifically: the same sentence is in the meta description,
-    // so a document-wide check passes even with no hero on the page.
+    // Read the <h1> specifically rather than the whole document. The meta
+    // description no longer repeats the headline, but reading the h1 is still
+    // the assertion worth making: it is *where* the sentence has to be.
     const h1 = rendered(HOME).match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? '';
-    expect(h1).toContain(
-      'I build systems that designers can understand and engineers can build.',
-    );
+    expect(h1).toContain('The hard part happens before anyone starts building.');
   });
 
-  it('pre-renders the hero body as the first paragraphs, readable with JS disabled', () => {
+  it('pre-renders the hero body as the first paragraph, readable with JS disabled', () => {
     // Anchored to position rather than to a document-wide count: the work grid
     // adds paragraphs of its own below, and this assertion is about the hero.
+    //
+    // One paragraph since 2026-08-04, not two. The second existed to carry the
+    // "one job instead of two" framing, which the same decision rejected: if
+    // design and implementation are one job then there is only one job, which
+    // was never the claim.
     const paragraphs = [...rendered(HOME).matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1]);
-    expect(paragraphs.length).toBeGreaterThanOrEqual(2);
-    // The first hero paragraph carries an apostrophe React escapes as an
-    // entity, so this matches a fragment that does not. It still fails if the
-    // paragraph goes missing, which is what the assertion is for.
-    expect(paragraphs[0]).toContain('taught me that the hard problems were rarely in the code');
-    expect(paragraphs[1]).toContain(
-      'Now I work where design and implementation are one job instead of two.',
-    );
+    expect(paragraphs.length).toBeGreaterThanOrEqual(1);
+    expect(paragraphs[0]).toContain('The expensive problems were rarely in the code.');
+    expect(paragraphs[0]).toContain('so I went and learned to do that part');
+  });
+
+  it('has dropped the rejected "one job" framing everywhere on Home', () => {
+    // A guard rather than a formality. The phrase was in three places (the h1,
+    // the hero body and About's closing section) and fixing one would have left
+    // the site arguing with itself, which is the failure the decision was about.
+    expect(rendered(HOME)).not.toContain('one job');
   });
 
   it('renders the hero headline on the display role, not a Tailwind built-in', () => {

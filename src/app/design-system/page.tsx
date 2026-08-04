@@ -1,10 +1,20 @@
 import type { Metadata } from 'next';
+import { TokenChain } from '@/components/design-system/chain';
 import { FixedLayer, SemanticLayer } from '@/components/design-system/colour';
 import { ContrastTable } from '@/components/design-system/contrast-table';
-import { RadiusScale, SpaceScale, TypeRoles, TypeScale } from '@/components/design-system/scales';
+import { Disclosure } from '@/components/design-system/disclosure';
+import { ComponentGallery } from '@/components/design-system/gallery';
+import {
+  RadiusScale,
+  SpaceScale,
+  TypeRoleProperties,
+  TypeRoles,
+  TypeScale,
+} from '@/components/design-system/scales';
 import {
   designSystem,
   ENFORCED_RULES,
+  PILLARS,
   SEMANTIC_COLOURS,
   TYPE_ROLES,
 } from '@/content/design-system';
@@ -34,6 +44,18 @@ function Prose({ body }: { body: readonly string[] }) {
   );
 }
 
+/*
+ * Restructured 2026-08-04. The order used to be layers, families, rules,
+ * contrast, built, which is the order the system was constructed in and the
+ * wrong one to read it in: the page opened on 12 Primitive swatches and put
+ * every decision behind them.
+ *
+ * Now the decisions come first, then the components those decisions produce,
+ * and the inventory that used to open the page sits behind disclosures. Nothing
+ * was deleted. The three things no other portfolio has, the build-time reading,
+ * the five enforced rules and the computed contrast table, are all still here
+ * and are now reachable without scrolling past a token dump to find them.
+ */
 export default function DesignSystemPage() {
   // Read once, at build time, and passed down. The page is a Server Component
   // and this never reaches the browser.
@@ -58,6 +80,35 @@ export default function DesignSystemPage() {
       */}
       <p className="mt-gap type-body">{designSystem.restraint}</p>
 
+      <section aria-labelledby="pillars" className="mt-section">
+        <h2 id="pillars" className="type-heading">
+          {designSystem.pillars.heading}
+        </h2>
+        <Prose body={designSystem.pillars.body} />
+
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
+          {PILLARS.map((pillar) => (
+            <div key={pillar.title}>
+              <dt className="type-emphasis">{pillar.title}</dt>
+              <dd className="text-muted">{pillar.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/*
+        Second, before any token. A reader who stops here has still seen the
+        system do its job, which was not true of any earlier version of this
+        page.
+      */}
+      <section aria-labelledby="in-place" className="mt-section">
+        <h2 id="in-place" className="type-heading">
+          {designSystem.inPlace.heading}
+        </h2>
+        <Prose body={designSystem.inPlace.body} />
+        <ComponentGallery />
+      </section>
+
       <section aria-labelledby="layers" className="mt-section">
         <h2 id="layers" className="type-heading">
           {designSystem.layers.heading}
@@ -65,16 +116,30 @@ export default function DesignSystemPage() {
         <Prose body={designSystem.layers.body} />
 
         {/*
+          One traced colour in the scan path, the full grids behind it. Started
+          from the Semantic end because that is the only end a component is
+          allowed to hold, and the walk finds the rest.
+        */}
+        <TokenChain from="--ds-color-fg" tokens={tokens} />
+
+        {/*
           Counts are computed, never authored. The spec's own hand-written
           "13 Brand" was already wrong two days later, on a page whose argument
           is that documentation cannot drift from what ships.
         */}
-        <h3 className="mt-section type-subheading">Primitive ({primitiveColour.length})</h3>
-        <FixedLayer tokens={primitiveColour} />
+        <Disclosure summary={`Every fixed token (${primitiveColour.length + brand.length})`}>
+          <h3 className="mt-gap type-subheading">Primitive ({primitiveColour.length})</h3>
+          <FixedLayer tokens={primitiveColour} />
 
-        <h3 className="mt-section type-subheading">Brand ({brand.length})</h3>
-        <FixedLayer tokens={brand} />
+          <h3 className="mt-section type-subheading">Brand ({brand.length})</h3>
+          <FixedLayer tokens={brand} />
+        </Disclosure>
 
+        {/*
+          The Semantic row stays open. It is nine entries, it is the only layer a
+          component may touch, and it is the one that moves with the theme, which
+          is the demonstration the prose above asks the reader to watch for.
+        */}
         <h3 className="mt-section type-subheading">Semantic ({SEMANTIC_COLOURS.length})</h3>
         <SemanticLayer entries={SEMANTIC_COLOURS} tokens={tokens} />
       </section>
@@ -92,7 +157,10 @@ export default function DesignSystemPage() {
         <TypeScale tokens={of('semantic', 'text')} />
 
         <h3 className="mt-section type-subheading">Type roles ({TYPE_ROLES.length})</h3>
-        <TypeRoles roles={TYPE_ROLES} tokens={tokens} />
+        <TypeRoles roles={TYPE_ROLES} />
+        <Disclosure summary="What each role sets">
+          <TypeRoleProperties roles={TYPE_ROLES} tokens={tokens} />
+        </Disclosure>
 
         <h3 className="mt-section type-subheading">Radius ({of('semantic', 'radius').length})</h3>
         <RadiusScale tokens={of('semantic', 'radius')} />

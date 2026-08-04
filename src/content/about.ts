@@ -4,23 +4,52 @@ import type { About } from './types';
 // character for character apart from the two changes noted inline. This repo is
 // canonical for it from 2026-07-31; the source carries a superseded-pointer.
 export const about: About = {
+  // Rewritten 2026-08-04. The arc is unchanged and deliberately so: metalworker
+  // to Unity developer to designer in nine words is the most memorable sentence
+  // on the site, and the alternative considered, some version of "I have worn
+  // many hats", is a cliché that says less. What the old line was missing is
+  // that it listed three states and attached no claim to any of them.
+  //
+  // The claim is "I still write the code", which the tone check pulled back to
+  // from "I still use all three". That version read as though the metalwork were
+  // also live, and it is not: what survives it is on the wall and in a pocket,
+  // which the last section says properly. Guardrail 1 applies to a sentence
+  // about yourself the same as to one about a project.
   intro:
-    "I'm a UX/UI designer in Berlin. Before that I was a Unity developer for over five years, and before that a metalworker.",
+    "I'm a UX/UI designer in Berlin, and I still write the code. Five years as a Unity developer before this, and a metalworker's apprenticeship before that.",
 
+  // Reordered 2026-08-04, from chronological to present-first. The old order ran
+  // How that happened, Why UX, How I work, Where I'm going, which put who Leonid
+  // is now third of four on the page a hiring manager opens to find out exactly
+  // that. Now: what he does, where it is going, why the pivot, then the story.
+  // "Why UX" sits third rather than last because it answers a question a reader
+  // actively has, which the biography does not.
   sections: [
     {
       kind: 'prose',
-      heading: 'How that happened',
+      heading: 'How I work',
       body: [
-        // The second sentence is the metalwork systems-origin line, decided
-        // 2026-07-29 and written 2026-07-31. It states a fact about the shelf
-        // and leaves the parallel to design work unstated: an earlier version
-        // drew it ("same instinct as the shelf, different material") and was
-        // cut under tone tell #4. It also avoids claiming he already framed
-        // before building, which would contradict "How I work" below.
-        "I trained in Metallgestaltung and passed my journeyman's exam in 2016. My Gesellenstück was a wall shelf on a bayonet mechanism, so the layers unlock and remount in any configuration. That was the first thing I built where the parts had to work in more than one arrangement. It is still on my wall, and I still carry the pocket knife I forged during the apprenticeship.",
-        'Then a few years without much direction. I was restoring a VW LT with a friend, living on a farm in Mecklenburg, and modding Torchlight II in the evenings, when it occurred to me that people do this for a living. I applied to Games Academy in Berlin.',
-        "I trained there as a game designer and then kept gravitating to the programming side of every project, so I taught myself to code. At Sorcerers Lab I ended up as the studio's only developer and shipped a turn-based roguelite in about five months. At Paintbucket Games I owned the UI on Beholder 3: designed it, implemented it, and built a color system where a single ScriptableObject drove the palette across every menu instead of colors being set per object.",
+        // Clauses flipped 2026-08-04. Both halves survive, and the honesty is
+        // the point of the sentence, but as the first line of the page the old
+        // order opened on a weakness and read as a hedge before anything had
+        // been claimed.
+        'I think in systems. My work still holds up when the requirements change three months later, and I am usually not the fastest person on a task. It shows up as design tokens, reusable components, and architecture decisions made early enough to matter.',
+        'It has a failure mode and I know what it is. Coming from engineering, the temptation is to jump to a solution before the problem is properly framed. Learning to do the framing first is most of what I went to SPICED for.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: "Where I'm going",
+      body: [
+        // The final clause used to read "and there's a case study about it".
+        // Cut on 2026-07-31 under guardrail 1: the meta case study is v2 and
+        // does not exist, so it was not a claim yet. Put it back when it ships.
+        //
+        // The opening used to read "Design and engineering as one job rather
+        // than two". Cut 2026-08-04 with the same phrase in the hero: if the two
+        // are one job then there is only one job, which was never the claim.
+        // They are two ways at the same problem and Leonid has both.
+        'Design and engineering as two ways into the same problem rather than two departments, and working out what AI actually changes about that. I write the architecture and the design docs myself, then use AI to review them and to execute inside guardrails I set. This site is being built that way.',
       ],
     },
     {
@@ -33,21 +62,22 @@ export const about: About = {
       ],
     },
     {
+      // Renamed from "How that happened" on 2026-08-04. It reads last now, and
+      // "that" had nothing in front of it to point at.
       kind: 'prose',
-      heading: 'How I work',
+      heading: 'How I got here',
       body: [
-        'I think in systems. That means I am usually not the fastest person on a task, and I am reliably the one whose work still holds up when the requirements change three months later. It shows up as design tokens, reusable components, and architecture decisions made early enough to matter.',
-        'It has a failure mode and I know what it is. Coming from engineering, the temptation is to jump to a solution before the problem is properly framed. Learning to do the framing first is most of what I went to SPICED for.',
-      ],
-    },
-    {
-      kind: 'prose',
-      heading: "Where I'm going",
-      body: [
-        // The final clause used to read "and there's a case study about it".
-        // Cut on 2026-07-31 under guardrail 1: the meta case study is v2 and
-        // does not exist, so it was not a claim yet. Put it back when it ships.
-        'Design and engineering as one job rather than two, and working out what AI actually changes about that. I write the architecture and the design docs myself, then use AI to review them and to execute inside guardrails I set. This site is being built that way.',
+        // The second sentence is the metalwork systems-origin line, decided
+        // 2026-07-29 and written 2026-07-31. It states a fact about the shelf
+        // and leaves the parallel to design work unstated: an earlier version
+        // drew it ("same instinct as the shelf, different material") and was
+        // cut under tone tell #4. It also avoids claiming he already framed
+        // before building, which would contradict "How I work" above. That
+        // section led this page until 2026-08-04 and now opens it, so the
+        // contradiction would land harder, not softer.
+        "I trained in Metallgestaltung and passed my journeyman's exam in 2016. My Gesellenstück was a wall shelf on a bayonet mechanism, so the layers unlock and remount in any configuration. That was the first thing I built where the parts had to work in more than one arrangement. It is still on my wall, and I still carry the pocket knife I forged during the apprenticeship.",
+        'Then a few years without much direction. I was restoring a VW LT with a friend, living on a farm in Mecklenburg, and modding Torchlight II in the evenings, when it occurred to me that people do this for a living. I applied to Games Academy in Berlin.',
+        "I trained there as a game designer and then kept gravitating to the programming side of every project, so I taught myself to code. At Sorcerers Lab I ended up as the studio's only developer and shipped a turn-based roguelite in about five months. At Paintbucket Games I owned the UI on Beholder 3: designed it, implemented it, and built a color system where a single ScriptableObject drove the palette across every menu instead of colors being set per object.",
       ],
     },
   ],

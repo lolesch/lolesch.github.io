@@ -19,7 +19,14 @@ export const metadata: Metadata = {
   // No em-dash (CLAUDE.md guardrail 5). The middot matches the metadata
   // separator already used in site_copy.md's tile lines.
   title: 'Leonid Schreiber · Design Engineer',
-  description: 'I build systems that designers can understand and engineers can build.',
+  // Descriptive rather than the h1, which the headline rewrite on 2026-08-04
+  // made necessary: "The hard part happens before anyone starts building." is a
+  // point of view, and a search result carrying only that says nothing about
+  // whose page it is. A description is read out of context, so it names the
+  // person and the contents; the headline is read in context and does not have
+  // to.
+  description:
+    'Portfolio of Leonid Schreiber, UX/UI designer in Berlin. Case studies in UX, design systems and interaction, plus the design system this site runs on.',
 };
 
 // Runs before first paint so the correct theme is on <html> with no flash.
