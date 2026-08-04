@@ -47,7 +47,15 @@ const OFFENCES: Offence[] = [
     why: 'hardcodes a colour literal instead of using a Semantic token',
     // src/content/** is exempt because a diagram that depicts the Rollhaus
     // brand palette is *about* those colours. They are content, not styling.
-    exempt: (path) => path.startsWith('src/content/'),
+    //
+    // src/lib/contrast.ts is exempt for a different reason and it is the
+    // narrower one: it declares the two ends of the sRGB gamut, which the scrim
+    // bound needs in order to say "no photograph can do worse than this". Black
+    // and white there are not colours anything renders and not decisions anyone
+    // made; they are where the colour space stops. The exemption is one file
+    // rather than a directory precisely because that argument does not
+    // generalise.
+    exempt: (path) => path.startsWith('src/content/') || path.endsWith('src/lib/contrast.ts'),
   },
   {
     // The four properties a type role carries alongside its size. Reaching for
@@ -61,6 +69,34 @@ const OFFENCES: Offence[] = [
     pattern:
       /\b(?:leading|tracking)-[\w.\[\]/-]+|\bfont-(?:serif|sans|mono|thin|extralight|light|normal|medium|semibold|bold|extrabold|black)\b/g,
     why: 'sets a type property outside a role',
+  },
+  {
+    // The same failure as the rule above, one family across. `motion-state`
+    // carries the duration and the curve together, and the two are only a tempo
+    // when they arrive together: a call site that takes `duration-200` and
+    // forgets the easing has invented a second tempo, and nothing looks wrong
+    // until there are four of them.
+    //
+    // `transition-*` is deliberately absent. Which property moves is the
+    // component's decision, not the system's, so the card naming
+    // `transition-colors` and the thumbnail naming `transition-transform` are
+    // both correct and both have to stay sayable.
+    //
+    // Both halves are narrower than they look, and the first draft was not.
+    // `duration-[\w-]+` and a bare `ease-[\w-]+` caught the phrase "ease-out
+    // curve" in a comment in src/lib/scrim.ts, which is prose about a curve and
+    // not a class. So `duration-` has to be followed by the number or the
+    // bracket a real utility carries, and the easing arm names Tailwind's four
+    // built-ins outright. Those are the only easings reachable here anyway,
+    // because the adapter in globals.css deliberately does not bridge the token
+    // to an `ease-*` utility. "ease-out" in running text still collides and that
+    // is accepted: it is one phrase, against rule four's warning that a guard
+    // which cries wolf is a guard someone deletes.
+    pattern: /\bduration-(?:\d|\[)[\w.\[\]/-]*|\bease-(?:linear|in-out|in|out|initial|\[)[\w.\[\]/-]*/g,
+    why: 'sets a duration or an easing outside the motion role',
+    // globals.css is where the role is defined, the same way it is the only
+    // file allowed to name a type token.
+    exempt: (path) => path.endsWith('src/app/globals.css'),
   },
 ];
 

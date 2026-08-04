@@ -1,0 +1,6 @@
+{
+  "motion": {
+    "state": { "$type": "duration", "$value": "{primitive.duration.state}" },
+    "ease": { "$type": "cubicBezier", "$value": "{primitive.easing.out}" }
+  }
+}

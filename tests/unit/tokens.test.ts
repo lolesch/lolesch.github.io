@@ -50,9 +50,32 @@ describe('token pipeline (Seam 1)', () => {
     expect(dark).not.toMatch(/--ds-brand-[\w-]+:/);
   });
 
-  it('gives light and dark identical Semantic keys, so no component branches on theme', () => {
-    const keys = (css: string) =>
-      [...css.matchAll(/(--ds-color-[\w-]+):/g)].map((m) => m[1]).sort();
-    expect(keys(dark)).toEqual(keys(light));
+  /*
+   * This case used to read `expect(keys(dark)).toEqual(keys(light))`, and it was
+   * right for as long as every Semantic colour varied by theme. Two stopped on
+   * 2026-08-05: the scrim over a thumbnail is media chrome, so it is dark on a
+   * light page, and the type on it is fixed in the same direction.
+   *
+   * What the case was actually protecting is in its own name, and that is
+   * untouched. A component still never branches on the theme, because every role
+   * is declared in :root and a theme-varying one is re-pointed by the cascade
+   * with no component involved. `text-on-scrim` is written once and is correct
+   * in both themes precisely because it is not overridden.
+   *
+   * So the assertion is split rather than relaxed. An override with no role
+   * under :root is still a bug and still fails. A role the dark file omits is
+   * still a decision, and it now has to be made here, by name, which is the same
+   * standard the Semantic family list in design-system.test.ts holds.
+   */
+  const keys = (css: string) => [...css.matchAll(/(--ds-color-[\w-]+):/g)].map((m) => m[1]).sort();
+
+  it('declares every Semantic colour under :root, so no component branches on theme', () => {
+    const orphans = keys(dark).filter((name) => !keys(light).includes(name));
+    expect(orphans, 'the dark file overrides a role that does not exist').toEqual([]);
+  });
+
+  it('varies every Semantic colour by theme except the two that are chrome', () => {
+    const fixed = keys(light).filter((name) => !keys(dark).includes(name));
+    expect(fixed).toEqual(['--ds-color-on-scrim', '--ds-color-scrim']);
   });
 });

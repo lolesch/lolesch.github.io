@@ -17,7 +17,7 @@ export type SemanticColour = {
  * same set in both directions, so adding a token without documenting it fails
  * the build and documenting one that no longer exists fails the build.
  *
- * Uniform bg-* on purpose. Three of the nine are border roles, and rendering
+ * Uniform bg-* on purpose. Three of them are border roles, and rendering
  * those as a ring while the other six are fills would make the reader compare
  * two things at once. The swatch shows the colour; the role line says what it
  * is for.
@@ -40,6 +40,17 @@ export const SEMANTIC_COLOURS: readonly SemanticColour[] = [
     utility: 'bg-border-media',
     role: 'Frame around a photograph',
   },
+  /*
+   * The two that do not move with the theme, and the only two on this list that
+   * render the same swatch in both. That is the interesting thing about them
+   * rather than an omission: the veil over a thumbnail is media chrome, so it
+   * stays dark on a light page the way a subtitle does, and the type on it has
+   * to be fixed in the same direction or the light theme puts dark ink on a dark
+   * band. Throw the switch above and watch these two hold still while the seven
+   * before them move.
+   */
+  { token: '--ds-color-scrim', utility: 'bg-scrim', role: 'Veil carrying a title over media' },
+  { token: '--ds-color-on-scrim', utility: 'bg-on-scrim', role: 'The title on that veil' },
 ];
 
 export type TypeRole = {
@@ -143,9 +154,15 @@ export type EnforcedRule = {
   why: string;
 };
 
-// The five things tests/unit/token-discipline.test.ts bans. Kept in step with
-// that file by hand, which is honest: a guard that generated its own
-// description would document itself rather than the code.
+// What tests/unit/token-discipline.test.ts bans. Kept in step with that file by
+// hand, which is honest: a guard that generated its own description would
+// document itself rather than the code.
+//
+// The count is deliberately not stated here or in the prose. It was, as "five",
+// in two sentences and this comment, and the sixth rule landed on 2026-08-05
+// and left all three behind. The page renders `ENFORCED_RULES.length` in the
+// heading instead, which is the same argument this file makes about every other
+// number on it.
 export const ENFORCED_RULES: readonly EnforcedRule[] = [
   {
     rule: 'No component may reference a Primitive or Brand token.',
@@ -166,6 +183,46 @@ export const ENFORCED_RULES: readonly EnforcedRule[] = [
   {
     rule: 'No component may set a font family, weight, line height or letter spacing on its own.',
     why: 'A type role carries all five decisions together, so a call site names a job and gets the whole of it. Reaching for one of them separately composes a role nobody named, which is how one heading on this site rendered at the wrong line height beside seven that did not.',
+  },
+  {
+    rule: 'No component may set a duration or an easing on its own.',
+    why: 'The same failure one family across. A tempo is a duration and a curve together, and a call site that takes one and forgets the other has invented a second tempo. Which property moves stays the component\'s decision, because the card animates its border and the thumbnail animates its transform and both are right.',
+  },
+];
+
+export type InteractionRule = {
+  /** The rule, stated as a constraint. */
+  rule: string;
+  /** What it prevents. Concrete, or it is not a rule. */
+  why: string;
+};
+
+/*
+ * Added 2026-08-05, when the project cards got a hover state and the system had
+ * nothing to say about what a hover state is.
+ *
+ * Four, and the count is the argument rather than an accident: what a state
+ * change is allowed to do turns out to be a small number of decisions, and every
+ * one below is either enforced by a test or made impossible by the way the role
+ * in globals.css is written. A fifth was drafted, "motion should be quick", and
+ * cut for being a preference with no mechanism behind it.
+ */
+export const INTERACTION_RULES: readonly InteractionRule[] = [
+  {
+    rule: 'A state is never carried by motion alone.',
+    why: 'Motion is invisible to a visitor who has asked their system for less of it, and colour alone fails SC 1.4.1 for everyone else. So the card that lifts its thumbnail also promotes its border and underlines its title, and holding the thumbnail still costs the state nothing.',
+  },
+  {
+    rule: 'Nothing that answers a pointer may change the layout.',
+    why: 'Scaling a card was the first thing tried and the grid reflowed under the cursor. The featured tile is already the full content box, so it grew past the page frame, and the two-up row ate the gap the spacing token exists to hold. What moves now moves inside a box whose size is fixed.',
+  },
+  {
+    rule: 'Hover and focus are one state, resolved by one selector.',
+    why: 'They are the same question asked by a mouse and by a keyboard. Writing them apart is how one of them ends up a step behind the other, and it is usually the keyboard.',
+  },
+  {
+    rule: 'The reduced-motion answer lives in the role, not at the call site.',
+    why: 'A guard that has to be remembered gets forgotten, and this one fails invisibly to everyone it does not affect. The role drops its duration to zero on its own, so a state still changes and stops travelling; anything that should not happen at all is marked where it is written.',
   },
 ];
 
@@ -201,7 +258,7 @@ export const PILLARS: readonly Pillar[] = [
   },
   {
     title: 'The rules run in the test suite, not in a document.',
-    body: 'Five of them, over every file under src and public, on every build. Tokens without enforcement are a naming convention, and a convention is what everyone follows until the week they are busy.',
+    body: 'They run over every file under src and public, on every build. Tokens without enforcement are a naming convention, and a convention is what everyone follows until the week they are busy.',
   },
   {
     title: 'Contrast is computed, never asserted.',
@@ -214,6 +271,7 @@ export const designSystem: {
   restraint: string;
   pillars: Prose;
   inPlace: Prose;
+  interaction: Prose;
   layers: Prose;
   families: Prose;
   rules: Prose;
@@ -247,6 +305,16 @@ export const designSystem: {
     ],
   },
 
+  interaction: {
+    kind: 'prose',
+    heading: 'How things respond',
+    body: [
+      'The system had a colour role for every surface, eleven type roles, and no answer to what a control does when you touch it. The project cards above are where that stopped being theoretical: a title that underlines is feedback at the wrong end of a card whose whole surface is the target.',
+      'One motion role, carrying a duration and a curve, because those two are only a tempo when they arrive together. What moves is left to the component: a card animates its border, a thumbnail animates its transform, and a role that fixed the property would have to be two roles or a lie.',
+      'Four rules govern the rest. Each one is either checked by the test suite or made impossible by how the role is written, which is the same standard the five above are held to.',
+    ],
+  },
+
   layers: {
     kind: 'prose',
     heading: 'Three layers, one direction',
@@ -255,6 +323,7 @@ export const designSystem: {
       'The chain stays visible in the file the browser receives, because the build emits each layer as a reference to the one below rather than flattening it to a value. Change a Brand token and every Semantic role above it moves, with no component involved.',
       'Body text is the shortest example. Three names resolve to one value, and each name answers a different question: what the number is, what this site calls it, and what it is for.',
       'Only the Semantic row varies by theme, so it is the first link that re-points in dark and nothing below it moves. That is also why the two fixed layers are shown here as values and the Semantic row is not. Switch the theme and watch which one changes.',
+      'Two Semantic colours do not re-point, and they are the exception that shows what the layer is for. The scrim over a thumbnail and the text on it stay dark and light respectively in both themes, because the veil is chrome belonging to the photograph rather than surface belonging to the page. Naming the job rather than the colour is what makes that sayable: a component asks for the role and is correct in both themes without knowing which one is on.',
     ],
   },
 
@@ -271,9 +340,9 @@ export const designSystem: {
     kind: 'prose',
     heading: 'The rules that hold it together',
     body: [
-      'Tokens without enforcement are a naming convention. Five rules run in the test suite on every build, over every file under src and public.',
+      'Tokens without enforcement are a naming convention. These run in the test suite on every build, over every file under src and public. The count is in the heading because it is read from the list rather than written into this sentence, which is where it was until a sixth rule arrived and left the number behind.',
       'This page is inside them, with no exemption. It renders the two fixed layers from values read at build time, and the Semantic layer through the same utilities every component uses, which is why the swatches below switch with the theme and the ones above them do not.',
-      'Three of the nine Semantic roles are borders, and two of them resolve to the same value today. One is the decorative hairline, one is the 3:1 boundary that identifies a control, and one frames a photograph. Two roles that agree can diverge later without touching a component, which is the whole point of naming the job rather than the colour.',
+      'Three of the Semantic roles are borders, and two of them resolve to the same value today. One is the decorative hairline, one is the 3:1 boundary that identifies a control, and one frames a photograph. Two roles that agree can diverge later without touching a component, which is the whole point of naming the job rather than the colour.',
     ],
   },
 
@@ -283,6 +352,10 @@ export const designSystem: {
     body: [
       'Every pair the site renders is measured against WCAG 2.2 AA from the resolved token values, in both themes. The numbers below are computed on this page by the same function the test suite uses, so a Brand change that breaks a ratio fails the build before it reaches here.',
       'A pair nothing renders is not listed. An unrendered pair passing tells you nothing.',
+      'One pair is not a pair of tokens. A project title sits on a translucent scrim over a photograph, so what the letters resolve against is the scrim diluted by whatever pixel the image put there. Earlier versions of that card avoided the problem by making the scrim opaque, and the comment in the code said the ratio was not computable at build time.',
+      'It is computable as a bound. An image cannot do worse than its most hostile pixel, and there are only two candidates: the two ends of the colour space. The scrim is dark, so the pixel that hurts is white, and the number below holds for every photograph that could be dropped into the grid, including the ones not taken yet.',
+      'That number is also what sets the opacity, rather than the other way round. The title is the brand gold, and gold is a mid-tone, so the veil has to be dense enough to carry it over a bright thumbnail. The floor is computable too, and the peak sits just above it. An earlier version of this card had a lighter veil and a gold title would have measured 2.53:1 on it, which is unreadable on a photograph of a pale screen and looks perfectly fine on a dark one. That is the failure this whole table exists to catch: the kind that depends on which image you happened to look at.',
+      'There is one row rather than two because the scrim does not follow the theme. It is the veil over a photograph, which is chrome belonging to the image rather than surface belonging to the page, so it stays dark on a light background the way a subtitle does. It and the type on it are the only two Semantic colours here that hold still when the switch is thrown.',
     ],
   },
 

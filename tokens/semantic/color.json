@@ -1,0 +1,7 @@
+{
+  "color": {
+    "$type": "color",
+    "scrim":    { "$value": "{brand.paper-inverse}" },
+    "on-scrim": { "$value": "{brand.accent-inverse}" }
+  }
+}

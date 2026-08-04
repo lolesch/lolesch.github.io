@@ -31,7 +31,7 @@ describe('the token model', () => {
   // fails here until someone decides where on the page it belongs, which is a
   // decision no fallback should make quietly.
   it('recognises every Semantic family, so the catch-all cannot hide a new one', () => {
-    const known = ['color', 'space', 'text', 'type', 'radius'];
+    const known = ['color', 'space', 'text', 'type', 'radius', 'motion'];
     const unknown = [
       ...new Set(
         TOKENS.filter((token) => token.layer === 'semantic')

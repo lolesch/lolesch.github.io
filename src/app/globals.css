@@ -60,6 +60,22 @@
    * for it would repeat the mistake the log records once already.
    */
   --color-border-media: var(--ds-color-border-media);
+  /*
+   * The two roles that do not move with the theme. Everything else in this block
+   * re-points under [data-theme="dark"] with no component involved, which is the
+   * point of the arrangement; these deliberately do not, because the veil over a
+   * thumbnail is media chrome and stays dark on a light page. They are bridged
+   * the same way regardless: the adapter does not need to know which ones vary.
+   */
+  --color-scrim: var(--ds-color-scrim);
+  /*
+   * The brand gold, fixed to its lighter value because the veil it sits on does
+   * not flip. One role rather than two: the title is the only thing on the
+   * scrim, so a separate white `on-scrim` beside a gold accent would have left
+   * one of them rendering nowhere, which is the inventory the restraint claim on
+   * /design-system is about.
+   */
+  --color-on-scrim: var(--ds-color-on-scrim);
 
   --spacing-gutter: var(--ds-space-gutter);
   --spacing-stack: var(--ds-space-stack);
@@ -70,6 +86,16 @@
   --radius-card: var(--ds-radius-card);
   --radius-control: var(--ds-radius-control);
   --radius-tag: var(--ds-radius-tag);
+
+  /*
+   * Motion is deliberately *not* bridged, for the same reason the size ramp
+   * below is not. Tailwind would give back `duration-state` and `ease-state` as
+   * two separate utilities, and a call site that reaches for one and forgets the
+   * other has composed a tempo nobody named. That is the failure the type roles
+   * already document. `motion-state` further down carries both, and rule six of
+   * tests/unit/token-discipline.test.ts is what stops anyone assembling their
+   * own.
+   */
 
   /*
    * The size ramp is deliberately not bridged. --ds-text-* still exists and is
@@ -248,6 +274,33 @@ html {
  */
 @utility type-emphasis {
   font-weight: var(--ds-type-emphasis-weight);
+}
+
+/*
+ * The one interaction role, and the same shape as a type role: it carries every
+ * decision that belongs to the *system* and none that belong to the element.
+ *
+ * How fast and along what curve is the site's tempo, so it is here. *What*
+ * moves is the component's own business, so `transition-property` is not: the
+ * card animates its border and the thumbnail animates its transform, and a role
+ * that fixed the property would have to be two roles or a lie.
+ *
+ * The reduced-motion arm is inside the utility rather than left to a variant at
+ * the call site. A guard that has to be remembered is the arrangement that put
+ * one heading on this site at the wrong line height, and this one has a worse
+ * failure mode than a wrong line height: it is invisible to everyone who is not
+ * affected by it. Duration goes to zero rather than the transition being
+ * removed, so a state still *changes*, it just stops travelling. Anything that
+ * should not move at all is marked `motion-safe` where it is written, which is
+ * what the thumbnail's scale does.
+ */
+@utility motion-state {
+  transition-duration: var(--ds-motion-state);
+  transition-timing-function: var(--ds-motion-ease);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0s;
+  }
 }
 
 /*

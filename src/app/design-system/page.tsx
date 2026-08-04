@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { TokenChain } from '@/components/design-system/chain';
 import { FixedLayer, SemanticLayer } from '@/components/design-system/colour';
-import { ContrastTable } from '@/components/design-system/contrast-table';
+import { ContrastTable, ScrimBound } from '@/components/design-system/contrast-table';
 import { Disclosure } from '@/components/design-system/disclosure';
 import { ComponentGallery } from '@/components/design-system/gallery';
 import {
@@ -14,6 +14,7 @@ import {
 import {
   designSystem,
   ENFORCED_RULES,
+  INTERACTION_RULES,
   PILLARS,
   SEMANTIC_COLOURS,
   TYPE_ROLES,
@@ -53,7 +54,7 @@ function Prose({ body }: { body: readonly string[] }) {
  * Now the decisions come first, then the components those decisions produce,
  * and the inventory that used to open the page sits behind disclosures. Nothing
  * was deleted. The three things no other portfolio has, the build-time reading,
- * the five enforced rules and the computed contrast table, are all still here
+ * the enforced rules and the computed contrast table, are all still here
  * and are now reachable without scrolling past a token dump to find them.
  */
 export default function DesignSystemPage() {
@@ -109,6 +110,41 @@ export default function DesignSystemPage() {
         <ComponentGallery />
       </section>
 
+      {/*
+        Directly under the gallery, because it is about the things in it. A
+        reader who has just been told to hover the card is one paragraph away
+        from what the hover is made of.
+      */}
+      <section aria-labelledby="interaction" className="mt-section">
+        <h2 id="interaction" className="type-heading">
+          {designSystem.interaction.heading}
+        </h2>
+        <Prose body={designSystem.interaction.body} />
+
+        {/*
+          The two tokens read out of the generated stylesheet like every other
+          value on this page, rather than written into the copy. A tempo quoted
+          in prose is a number that can go stale; this one cannot.
+        */}
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
+          {of('semantic', 'motion').map((token) => (
+            <div key={token.name}>
+              <dt className="type-code">{token.name}</dt>
+              <dd className="text-muted">{token.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
+          {INTERACTION_RULES.map((rule) => (
+            <div key={rule.rule}>
+              <dt className="type-emphasis">{rule.rule}</dt>
+              <dd className="text-muted">{rule.why}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       <section aria-labelledby="layers" className="mt-section">
         <h2 id="layers" className="type-heading">
           {designSystem.layers.heading}
@@ -136,7 +172,7 @@ export default function DesignSystemPage() {
         </Disclosure>
 
         {/*
-          The Semantic row stays open. It is nine entries, it is the only layer a
+          The Semantic row stays open. It is short, it is the only layer a
           component may touch, and it is the one that moves with the theme, which
           is the demonstration the prose above asks the reader to watch for.
         */}
@@ -168,7 +204,7 @@ export default function DesignSystemPage() {
 
       <section aria-labelledby="rules" className="mt-section">
         <h2 id="rules" className="type-heading">
-          {designSystem.rules.heading}
+          {designSystem.rules.heading} ({ENFORCED_RULES.length})
         </h2>
         <Prose body={designSystem.rules.body} />
 
@@ -188,6 +224,7 @@ export default function DesignSystemPage() {
         </h2>
         <Prose body={designSystem.contrast.body} />
         <ContrastTable />
+        <ScrimBound />
       </section>
 
       <section aria-labelledby="built" className="mt-section">

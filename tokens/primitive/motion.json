@@ -1,0 +1,12 @@
+{
+  "primitive": {
+    "duration": {
+      "$type": "duration",
+      "state": { "$value": "160ms" }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "out": { "$value": [0.2, 0, 0.2, 1] }
+    }
+  }
+}
