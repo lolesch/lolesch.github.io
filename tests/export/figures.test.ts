@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { rollhausArchitecture } from '../../src/content/figures/rollhaus-architecture';
+import { rollhausSlots } from '../../src/content/figures/rollhaus-slots';
 import { projects } from '../../src/content/projects';
 import type { Section } from '../../src/content/types';
 import { body, text } from './rendered';
@@ -32,9 +32,14 @@ describe('embedded figures (Seam 2)', () => {
     });
   }
 
-  it('renders the Rollhaus diagram, honest limitation included', () => {
+  it('renders the Rollhaus slot figure, honest limitation included', () => {
     const visible = body('out/projects/rollhaus/index.html');
-    expect(visible).toContain(rollhausArchitecture.title);
+    expect(visible).toContain(rollhausSlots.title);
+    // Every screen the one card serves has to be named, or the figure is a
+    // drawing of a tree rather than evidence of reuse.
+    for (const screen of rollhausSlots.screens) {
+      expect(visible).toContain(screen.name);
+    }
     // The footnote is the one place the ad hoc naming limitation is stated.
     // Drop it in a refactor and the page starts overclaiming, quietly.
     expect(visible).toContain('the variable naming is ad hoc');

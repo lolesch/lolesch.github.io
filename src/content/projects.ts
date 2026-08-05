@@ -410,10 +410,10 @@ export const projects: readonly Project[] = [
       },
       {
         kind: 'embed',
-        heading: 'How the configurator is built',
+        heading: 'One card, four screens',
         caption:
-          'The system as it actually works, ported from the Figma file onto the tokens this site runs on, so it follows the theme.',
-        figure: 'rollhaus-architecture',
+          'The layer tree and the token set as the Figma file actually holds them, ported onto the tokens this site runs on, so it follows the theme. This replaced a flow diagram on 2026-08-05: that figure drew a mechanism in boxes, and the file itself is more convincing than a drawing of it.',
+        figure: 'rollhaus-slots',
       },
       {
         kind: 'prose',
