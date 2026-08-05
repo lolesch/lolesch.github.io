@@ -124,31 +124,46 @@ function SectionBody({ section }: { section: Section }) {
       return (
         <figure className="mt-gap">
           {/*
-            One step per row at the full reading width, not two-up. At the
-            two-column width these screenshots land near 350px, which puts the
-            panel heading under 5px tall, and the panel changing is half of what
-            the figure is for. Height is the cost and it is taken deliberately.
+            Two up, and the notes collected underneath. This reverses what stood
+            here until 2026-08-05, which put one step per row at the full reading
+            width and argued that halving the width puts the editor's panel
+            heading under 5px tall. That cost is real and it is still paid. It
+            stopped being the deciding one on Leonid's reading of the rendered
+            page: a paragraph between every pair of screenshots meant the reader
+            compared four near-identical states from memory, which is the exact
+            failure that made `comparison` its own kind in the first place.
+            Contiguous, the four differences are one glance apart, and the panel
+            at full size is what the prototype section below is for.
 
-            <ol> rather than a stack of <figure>s: the steps are cumulative and
-            the order is the argument, so it has to be in the markup rather than
-            only in the layout.
+            An <ol> for the notes and a plain grid for the images, rather than
+            two lists numbering the same four things. The order is still the
+            argument and it is still in the markup: the list carries it, and the
+            grid's reading order maps onto it, 1 and 2 above 3 and 4.
+
+            `gap-tight` rather than `gap-gap`, which is what the comparison pair
+            uses. That pair is two things being told apart; this is one block
+            being read as a sequence, and the wider gutter makes it four.
           */}
-          <ol className="space-y-gap">
+          <div className="grid gap-tight sm:grid-cols-2">
+            {section.steps.map((step) => (
+              <Image
+                key={step.src}
+                src={step.src}
+                alt={step.alt}
+                width={step.width}
+                height={step.height}
+                sizes="(max-width: 40rem) 100vw, 22rem"
+                className="h-auto w-full rounded-card border border-border"
+              />
+            ))}
+          </div>
+          <ol className="mt-gap space-y-tight type-meta text-muted">
             {section.steps.map((step, index) => (
-              <li key={step.src}>
-                <p className="type-meta text-muted">
-                  <span className="type-emphasis text-fg">
-                    {index + 1}. {step.label}
-                  </span>{' '}
-                  {step.note}
-                </p>
-                <Image
-                  src={step.src}
-                  alt={step.alt}
-                  width={step.width}
-                  height={step.height}
-                  className="mt-tight h-auto w-full rounded-card border border-border"
-                />
+              <li key={step.label}>
+                <span className="type-emphasis text-fg">
+                  {index + 1}. {step.label}
+                </span>{' '}
+                {step.note}
               </li>
             ))}
           </ol>

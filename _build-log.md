@@ -894,3 +894,64 @@ screenshot than like a control. Worth a look before this is called done.
 page load 404s on `/about/__next.about.__PAGE__.txt` and the design-system
 equivalent. Static export emits no RSC payloads for prefetch to find. Unrelated
 to this pass, visible in the console on every page.
+
+## 2026-08-05: the 2x2, and the two tens
+
+Two notes from Leonid on the pass above, one layout and one defect.
+
+**The four editor states are a 2x2 now, with the notes collected underneath.**
+What shipped this morning put one step per row at the full reading width, and
+the comment in `sections.tsx` argued for it: halving the width puts the editor's
+panel heading under 5px tall, and the panel changing is half of what the figure
+is about. That cost is real and it is still paid. It stopped being the deciding
+one on the rendered page. A paragraph between every pair of screenshots meant
+four near-identical states were compared from memory, which is the exact failure
+that made `comparison` a separate kind in the first place. Contiguous, the mount
+appearing in step 3 and the wheels turning in step 4 are one glance apart.
+
+The notes moved out from between the images rather than staying with them,
+because a caption per cell puts a text band back between row one and row two and
+gives half the separation back. Reading order maps them: 1 and 2 above 3 and 4.
+One `<ol>` carries the sequence and the images sit in a plain grid, rather than
+two lists numbering the same four things.
+
+**The title scrolled over the nav, and the same bug was quietly worse on Home.**
+Both scrim titles carry `z-10` so they paint above the image they share a grid
+cell with. Neither box was a stacking context, so both z-indexes resolved
+against the root, where the sticky header's own `z-10` lives. Two tens tie and
+the later element in the document wins, and the header is first.
+
+On a project page that is the reported symptom: the `<h1>` slides over the bar.
+On Home it also takes the clicks, because the card link's `::after` covers the
+whole card and lives inside the title's stacking context, so a strip of the
+header navigated to whichever project was passing underneath it. Nobody had
+noticed, and nothing in the suite could.
+
+Fixed with `isolate` on both media containers rather than by promoting the
+header to `z-20`. Promoting it treats the collision as a ranking problem and
+leaves the next overlay to discover the same tie; isolating says what is
+actually true, which is that a title above its own thumbnail is a claim about
+two elements in one box and was never about the page. The header is now the only
+z-index in the document that means anything globally.
+
+Rejected on the way: nothing. The one thing worth recording is what made the fix
+safe to make. `isolation` changes paint order and not the containing block, so
+the card's `::after` still resolves against the `<article>` and still covers the
+whole card. That was checked in the browser before it was written, because the
+click target is load-bearing and the failure would have been invisible.
+
+**A guard for the half that is invisible.** `tests/export/stacking.test.ts`
+asserts the header carries `sticky` and a z-index, that every other z-index in
+the document sits on a scrim title, and that there is at least one `isolate` box
+per layered element. Paint order is a property of the browser, not of the
+markup, so what a static export test can hold is the invariant that produced it:
+one global layer, everything else sealed.
+
+**One test needed narrowing, for the reason the `next/link` guard did.**
+`figures.test.ts` proved the progression's steps stay in order by looking for
+each step's *label* in the page. With the notes below the grid, three of the four
+labels now match earlier inside the alt text of the images above ("Select Your
+Pattern active"), so the case was passing or failing on which occurrence the
+string happened to hit first. It asserts on the image sources and on the notes
+instead, which are unique, and it asserts both because a grid that reflowed and
+a list that reordered are different bugs and only one of them is visible.

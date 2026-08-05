@@ -126,21 +126,41 @@ describe('image figures (Seam 2)', () => {
     expect(IMAGES.some(({ state }) => state.kind === 'comparison')).toBe(true);
   });
 
-  it('ships a progression whose steps are numbered in order', () => {
-    const page = body('out/projects/rollhaus/index.html');
+  it('ships a progression whose steps stay in order', () => {
+    const page = text('out/projects/rollhaus/index.html');
     const progression = projects
       .flatMap((project) => project.sections)
       .find((section) => section.kind === 'progression');
     expect(progression, 'no progression section ships').toBeDefined();
     if (progression?.kind !== 'progression') throw new Error('unreachable');
 
-    // An <ol> rather than a stack of <figure>s is the whole reason this is a
-    // separate kind: the steps are cumulative, so a screen reader has to get
-    // the order. Asserting the labels appear in source order is what proves
-    // the list was not reshuffled by a grid.
-    const positions = progression.steps.map((step) => page.indexOf(step.label));
-    expect(positions.every((at) => at >= 0), 'a step label is missing').toBe(true);
-    expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+    // Order is the whole reason this is a separate kind from `comparison`: the
+    // steps are cumulative, so a reader who gets them shuffled is reading a
+    // different argument. Since 2026-08-05 it has to hold in two places rather
+    // than one, because the images sit in a 2x2 grid and the notes are a list
+    // underneath it. Both are asserted: a grid that reflowed and a list that
+    // reordered are different bugs and only one of them is visible.
+    const ordered = (needles: string[], what: string) => {
+      const positions = needles.map((needle) => page.indexOf(needle));
+      expect(positions.every((at) => at >= 0), `a ${what} is missing`).toBe(true);
+      expect([...positions].sort((a, b) => a - b), `the ${what}s are out of order`).toEqual(
+        positions,
+      );
+    };
+
+    ordered(
+      progression.steps.map((step) => step.src),
+      'step image',
+    );
+    // The note rather than the label, and that is not incidental. Three of the
+    // four labels are words that appear in the alt text of the images above
+    // ("Select Your Pattern active"), so searching for a label finds the figure
+    // and not the list, and the case passes or fails on which of the two the
+    // string happens to hit first. The notes are prose that appears once.
+    ordered(
+      progression.steps.map((step) => step.note),
+      'step note',
+    );
   });
 
   for (const { project, state } of IMAGES) {

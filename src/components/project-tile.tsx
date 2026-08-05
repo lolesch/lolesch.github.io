@@ -107,8 +107,18 @@ export function ProjectTile({
         not a containing block. The image keeps its own `relative` wrapper, which
         `fill` requires, and that wrapper is now the title's sibling rather than
         its ancestor.
+
+        `isolate` since 2026-08-05, and it fixes something worse here than the
+        same omission did on the project hero. The <h3>'s `z-10` was resolving
+        against the root, tying with the sticky header's `z-10` and winning on
+        document order, and the link's card-covering ::after lives *inside* that
+        stacking context. So a card scrolling under the bar did not merely paint
+        over it, it took the clicks: a strip of the header navigated to whichever
+        project happened to be passing beneath it. Isolated, the whole box drops
+        below the header, and the ::after still covers the card because
+        `isolation` changes paint order and not the containing block.
       */}
-      <div className="grid aspect-[16/10] w-full overflow-hidden border-b border-border-media">
+      <div className="grid aspect-[16/10] w-full isolate overflow-hidden border-b border-border-media">
         <div className="relative col-start-1 row-start-1">
           <Image
             src={project.thumb.src}

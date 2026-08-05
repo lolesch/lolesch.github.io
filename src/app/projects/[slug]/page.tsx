@@ -47,7 +47,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         page had a scrim title and a separate headline for about ten minutes
         during the build, and one of them was always redundant.
       */}
-      <div className="grid aspect-[16/10] w-full overflow-hidden rounded-card border border-border-media">
+      {/*
+        `isolate` is load-bearing, added 2026-08-05 on Leonid's report that the
+        title scrolled *over* the sticky bar. The <h1> below carries `z-10` so it
+        paints above its sibling image, which is a claim about two elements in
+        one grid cell. Without a stacking context here that z-index resolves
+        against the root, where the header's own `z-10` is: two tens, and the
+        later element in the document wins. `isolation: isolate` keeps the
+        title's ordering inside this box, so the header stays the only layer with
+        a z-index anyone has to reason about globally.
+      */}
+      <div className="grid aspect-[16/10] w-full isolate overflow-hidden rounded-card border border-border-media">
         <div className="relative col-start-1 row-start-1">
           <Image
             src={project.thumb.src}
