@@ -113,22 +113,11 @@ const imagesOf = (section: Section): Shipped[] => {
   }
 };
 
-// The section index rides along, because the lead-figure rule below is about
-// position rather than about the image.
+// No section index since 2026-08-05: the lead-figure rule went with the hero,
+// so nothing here is about position any more.
 const IMAGES = projects.flatMap((project) =>
-  project.sections.flatMap((section, index) =>
-    imagesOf(section).map((state) => ({ project, index, state })),
-  ),
+  project.sections.flatMap((section) => imagesOf(section).map((state) => ({ project, state }))),
 );
-
-// Which section owns the LCP image, by the same rule sections.tsx uses. Kept
-// as its own function so the two cannot drift apart silently: they did once,
-// when `comparison` became the lead figure on Rollhaus and this file still
-// only looked for `figure`.
-const leadIndex = (project: (typeof projects)[number]) =>
-  project.sections.findIndex(
-    (section) => section.kind === 'figure' || section.kind === 'comparison',
-  );
 
 describe('image figures (Seam 2)', () => {
   it('ships image figures of both kinds, so the cases below are not vacuous', () => {
@@ -154,7 +143,7 @@ describe('image figures (Seam 2)', () => {
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
   });
 
-  for (const { project, index, state } of IMAGES) {
+  for (const { project, state } of IMAGES) {
     describe(`${project.slug} / ${state.src}`, () => {
       const page = `out/projects/${project.slug}/index.html`;
 
@@ -178,16 +167,9 @@ describe('image figures (Seam 2)', () => {
         });
       }
 
-      it('does not lazy-load the lead figure', () => {
-        // The first figure on a page sits at or near the fold, so it is the LCP
-        // candidate. `next/image` lazy-loads unless told otherwise, and a
-        // lazily loaded LCP image is a self-inflicted performance mark on a
-        // site whose argument is design engineering.
+      it('is allowed to lazy-load, because the hero above it is the LCP', () => {
         const tag = body(page).match(new RegExp(`<img[^>]*${state.src}[^>]*>`))?.[0] ?? '';
         expect(tag, `no <img> found for ${state.src}`).not.toBe('');
-        if (leadIndex(project) === index) {
-          expect(tag).not.toContain('loading="lazy"');
-        }
       });
 
       it('points at a file that actually shipped', () => {
@@ -213,4 +195,18 @@ describe('the prototype facade (Seam 2)', () => {
     expect(markup).toContain('figma.com/proto/');
     expect(markup).toContain('rollhaus-editor-wheels.jpg');
   });
+});
+
+describe('the project hero (Seam 2)', () => {
+  for (const project of projects) {
+    it(`${project.slug} paints its card image eagerly at the top of the page`, () => {
+      const markup = body(`out/projects/${project.slug}/index.html`);
+      const tag = markup.match(new RegExp(`<img[^>]*${project.thumb.src}[^>]*>`))?.[0] ?? '';
+      expect(tag, `no hero <img> found for ${project.thumb.src}`).not.toBe('');
+      // The hero is the LCP on every project page now, so deferring it delays
+      // the paint it defines. This is the rule the old lead-figure computation
+      // used to carry, moved to the element that actually earns it.
+      expect(tag).not.toContain('loading="lazy"');
+    });
+  }
 });

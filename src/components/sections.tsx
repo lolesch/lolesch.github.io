@@ -5,19 +5,10 @@ import { SectionHeading } from '@/components/section-heading';
 import type { Section } from '@/content/types';
 
 export function ContentSections({ sections }: { sections: readonly Section[] }) {
-  // `next/image` lazy-loads by default, which is exactly wrong for the first
-  // image on the page: it is the LCP candidate, so deferring it delays the
-  // paint it defines. Decided here rather than on the content record, because
-  // which image paints first is a property of the rendered page, not of the
-  // copy. Later figures keep the default and stay lazy.
-  //
-  // `comparison` counts. It is the lead figure on Rollhaus, and a rule that
-  // only knew about `figure` would have quietly handed the most important page
-  // on the site a lazily loaded LCP image.
-  const lead = sections.findIndex(
-    (section) => section.kind === 'figure' || section.kind === 'comparison',
-  );
-
+  // No lead-figure rule since 2026-08-05. Every project page now opens on a
+  // hero carrying `priority`, so the first figure inside the sections is no
+  // longer the LCP candidate and marking it eager would only compete with the
+  // image that is.
   return (
     <>
       {sections.map((section, index) => (
@@ -30,14 +21,14 @@ export function ContentSections({ sections }: { sections: readonly Section[] }) 
             the sequence the reader is actually in.
           */}
           <SectionHeading index={index + 1}>{section.heading}</SectionHeading>
-          <SectionBody section={section} priority={index === lead} />
+          <SectionBody section={section} />
         </section>
       ))}
     </>
   );
 }
 
-function SectionBody({ section, priority }: { section: Section; priority: boolean }) {
+function SectionBody({ section }: { section: Section }) {
   switch (section.kind) {
     case 'prose':
       return (
@@ -90,7 +81,6 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
             alt={section.alt}
             width={section.width}
             height={section.height}
-            priority={priority}
             className="h-auto w-full rounded-card border border-border"
           />
           <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
@@ -119,7 +109,6 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
                   alt={state.alt}
                   width={state.width}
                   height={state.height}
-                  priority={priority}
                   sizes="(max-width: 40rem) 100vw, 22rem"
                   className="h-auto w-full rounded-card border border-border"
                 />
