@@ -243,7 +243,11 @@ export const projects: readonly Project[] = [
     // as a configurator, which is what the summary above claims it is.
     thumb: {
       src: '/figures/rollhaus-thumb.jpg',
-      alt: 'The Rollhaus customization editor: a teal, red, yellow and blue roller skate fills the screen beside a panel of skate-type options and an add to cart button.',
+      // Re-alted 2026-08-05 with the crop. The file was re-sourced from the
+      // wheels step of the progression below, so the panel beside the boot is
+      // now colourways rather than skate types, and the old wording described
+      // an image that no longer ships.
+      alt: 'The Rollhaus customization editor: a teal, red, yellow and blue roller skate on yellow wheels fills the screen beside a panel of wheel colourways and an add to cart button.',
       width: 1120,
       height: 700,
     },
@@ -273,36 +277,69 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        // Replaces the placeholder screenshot that stood here until 2026-07-31,
-        // and retires it rather than swapping it: the caption below used to
-        // assert that the skate updates alongside the categories, and a single
-        // still could only assert it. The pair shows it. The old file carried a
-        // "Patten" typo and a clipped summary card baked in by the slide it was
-        // captured into, so nothing is lost by dropping it.
+        // Replaces the quad-versus-inline pair that stood here until
+        // 2026-08-05. Leonid's objection was that the two states were "mainly
+        // the same": one wheel mount differed and the reader had to hunt for
+        // it. A progression starts from almost nothing and adds one decision at
+        // a time, so the option space opens in front of the reader instead of
+        // being asserted in a caption.
         //
-        // Static rather than a cut-between loop, per the spec's decision 2: a
-        // loop would also claim smoothness, and Learnings below says the
-        // opposite about animating across a variable state change.
-        kind: 'comparison',
+        // He clicked and exported all four in one sitting, at an identical
+        // 2916x2086, which is why any difference between these images is a
+        // difference in the product rather than in the framing.
+        kind: 'progression',
         heading: 'The editor',
         caption:
-          'One switch, two states of the same screen. Selecting a skate type re-renders the hero and every option thumbnail into the colourway already configured, because each thumbnail is an instance of the product rather than a static icon. The step, the price and the colour set hold.',
-        items: [
+          'Four decisions, in the order the editor asks for them. Each state keeps everything the one before it added, and the rail above the options fills as you go. Nothing was redrawn between them: the product is one component reading the current selection, which is why the panel thumbnails in step 3 are the boot you already configured rather than four stock icons.',
+        steps: [
           {
-            label: 'Quad selected',
-            src: '/figures/rollhaus-editor-quad.jpg',
-            alt: 'The Rollhaus editor with Quad selected: a teal, red, yellow and blue boot on four wheels fills the screen, beside a panel whose four thumbnails show that same boot as a quad skate, an inline, an ice skate and a plain shoe.',
+            label: 'Shoe model',
+            note: 'Two lasts, a high top and a low shoe. Nothing is mounted yet, so this is the whole product.',
+            src: '/figures/rollhaus-editor-shoe.jpg',
+            alt: 'The Rollhaus editor with Select Your Shoe Model active. A plain cream boot fills the canvas with nothing fitted underneath it, and the panel offers two thumbnails, a low shoe and a high boot.',
             width: 1400,
             height: 994,
           },
           {
-            label: 'Inline selected',
-            src: '/figures/rollhaus-editor-inline.jpg',
-            alt: 'The same editor with Inline selected: the boot is unchanged and now sits on a five-wheel inline frame, the selection has moved to the second thumbnail, and the step, price and colours are the same as before.',
+            label: 'Pattern',
+            note: 'Eight fabrics and colourways. The boot changes, the mount is still absent.',
+            src: '/figures/rollhaus-editor-pattern.jpg',
+            alt: 'The same editor with Select Your Pattern active. The boot now carries a teal, red, yellow and blue colourblock, and the panel shows eight swatches including tartan, checkerboard, floral, polka dot and a retro wave.',
+            width: 1400,
+            height: 994,
+          },
+          {
+            label: 'Skates',
+            note: 'Quad, inline, ice, or nothing at all. Every thumbnail here is the boot from the step before.',
+            src: '/figures/rollhaus-editor-skates.jpg',
+            alt: 'The same editor with Select Your Skates active. The colourblock boot now sits on a four-wheel quad plate, and the four panel thumbnails show that same boot as a quad, an inline, an ice skate and a plain shoe.',
+            width: 1400,
+            height: 994,
+          },
+          {
+            label: 'Wheels',
+            note: 'Eight colourways, and each one carries more than a colour. The variables figure below shows what.',
+            src: '/figures/rollhaus-editor-wheels.jpg',
+            alt: 'The same editor with Select Your Wheels active. The wheels have turned yellow and the panel shows eight wheel colourways including cream, dark green, orange, pale blue, royal blue, rust, black and mint.',
             width: 1400,
             height: 994,
           },
         ],
+      },
+      {
+        kind: 'prototype',
+        heading: 'Try it',
+        caption:
+          'The full flow, landing page to confirmation, with the editor at its centre. Nothing loads from Figma until you press the button.',
+        href: 'https://www.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed',
+        embedSrc:
+          'https://embed.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed&embed-host=lolesch-github-io',
+        poster: {
+          src: '/figures/rollhaus-editor-wheels.jpg',
+          alt: 'The Rollhaus editor with a fully configured skate: a colourblock boot on a quad plate with yellow wheels.',
+          width: 1400,
+          height: 994,
+        },
       },
       {
         kind: 'prose',
