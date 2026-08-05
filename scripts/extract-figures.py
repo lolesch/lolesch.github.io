@@ -91,82 +91,144 @@ FIGURES = [
     {
         "out": "public/figures/rollhaus-thumb.jpg",
         "project": "rollhaus",
-        "png": "rollhaus_editor_quad.png",
+        "png": "rollhaus_editor_03.png",
         "crop": [22, 295, 2830, 2050],
         "width": 1120,
         "why": (
-            "The project-grid card. The editor viewport below the browser chrome, "
-            "cropped to 16:10 because the tile fixes that ratio and crops with "
-            "object-cover, so framing it here is the only way to control it. "
-            "Top edge sits just under the site logo rather than through it, "
-            "which is what fixes the width: 16:10 off a 1755px-tall viewport. "
-            "Chosen over a boot-only crop: at a 320px card the option panel and "
-            "the cart button are what make it read as a configurator rather "
-            "than a product photo, which is what the card's summary claims."
+            "The project-grid card, and since 2026-08-05 also the hero at the "
+            "top of the detail page, which the card morphs into. Both render "
+            "the same file so the view transition has one image to move rather "
+            "than two to cross-fade. Re-sourced from the wheels step of the new "
+            "progression, because the card promises the finished skate and the "
+            "old quad export is a different boot. Editor viewport below the "
+            "browser chrome, cropped to 16:10 because the tile fixes that ratio "
+            "and crops with object-cover, so framing it here is the only way to "
+            "control it."
         ),
     },
     {
-        "out": "public/figures/rollhaus-editor-quad.jpg",
+        "out": "public/figures/rollhaus-editor-shoe.jpg",
         "project": "rollhaus",
-        "png": "rollhaus_editor_quad.png",
+        "png": "rollhaus_editor_00.png",
         "crop": [22, 18, 2886, 2050],
         "width": 1400,
         "why": (
-            "Left half of the two-state comparison, Quad selected. Native "
-            "2916x2086 with alpha; the crop insets 10px into the mockup's "
-            "rounded window so no transparent corner survives the flatten to "
-            "JPEG. Browser chrome is kept deliberately: Leonid, 2026-07-31, "
-            "the PageName placeholder in the tab shows the system behind it."
+            "Step 1 of 4. Leonid clicked these four states in the prototype on "
+            "2026-08-05 and exported them at an identical 2916x2086, so all four "
+            "share one crop and any difference between the images is a "
+            "difference in the product. This one is the boot with nothing "
+            "mounted, which is the state the old quad-versus-inline pair could "
+            "not show: the reader starts from almost nothing and watches the "
+            "option space open. Browser chrome kept, per Leonid 2026-07-31: the "
+            "PageName placeholder in the tab shows the system behind it."
         ),
     },
     {
-        "out": "public/figures/rollhaus-editor-inline.jpg",
+        "out": "public/figures/rollhaus-editor-pattern.jpg",
+        "project": "rollhaus",
+        "png": "rollhaus_editor_01.png",
+        "crop": [22, 18, 2886, 2050],
+        "width": 1400,
+        "why": (
+            "Step 2 of 4, the pattern applied and still no mount. Identical crop "
+            "to its three siblings on purpose. The eight swatches in the panel "
+            "are the pattern axis of the atoms figure, seen from the product "
+            "side."
+        ),
+    },
+    {
+        "out": "public/figures/rollhaus-editor-skates.jpg",
         "project": "rollhaus",
         "png": "rollhaus_editor_02.png",
         "crop": [22, 18, 2886, 2050],
         "width": 1400,
         "why": (
-            "Right half of the same comparison, Inline selected. Identical crop "
-            "to the Quad state on purpose: the figure's whole claim is what "
-            "changes between them, so any difference in framing would be read "
-            "as part of the answer. Matched pair, same colourway, same step, "
-            "same 124 EUR. The Hi-Fi canvas carries no inline editor state, so "
-            "these two PNGs are the only shipped-fidelity source for this."
+            "Step 3 of 4, the quad appears. The strongest of the four: its own "
+            "panel thumbnails are the already-configured boot drawn as a quad, "
+            "an inline, an ice skate and a plain shoe, which is the case "
+            "study's claim that a thumbnail is an instance of the product "
+            "rather than a static icon. This source file replaced the old "
+            "inline-selected export of the same name on 2026-08-05."
         ),
     },
     {
-        "out": "public/figures/rollhaus-panel-before.jpg",
+        "out": "public/figures/rollhaus-editor-wheels.jpg",
+        "project": "rollhaus",
+        "png": "rollhaus_editor_03.png",
+        "crop": [22, 18, 2886, 2050],
+        "width": 1400,
+        "why": (
+            "Step 4 of 4, the wheels recolour. Eight colourways in the panel, "
+            "each one a mode in the Wheels collection carrying its own type and "
+            "price, which the variables figure shows directly. Same frame as the "
+            "thumb crop above, so the card and the last step of the progression "
+            "are the same picture at two sizes."
+        ),
+    },
+    {
+        "out": "public/figures/rollhaus-atoms.jpg",
         "project": "rollhaus",
         "pdf": COMPONENTS,
         "page": 0,
-        "clip": [0.1050, 0.2996, 0.1415, 0.4195],
-        "width": 700,
+        "clip": [0.0045, 0.1228, 0.1825, 0.2665],
+        "width": 1400,
         "why": (
-            "The merged column inside the `Editor Molecules` frame: Shoe, then "
-            "Pattern, then Skates, then Wheels as one continuous scroll. The "
-            "crop stops short of the column at x=0.1585, which carries the "
-            "strings 'Custom Inline Skates Coming Soon' and the ice equivalent, "
-            "because the per-type wheel sets were not all built. Do not widen."
+            "The `Skates Atoms` frame, replacing the option-tree screenshot that "
+            "stood at this position until 2026-08-05. That figure was a picture "
+            "of text on a page arguing it needed more pictures, and the prose in "
+            "the section below already enumerates the same option space. Three "
+            "mounts, sixteen boots as eight patterns by two lasts, and eight "
+            "wheel colourways: the option space as parts rather than as a list. "
+            "Box covers all three component sets and stops at the frame edge."
         ),
         "open": (
-            "This structure demonstrably exists in the file, but nothing in the "
-            "sources proves it is the exact screen the 18 Maze participants "
-            "clicked. Leonid, 2026-07-31: caption it as two panel structures, "
-            "not as a test artefact, until that is confirmed. Guardrail 1."
+            "Figma's dashed violet component-set outlines are inside this crop "
+            "and cannot be excluded without cutting content. Kept on the "
+            "argument that a UX/UI reader reads them as component sets "
+            "instantly, which is the section's point. Reversing this means "
+            "dropping the figure, not tightening the box."
         ),
     },
     {
-        "out": "public/figures/rollhaus-panel-after.jpg",
+        "out": "public/figures/rollhaus-variables.png",
         "project": "rollhaus",
-        "pdf": COMPONENTS,
-        "page": 0,
-        "clip": [0.0218, 0.4679, 0.0684, 0.5932],
-        "width": 900,
+        "png": "Variable.png",
+        "crop": [0, 38, 1920, 500],
+        "width": 1600,
         "why": (
-            "The left column of the frame Figma itself names `SideBarRework`: "
-            "four categories, each a four-icon selector with the active step "
-            "ringed and the connector filled, above its own option grid. This "
-            "is the rework sentence in the case study rendered as an image."
+            "The Figma variables panel, and the strongest single artifact in "
+            "this case study. Eleven collections scoped by domain, and the "
+            "Wheels collection open with its modes as columns: Default, Yellow, "
+            "Green, Water blue, Blue, Orange, Black, each setting WheelColor, "
+            "WheelType and WheelPrice together. That is the record's own "
+            "sentence, one mode switch reconfiguring several linked elements at "
+            "once, and it is the only evidence anywhere for modes, which the "
+            "page could previously only assert. PNG rather than JPEG: flat dark "
+            "UI and small type. The crop starts at y=38 to drop the browser tab "
+            "strip, which carried unrelated tabs."
+        ),
+        "open": (
+            "The `Test Radio Buttons` collection and two empty collections are "
+            "visible and stay. They corroborate the footnote the page already "
+            "ships, that this was a first variables project and the naming is "
+            "ad hoc. Cropping them out would be tidying the evidence."
+        ),
+    },
+    {
+        "out": "public/figures/rollhaus-debug.png",
+        "project": "rollhaus",
+        "pdf": HIFI,
+        "page": 0,
+        "clip": [0.4190, 0.2250, 0.5530, 0.2620],
+        "width": 1700,
+        "why": (
+            "The debug panel left on the cart screen during the build, printing "
+            "live variable state in four groups. Scouted and cut on 2026-07-31 "
+            "because two working-note figures on one page was one too many; the "
+            "page it was cut from no longer exists. It is the second half of the "
+            "variables pair: the panel above defines the state, this shows a "
+            "product screen reading it. PNG for the same reason the variables "
+            "crop is."
         ),
     },
     {
@@ -184,21 +246,6 @@ FIGURES = [
             "inline. Same boot, different mount, shown in the product rather "
             "than in a parts diagram. Box covers the Quads heading down to the "
             "bottom of the Ice row and stops above 'Make it yours'."
-        ),
-    },
-    {
-        "out": "public/figures/rollhaus-options.png",
-        "project": "rollhaus",
-        "pdf": LOFI,
-        "page": 0,
-        "clip": [0.7006, 0.1351, 0.7654, 0.2471],
-        "width": 1400,
-        "why": (
-            "The Lo-Fi working note enumerating the option space down to ball "
-            "bearings and inline sub-type by wheel count. Box covers the pink "
-            "plate and its 'Customization Options' title tab, so it reads as "
-            "the note it is. The empty upper third is the note's own layout and "
-            "is kept rather than cropped into, which would cut its corners off."
         ),
     },
     {
@@ -308,11 +355,21 @@ FIGURES = [
 #   [0.84, 0.19, 0.98, 0.29], is a stock reference image rather than Leonid's or
 #   Yassine's work. Guardrail 4, do not use.
 #
-#   The Hi-Fi debug variable panel, hifi clip [0.4190, 0.2250, 0.5530, 0.2595]
-#   at width 1800, names the variables driving the cart screen and is the
-#   strongest evidence on the canvas for "built on Figma variables and modes".
-#   Verified and then cut on 2026-07-31: Leonid took the option tree instead,
-#   and two working-note figures on one page is one more than the page can hold.
+#   The Hi-Fi debug variable panel was cut on 2026-07-31 and restored on
+#   2026-08-05 as `rollhaus-debug.png`. The reason it was cut, that the page
+#   could not hold two working-note figures, went away when the option tree it
+#   was competing with was retired.
+#
+#   The slot trio, Cart / Checkout / Confirmation on the Hi-Fi canvas showing one
+#   Base Card slotted three ways. Four boxes were tried on 2026-08-05 and all
+#   four were rejected: [0.4290, 0.655, 0.9450, 0.980] carries the red annotation
+#   and its caption; [0.4345, 0.6640, 0.9395, 0.9230] leaves a red sliver at the
+#   top and cuts the suggestion cards mid-card; [0.4425, 0.6660, 0.9220, 0.8600]
+#   clips the first product image at the left edge; and a panels-only band at
+#   roughly 7:1 renders the summary type too small to read. The three screens sit
+#   at different heights with dead canvas between them, so no single box is both
+#   legible and complete. The slot argument moved into the rollhaus-slots embed
+#   instead, which is where a mechanism belongs. Do not re-derive these.
 #
 #   A standalone clean editor viewport, hifi clip [0.2350, 0.0855, 0.3665,
 #   0.2270] at width 1600. It replaces the "Patten" typo and the clipped summary
