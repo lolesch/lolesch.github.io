@@ -645,3 +645,91 @@ Leonid opened the session with a fear rather than a task: applying as a UX/UI de
 **One claim in this pass was wrong and is recorded as wrong.** The Rollhaus cover was reported as carrying its own wordmark under the overlay title. It does not; the source has no wordmark, and the first reading mistook the overlay for artwork. The real defect is the one the tile's own comment already names: the title lands beside the screenshot's embedded "Select Your Skates" and the two read as one row of unrelated words. **No `object-position` fixes it** on a source that is already exactly 16:10, so it is an asset problem rather than a CSS one. GlyphsHero is the same class of problem measured differently: a 340x340 source upscaled into a ~470px 16:10 tile, which renders soft. Both need purpose-made covers and both are Leonid's call.
 
 76 unit, typecheck clean, build green at four routes.
+
+---
+
+## 2026-08-05: the figure pass is specced, and five Figma calls that should not have been spent
+
+Leonid reviewed the live site and gave six findings, all on Rollhaus except the
+first: the card image vanishes on navigation; the editor comparison shows two
+states that are "mainly the same"; section 04 is a screenshot of text; section 06
+tries to show the mechanism and does not work; section 08's before state goes and
+the after state becomes the visual language of the case study; the prototype
+should be embedded or at least mentioned. Design in
+`docs/superpowers/specs/2026-08-05-case-study-visual-pass-design.md`.
+
+**Five Figma MCP calls were spent unprompted, and the free tier holds about six.**
+`whoami`, two `get_metadata`, two `get_variable_defs`, all to source figures
+Leonid could have pointed at in a sentence, and he did: the exports were already
+in the sibling repo's `assets/` folder, or arrived there within the hour once
+asked. Everything those calls returned is transcribed into the spec so it never
+needs repeating, and the rule is now in the session memory. The cheap substitutes
+that should have been reached for first: `assets/` and `source/` in the sibling
+repo, PyMuPDF for crops, and `curl figma.com/api/oembed?url=...` for whether a
+link is publicly shared, which is free and answers a question the MCP does not.
+
+**The prototype link Leonid first supplied was not public**, which oEmbed caught
+before it shipped: 404 against a 200 for the FerMentor link already live on the
+site. He changed the share setting and it now returns 200. Worth keeping as a
+check on any outward link, because a permission wall is invisible to the person
+who owns the file.
+
+**`Variable.png` turned out to be the strongest artifact in the case study**, and
+Leonid offered it with "though I dont know how usefull that is". It shows eleven
+variable collections scoped by domain, and the Wheels collection expanded with
+its modes as columns: Default, Yellow, Green, Water blue, Blue, Orange, Black.
+Each mode carries `WheelColor`, `WheelType` and `WheelPrice` together, so Green
+gives Green, Outdoor, 26 and Black gives Black, Outdoor, 17. That is the record's
+own sentence, "one mode switch reconfigures several linked elements at once",
+proven in one image. It is also the only evidence anywhere for modes, which the
+page has until now asserted and never shown.
+
+**`Test Radio Buttons` and two empty collections stay in the crop.** They
+corroborate the footnote the page already ships, that this was a first variables
+project and the naming is ad hoc. Cropping them out would be tidying the
+evidence.
+
+**The slot photo was cut after four rejected crops.** Cart, Checkout and
+Confirmation sit at different heights with dead canvas between them, so every box
+tight enough to be legible clipped one of the three. Boxes tried and rejected:
+`[0.4290, 0.655, 0.9450, 0.980]` (carries the red annotation and its caption),
+`[0.4345, 0.6640, 0.9395, 0.9230]` (red sliver at the top, suggestion cards cut
+mid-card), `[0.4425, 0.6660, 0.9220, 0.8600]` (first product image clipped at the
+left edge), and a panels-only band at roughly 7:1 that rendered the summary type
+too small to read. The slot argument moves whole into the rewritten embed, which
+is where a mechanism belongs. Fighting a crop that hard was the signal.
+
+**Two-up progression steps were specced and then reversed by arithmetic.** At the
+two-column `sizes` hint each 1400x994 screenshot lands near 470px wide, which
+puts "Select Your Pattern" at about 5px tall. The panel changing is half of what
+the figure is for. Full width costs roughly 2,200px of page height and was taken
+deliberately.
+
+**A number given to Leonid mid-session was wrong and is corrected in the spec.**
+He was told the page would not get shorter, which was a guess. Worked through, the
+retirements save about 4,100px and the additions cost about 4,800px, so the page
+grows by roughly 1,400px rather than holding level. Under two-up steps it would
+have been a net saving of about 800px, which is the version that was rejected.
+
+**Section 09 loses its figure entirely**, confirmed by Leonid rather than assumed,
+because it is the most aggressive cut in the pass. The reworked panel is what
+every screenshot from section 02 onward already shows. This also retires the open
+provenance caveat against `rollhaus-panel-before.jpg`, that nothing in the
+sources proves it is the screen the 18 Maze participants clicked.
+
+**Card to page continuity ships as CSS cross-document view transitions**, which
+means project cards become plain `<a>` and lose Next's client-side routing on
+those links. `unstable_ViewTransition` would have kept routing and was rejected:
+an experimental API on the site's flagship interaction, on a site arguing its
+choices are durable.
+
+**The price reads 124 EUR in all four progression states.** The selections happen
+to be price-neutral, so no caption may claim the price ticks up. Recorded because
+it is the obvious thing to write and it would be false.
+
+**`rollhaus_editor_02.png` in the sibling repo was overwritten** by the new Skates
+export; it used to be the inline-selected state. `rollhaus-editor-inline.jpg` can
+no longer be regenerated from its recorded source. The figure retires in this
+pass so nothing breaks, but the entry comes out rather than sitting in
+`extract-figures.py` describing a crop that would now produce a different
+picture.
