@@ -97,6 +97,9 @@ const imagesOf = (section: Section): Shipped[] => {
     case 'prose':
     case 'constraints':
     case 'embed':
+    // The poster is checked by the facade's own describe block below, not by
+    // this walker: it is a control's label rather than a figure.
+    case 'prototype':
       return [];
     default: {
       const unhandled: never = section;
@@ -190,4 +193,19 @@ describe('image figures (Seam 2)', () => {
       });
     });
   }
+});
+
+describe('the prototype facade (Seam 2)', () => {
+  const page = 'out/projects/rollhaus/index.html';
+
+  it('ships the poster and the outward link without the iframe', () => {
+    const markup = body(page);
+    // The whole point of a facade: nothing third-party is requested until the
+    // reader asks. An <iframe> in the exported HTML means the facade regressed
+    // into a plain embed, which loads Figma's application for someone who never
+    // clicked.
+    expect(markup).not.toContain('embed.figma.com');
+    expect(markup).toContain('figma.com/proto/');
+    expect(markup).toContain('rollhaus-editor-wheels.jpg');
+  });
 });

@@ -39,6 +39,8 @@ const bodies = (project: Project) =>
           section.caption,
           ...section.steps.flatMap((step) => [step.label, step.note, step.alt]),
         ];
+      case 'prototype':
+        return [section.caption, section.poster.alt];
       case 'embed':
         return [section.caption];
       default: {

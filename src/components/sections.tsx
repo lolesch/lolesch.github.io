@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { FIGURES } from '@/components/figures/registry';
+import { PrototypeEmbed } from '@/components/prototype-embed';
 import { SectionHeading } from '@/components/section-heading';
 import type { Section } from '@/content/types';
 
@@ -163,6 +164,27 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
             ))}
           </ol>
           <figcaption className="mt-gap type-meta text-muted">{section.caption}</figcaption>
+        </figure>
+      );
+
+    case 'prototype':
+      return (
+        <figure className="mt-gap">
+          {/* `href` is not passed: the facade is the button, and the link
+              below it is this renderer's job. */}
+          <PrototypeEmbed embedSrc={section.embedSrc} poster={section.poster} />
+          <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
+          <p className="mt-gap type-body">
+            <a
+              href={section.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline underline-offset-4"
+            >
+              Open the prototype in Figma
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
         </figure>
       );
 

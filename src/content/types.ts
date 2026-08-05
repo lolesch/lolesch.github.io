@@ -59,6 +59,19 @@ export type Section =
       caption: string;
       steps: readonly ProgressionStep[];
     }
+  // An embedded app, and the one section that reaches a third party. It ships as
+  // a facade: the poster is a real screenshot the page already carries, and the
+  // iframe is not requested until the reader clicks it. `href` is the same
+  // prototype as a plain link, so a reader who does not want an embedded
+  // application still gets the prototype.
+  | {
+      kind: 'prototype';
+      heading: string;
+      caption: string;
+      href: string;
+      embedSrc: string;
+      poster: { src: string; alt: string; width: number; height: number };
+    }
   | { kind: 'embed'; heading: string; caption: string; figure: FigureId };
 
 // An ordered, cumulative sequence: each step keeps what the one before it added.
