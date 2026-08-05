@@ -219,7 +219,7 @@ FIGURES = [
         "project": "rollhaus",
         "pdf": HIFI,
         "page": 0,
-        "clip": [0.4190, 0.2250, 0.5530, 0.2620],
+        "clip": [0.4190, 0.2250, 0.5530, 0.2600],
         "width": 1700,
         "why": (
             "The debug panel left on the cart screen during the build, printing "
@@ -228,7 +228,8 @@ FIGURES = [
             "page it was cut from no longer exists. It is the second half of the "
             "variables pair: the panel above defines the state, this shows a "
             "product screen reading it. PNG for the same reason the variables "
-            "crop is."
+            "crop is. Bottom edge is 0.2600 rather than the 0.2620 first tried, "
+            "which cut through the tops of the next row of labels. Do not widen."
         ),
     },
     {

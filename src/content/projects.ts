@@ -351,18 +351,20 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        // Sits above the next section rather than inside it, because that
-        // section closes on "the figure below carries it in full" pointing at
-        // the architecture embed. Putting this between the two would silently
-        // repoint that sentence at the wrong figure.
+        // Replaces the option-tree screenshot that stood here until 2026-08-05,
+        // which was a picture of text on a page whose problem was that it had
+        // too few pictures. Nothing is lost by dropping it: the prose in the
+        // next section already enumerates the same option space, down to the
+        // ball bearings, so the tree was restating a paragraph in a lower
+        // resolution.
         kind: 'figure',
-        heading: 'What the system had to survive',
+        heading: 'What you can actually change',
         caption:
-          'The option space as we mapped it at the lo-fi stage, down to ball bearings and inline sub-type by wheel count. A working note rather than a deliverable, and the thing the proof of concept below had to hold before it was worth scaling.',
-        src: '/figures/rollhaus-options.png',
-        alt: 'A note from the design file headed Customization Options, listing a nested tree: shoe model with high top, low top and a closing mechanism of laces or straps; size; pattern with a base colour set and an overlay; then base type branching into quad, inline and ice, the quad and inline each carrying their own wheel options and ball bearings.',
+          'The parts, as they are built in the file. Two lasts and eight patterns make sixteen boots, three mounts and eight wheel colourways multiply that again, and none of it is a screen. The dashed outlines are Figma component-set boundaries, left in because they are what makes these sets rather than a page of product shots.',
+        src: '/figures/rollhaus-atoms.jpg',
+        alt: 'Three groups of product renders on a dark canvas. On the left, three mounts: an inline frame, a quad plate and an ice blade. In the middle, two columns of eight, high tops beside low shoes, running through plain cream, tartan, retro stripe, checkerboard, floral, colourblock, polka dot and a wave print. On the right, wheel sets in eight colourways, each drawn as a quad pair and as an inline row.',
         width: 1401,
-        height: 2299,
+        height: 1230,
       },
       {
         kind: 'prose',
@@ -371,8 +373,40 @@ export const projects: readonly Project[] = [
           'We wrote four design principles in week one, from a user story and a moodboard, and checked components against them. Highlight Individuality, Flow Over Flash, Guidance Over Selling, Design for Joy. Writing principles down is ordinary practice and it bought us something modest but real: each one names a tradeoff we would otherwise have argued about every week. Flow Over Flash settles personality against usability, so usability wins the structure and the personality lives in the copy. Guidance Over Selling settles conversion pressure against trust, which is why the editor recommends and never pushes.',
           'That gave the copy a rule of its own. The interface talks like a knowledgeable skate friend rather than a salesperson: "Nice choice. Now pick your wheels." moves someone forward without inventing a points system, and progress reads as readiness, "Your setup is 80% complete", instead of as a checklist.',
           'Before committing to the full editor I built a small working version as a go or no-go gate. The product gave that gate something concrete to survive: shoe model, closing mechanism, size, patterns and colour sets, three skate types each with their own wheels and brakes, and per wheel the size, material, hardness and colour, down to the ball bearings. Either one variable system could carry all of that or it would collapse as soon as the product got complex. It held, so we scaled it.',
-          'The mechanism is the core of the project and the figure below carries it in full. The part worth naming here is the slot system: one Base Card, slotted differently, serves the landing page, the cart, the checkout and the confirmation. Peers and the instructor arrived at the same note independently, that talking about atomic design in general terms buried the decision that was actually ours.',
+          'The mechanism is the core of the project, and the three figures below carry it: what the variables are, what a screen reads off them, and what one card does across four screens. The part worth naming here is the slot system: one Base Card, slotted differently, serves the landing page, the cart, the checkout and the confirmation. Peers and the instructor arrived at the same note independently, that talking about atomic design in general terms buried the decision that was actually ours.',
         ],
+      },
+      {
+        // The strongest artifact in this case study, and Leonid offered it with
+        // "though I dont know how usefull that is". It is the only evidence
+        // anywhere for modes, which every earlier version of this page could
+        // assert and never show.
+        //
+        // A full-width figure rather than half of a `comparison` with the debug
+        // readout below: both images are wide landscape strips, and the
+        // comparison renderer is a two-column grid that would put each of them
+        // near 350px and make both unreadable.
+        kind: 'figure',
+        heading: 'Where the configuration is defined',
+        caption:
+          'Eleven collections, nine of them named for what they drive, and the Wheels collection open with its modes as columns. Green sets the colour, the outdoor type and 26 euro together. Black sets black, outdoor and 17. One switch, three linked values, which is the whole of what modes are doing in this file.',
+        src: '/figures/rollhaus-variables.png',
+        alt: 'The Figma variables panel. A left rail lists eleven collections: Color 31, System 5, an unnamed empty one, Cart 5, EditorSidePanel 2, Test Radio Buttons 5, a second unnamed empty one, Pattern 2, Shoe 3, Skates 2, and Wheels 3, which is selected. The table shows three variables, WheelColor, WheelType and WheelPrice, across seven mode columns named Default, Yellow, Green, Water blue, Blue, Orange and Black. WheelPrice reads 23, 23, 26, 26, 23, 21 and 17 across them.',
+        width: 1600,
+        // 385 rather than 386: measured off the written file, because the zoom
+        // lands a fraction under a whole pixel. next/image uses this only for
+        // the aspect ratio, so the measurement wins and the crop stays.
+        height: 385,
+      },
+      {
+        kind: 'figure',
+        heading: 'And where it is read',
+        caption:
+          'A debug panel left on the cart screen during the build. The same state the collections above define, grouped by what it drives, on a screen that is using it.',
+        src: '/figures/rollhaus-debug.png',
+        alt: 'A readout in four columns headed Debug Shoe, Debug Skates, Debug Cart and Debug Side Panel. Shoe reads Shoe Type High, Shoe Pattern Default, Shoe Size 49. Skates reads Skate Type Quad, Wheels Color Default, Wheels Type Indoor. Cart reads Shoe Price 54, Pattern Price 5, Wheel Price 65, Total Price 123, Amount Counter 0. Side Panel reads Side Panel Content Pattern, Side Panel State Collapsed.',
+        width: 1701,
+        height: 288,
       },
       {
         kind: 'embed',
@@ -387,40 +421,20 @@ export const projects: readonly Project[] = [
         body: [
           'In week three we put the prototype through Maze, 18 unmoderated tasks and one moderated session. The shopping flow held. Cart to confirmation came back at a 100% success rate and people described it as straightforward. The editor did not hold: editing a skate produced a 68% misclick rate.',
           'The cause was structural rather than visual. People could not tell the customization categories apart, so they clicked around to find out what was editable and lost their place between tasks. We put the findings on an affinity map and a prioritization matrix, which pushed the side panel to the top of the list.',
-          // Category names corrected 2026-07-31 to the ones on the screen in
-          // the figure below, which reads Pattern and Skates. The earlier
+          // Category names corrected 2026-07-31 to the ones on the screen. They
+          // are the four headings in the progression at the top of this page,
+          // Select Your Shoe Model / Pattern / Skates / Wheels. The earlier
           // "Colour, Skate Type" was a paraphrase, and a paraphrase that
-          // disagrees with the image two paragraphs down is the kind of small
-          // thing the reader this page is written for will notice.
-          'So we re-cut it. The panel became a category selector, Shoe Model, Pattern, Skates and Wheels, sitting above an option grid, in place of one list that merged unrelated options. Reading the results as a request for visual tweaks would have been much cheaper. Re-cutting the information hierarchy was the more expensive call and the right one.',
-        ],
-      },
-      {
-        // Captioned as two panel structures, not as a test artefact. The merged
-        // column demonstrably exists in the design file, but nothing in the
-        // sources proves it is the exact screen the 18 Maze participants
-        // clicked, and the caption may not quietly imply that it is.
-        // Guardrail 1. Leonid, 2026-07-31; the open item is in
-        // `scripts/extract-figures.py` next to the crop.
-        kind: 'comparison',
-        heading: 'The side panel, before and after',
-        caption:
-          'Two panel structures from the design file. One merges shoe, pattern, skates and wheels into a single scroll, so nothing tells you where one category ends. The other gives each its own step, and the step you are on is the ringed icon in the row above the grid.',
-        items: [
-          {
-            label: 'One merged column',
-            src: '/figures/rollhaus-panel-before.jpg',
-            alt: 'A narrow dark panel running as one continuous column: a Shoe heading over two boot options, then Pattern at 5 euro over eight swatches, then Skates over three options, then Wheels at 23 euro over eight more, with nothing dividing one category from the next.',
-            width: 701,
-            height: 2501,
-          },
-          {
-            label: 'Four categories',
-            src: '/figures/rollhaus-panel-after.jpg',
-            alt: 'The reworked panel in four headed sections, Select Your Shoe Model, Select Your Pattern, Select Your Skates and Select Your Wheels. Each heading is paired with the same row of four icons, the icon for that section ringed and the line connecting them filled up to it, above only the options belonging to that one category.',
-            width: 901,
-            height: 2631,
-          },
+          // disagrees with an image on the same page is the kind of small thing
+          // the reader this page is written for will notice.
+          //
+          // The final sentence took over from the before/after comparison that
+          // followed this section until 2026-08-05. Leonid's call was to drop
+          // the before state; with it gone the after state had nothing to be a
+          // pair with, and it is already the panel in all four editor
+          // screenshots above, so the argument is made by pointing rather than
+          // by shipping a fifth picture of the same panel.
+          'So we re-cut it. The panel became a category selector, Shoe Model, Pattern, Skates and Wheels, sitting above an option grid, in place of one list that merged unrelated options. Reading the results as a request for visual tweaks would have been much cheaper. Re-cutting the information hierarchy was the more expensive call and the right one. It is the panel in every screenshot above.',
         ],
       },
       {
