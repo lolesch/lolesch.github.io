@@ -822,7 +822,11 @@ Immediately after the prose headed `'One system, not a screen per option'` and *
         src: '/figures/rollhaus-variables.png',
         alt: 'The Figma variables panel. A left rail lists eleven collections with their counts: Color 31, System 5, Cart 5, EditorSidePanel 2, Test Radio Buttons 5, Pattern 2, Shoe 3, Skates 2, and Wheels 3, which is selected. The table shows three variables, WheelColor, WheelType and WheelPrice, across seven mode columns named Default, Yellow, Green, Water blue, Blue, Orange and Black. WheelPrice reads 23, 23, 26, 26, 23, 21 and 17 across them.',
         width: 1600,
-        height: 386,
+        // 385 rather than the 386 this plan first predicted. Measured off the
+        // written file in Task 1 Step 5: the zoom lands a fraction under a whole
+        // pixel and PyMuPDF floors it. next/image uses this only for the aspect
+        // ratio, so the measurement is the truth and the crop stays.
+        height: 385,
       },
       {
         kind: 'figure',

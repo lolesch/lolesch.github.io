@@ -733,3 +733,164 @@ no longer be regenerated from its recorded source. The figure retires in this
 pass so nothing breaks, but the entry comes out rather than sitting in
 `extract-figures.py` describing a crop that would now produce a different
 picture.
+
+## 2026-08-05: impeccable is installed, and a fifth doc that had to earn its place
+
+Leonid asked for the skills from `impeccable.style`. `/plugin marketplace add
+pbakaus/impeccable` is the documented route for Claude Code and is unavailable in
+this harness, so the install went through `npx impeccable install`, which the site
+lists first anyway because it compiles a build for the detected harness rather
+than one shared build.
+
+**The installer detected eight harnesses and installed into two, and one of them
+was wrong.** It wrote 148 files into `.claude` and a second full copy, 152 files,
+into `.github/agents`, `.github/hooks` and `.github/skills` for GitHub Copilot.
+Nothing in this repo uses Copilot and `.github` tracks exactly one file,
+`workflows/deploy.yml`. **The Copilot copy was removed** rather than left in place
+against a someday, and removing it is what later made the pointer-over-copy
+argument work: Claude Code is now the only thing that reads any of this.
+
+**The skill itself is gitignored rather than committed.** 148 vendored files,
+reinstallable with one command, in a public repo whose diffs are themselves
+case-study material. The hooks landed in `.claude/settings.local.json`, which was
+already gitignored, so the detector is machine-local: a fresh clone gets neither
+the hooks nor the skill until someone reruns the installer. Stated because it is
+the kind of thing that gets discovered later as a bug.
+
+**`init` needed three questions and one of the answers came back impossible.** The
+repo answered platform, stack, accessibility floor, voice and positioning on its
+own, so nothing already written down was asked again. The evidence question came
+back with `None of these exist` selected together with all three things that would
+exist. **The safe-looking reading would have written a falsehood into the record**:
+the Rollhaus prototype has been live and linked at `projects.ts:175` for days, so
+"no live URLs" was never true. It was put back to Leonid instead of resolved by
+picking the cautious option, which is the whole point of guardrail 1 being about
+accuracy rather than about modesty. Resolved: prototype, store page, repo and
+press kit are real; **metrics and testimonials do not exist**, which is what the
+shipped Rollhaus copy already says at `projects.ts:395`.
+
+**The first PRODUCT.md was 98 lines and about half of it was other files.**
+Terminology, Tile Schema, Lenses, the three ADR constraints, the CLAUDE.md
+guardrails, all copied in. The reasoning was that impeccable resolves PRODUCT.md
+by path and loads nothing else, so facts living only in CONTEXT.md would be
+invisible to it. **That was wrong for this setup and Leonid caught it in one
+question.** CLAUDE.md is auto-loaded every session and already points at
+CONTEXT.md and the ADRs, so a pointer reaches those facts as well as a copy does,
+and a copy is a second place to update when a Lens gets renamed. He applied the
+site's own anti-brand constraint to the repo, which is the correct reading of it:
+a fifth document that restates four others is clutter by exactly the rule the
+site is built on.
+
+**What survived is what nothing else holds:** the reader's situation, the Track C
+decision with its date, the current milestone, the confirmation that runtime
+dependencies are *not* restricted, and Evidence on Hand. That last section is the
+one that justifies the file existing at all. Nothing in the repo previously stated
+in one place what proof exists and what must never be invented; the pieces were
+spread across a Rollhaus paragraph, a link 220 lines away, and a CLAUDE.md
+guardrail. 618 words now.
+
+**Worth knowing before reaching for impeccable again:** only new-surface and
+redesign flows block on PRODUCT.md. `polish`, `critique`, `audit`, `typeset`,
+`layout`, `clarify`, `adapt` and `optimize` read the existing code as authority
+and run without it. So the file's payoff is the v2 Router and the meta case study,
+not the day-to-day.
+
+**A small process cost, recorded because it will happen again.** `git add -N`
+records intent to add and no blob, so overwriting the first PRODUCT.md left
+nothing to diff the trim against. The original exists only in the session
+transcript. Staging content, not intent, is what makes a draft recoverable.
+
+**CONTEXT.md had drifted in four places and was missing a term.** Home is hero
+plus the grid rather than hero plus a Rollhaus card; `/projects/[slug]` is four
+records rather than one; the Tile Schema is no longer a v2 standard waiting for a
+grid, because tiles have rendered on Home since 2026-07-30; and the Constraints callout listed
+as pending polish has been a `constraints` section kind on both featured case
+studies for days. **`Tier` is now defined**, since `featured`/`bridge`/`archive`
+has been live vocabulary in `types.ts` and the grid without ever being in the
+glossary. `Hero Case Study` is kept as a definition rather than deleted, because
+earlier log entries and plans use the phrase and an orphaned term is worse than a
+superseded one.
+
+The deferral of the `/projects` listing was recorded with the reason "a list of
+one is just a link". That reason expired at four records, so the deferral is
+restated on the Router rather than left resting on a fact that stopped being true.
+
+No source files changed in this pass. 76 unit, typecheck clean, run to confirm
+the baseline rather than because anything here could have moved it. `21591a3`
+landed from another session while this one was open; it is docs-only and does not
+touch anything above.
+
+**Two dates in this entry were wrong on the first write and are corrected here
+rather than quietly.** The grid was dated 2026-08-04 and the Tier supersession
+2026-08-05; git says tiles have rendered since `098c549` on 2026-07-30 and
+FerMentor shipped in `42f5bc9` on 2026-08-02. Both came from reading the log's
+recent entries instead of asking git, on a day whose own entries are about not
+trusting a plausible-looking claim.
+
+## 2026-08-05: the figure pass ships, and the guard that matched its own comment
+
+The plan in `docs/superpowers/plans/2026-08-05-case-study-visual-pass.md` executed
+in eight commits, `abe766e` through `a0d00b8`. Typecheck clean, 76 unit, 154
+export. What follows is only what the plan did not already predict.
+
+**Rendered result.** The Rollhaus page is 12,819px, against 10,216px before. The
+plan estimated growth of about 1,300px and the real figure is 2,600. The whole
+difference is section 2: four full-width 546px screenshots plus their labels come
+to 2,647px on their own. That is the cost the one-step-per-row decision was
+knowingly taking, and it is worth more than the estimate was: at 768px the panel
+headings and the option thumbnails are legible, and the two-up version this
+replaced would have put them at 350px where they are not. The page is longer and
+the ratio it was failing on has inverted, which was the point.
+
+**The morph fires.** Verified at runtime rather than inferred: the `pageswap`
+event on the home document reports `viewTransition` non-null on a click through
+to `/projects/rollhaus/`, and the browser parses the at-rule as a real
+`CSSViewTransitionRule` with `navigation: auto` nested inside
+`(prefers-reduced-motion: no-preference)`. **Lightning CSS did not strip
+`@view-transition`,** so the `public/view-transition.css` fallback the plan
+carried was not needed. That is now a known-good data point for any future
+at-rule in this repo.
+
+**The guard that matched its own comment.** `view-transition.test.ts` asserts the
+tile does not import `next/link`, because a client-side route change would make
+the morph silently never happen. Written as a substring search it failed against
+the comment in `project-tile.tsx` that *explains* why the anchor is plain, which
+says the words "next/link". Narrowed to `/from\s+['"]next\/link['"]/`. A source
+guard has to match the construct rather than the vocabulary, or the file cannot
+document its own reason.
+
+**Three claims the images did not support**, all caught by looking at the written
+crops rather than by any test:
+
+- The thumb was re-sourced from the wheels step, so its alt still described "a
+  panel of skate-type options" from the retired quad export. Re-alted with the
+  crop.
+- The atoms alt said "eight patterns each drawn as a high top and a low shoe".
+  Row three pairs a striped high top with a plain tan low shoe, so it is two
+  columns of eight rather than eight matched pairs. Reworded.
+- The variables caption said "eleven collections, each scoped to what it drives".
+  Two of the eleven are unnamed and empty. Now "nine of them named for what they
+  drive", which is also the honest version of the same argument.
+
+**Two things the plan got wrong by arithmetic.** `rollhaus-variables.png` writes
+at 1600x385, not the predicted 386: the zoom lands a fraction under a whole pixel
+and PyMuPDF floors it. And `rollhaus-debug.png` at clip bottom 0.2620 cut through
+the tops of the next row of labels, which no test could see; tightened to 0.2600
+and re-rendered at 1701x288.
+
+**One duplication the plan wrote in.** It gave the embed section the heading
+"One card, four screens" and the figure inside it the title "One card, four
+screens", which renders the same phrase twice about forty pixels apart. The
+section heading is the spec's and stays; the figure is now titled "Rollhaus Base
+Card and its slots", after what it depicts, which is how the figure it replaced
+was named.
+
+**Open, not fixed here.** The prototype facade's label sits on a 90% scrim over
+the poster, and the poster's own ADD TO CART button reads through it. It is
+legible and it is a button, but at rest it reads more like a caption baked into a
+screenshot than like a control. Worth a look before this is called done.
+
+**Also open and pre-existing:** the header nav still uses `next/link`, so every
+page load 404s on `/about/__next.about.__PAGE__.txt` and the design-system
+equivalent. Static export emits no RSC payloads for prefetch to find. Unrelated
+to this pass, visible in the console on every page.
