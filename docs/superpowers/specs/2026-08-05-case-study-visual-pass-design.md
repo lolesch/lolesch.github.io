@@ -106,23 +106,27 @@ Anything older gets an instant navigation, which is what it gets today.
 | # | Section | Kind | Change |
 |---|---|---|---|
 | 1 | Constraints | `constraints` | unchanged |
-| 2 | The editor | **`progression`** (4 states) | replaces the quad/inline `comparison`; carries the prototype |
-| 3 | Context | `prose` | unchanged |
-| 4 | What you can actually change | `figure` | Skates Atoms replaces the option-tree screenshot |
-| 5 | One system, not a screen per option | `prose` | absorbs the option tree in one paragraph; the pointer at "the figure below" repoints |
-| 6 | Where the configuration is defined | `figure` | the Figma variables panel |
-| 7 | And where it is read | `figure` | the debug readout on the cart screen |
-| 8 | One card, four screens | `embed` | `rollhaus-architecture` rewritten as the real `Base Card` tree plus the token inventory |
-| 9 | What testing changed | `prose` | **no figure** |
-| 10 | Outcome | `prose` | unchanged |
-| 11 | The same boot on a different mount | `figure` | unchanged |
-| 12 | Learnings | `prose` | unchanged |
+| 2 | The editor | **`progression`** (4 states) | replaces the quad/inline `comparison` |
+| 3 | Try it | **`prototype`** | the click-to-load facade, at the moment of most interest |
+| 4 | Context | `prose` | unchanged |
+| 5 | What you can actually change | `figure` | Skates Atoms replaces the option-tree screenshot |
+| 6 | One system, not a screen per option | `prose` | one sentence repointed; no new paragraph |
+| 7 | Where the configuration is defined | `figure` | the Figma variables panel |
+| 8 | And where it is read | `figure` | the debug readout on the cart screen |
+| 9 | One card, four screens | `embed` | `rollhaus-architecture` rewritten as the real `Base Card` tree plus the token inventory |
+| 10 | What testing changed | `prose` | **no figure** |
+| 11 | Outcome | `prose` | unchanged |
+| 12 | The same boot on a different mount | `figure` | unchanged |
+| 13 | Learnings | `prose` | unchanged |
 
-Twelve sections against eleven. Prose paragraphs go from 17 to 18, images from 6
-to 8, and the embed stops being an abstract diagram. The ratio moves less than
-those counts suggest; what actually changes is weight and position. Four
-full-width screenshots become the second thing on the page, and the picture of a
-text tree is gone.
+Thirteen sections against eleven. **Prose paragraph count does not move**, and
+that is worth stating because the first draft of this spec assumed it would: the
+option tree the retired screenshot depicted is *already* enumerated in section 6,
+down to the ball bearings, so that figure was restating a paragraph at a lower
+resolution rather than carrying anything the prose lacked. Images go from 6 to 8,
+plus a prototype nobody could reach before. The ratio moves less than those counts
+suggest; what changes is weight and position. Four full-width screenshots and a
+playable prototype become the first things after the constraints callout.
 
 **Section 09 loses its figure.** Leonid's instruction taken literally, confirmed
 by him on 2026-08-05. The reworked panel is what every screenshot from section 02
@@ -149,13 +153,12 @@ into section 08's embed, which is where the mechanism belongs anyway.
 ## Part 3: the new section kind
 
 ```ts
-| {
-    kind: 'progression';
-    heading: string;
-    caption: string;
-    steps: readonly ProgressionStep[];
-    link?: SectionLink;
-  }
+| { kind: 'progression'; heading: string; caption: string;
+    steps: readonly ProgressionStep[] }
+
+| { kind: 'prototype'; heading: string; caption: string;
+    href: string; embedSrc: string;
+    poster: { src: string; alt: string; width: number; height: number } }
 
 type ProgressionStep = {
   label: string;   // "Shoe model"
@@ -172,18 +175,26 @@ rather than compare across it. It renders as a numbered `<ol>`, which also hands
 a screen reader the order for free.
 
 **One step per row at full content width, not two-up.** Two-up was specced first
-and fails on arithmetic: at the 2-column `sizes` hint each 1400x994 screenshot
-lands at roughly 470px wide, which puts the panel heading ("Select Your Pattern")
-at about 5px tall. The panel changing is half of what the figure is for, so a
-layout that makes it unreadable defeats the section. Full width gives each step
-976x693, and the cost is height, taken deliberately.
+and fails on arithmetic. The project page is `measure`, a 48rem reading column,
+not the 64rem `frame`, so full width here is 768px and a two-column step is about
+350px. At that size the panel heading ("Select Your Pattern") is roughly 5px
+tall. The panel changing is half of what the figure is for, so a layout that
+makes it unreadable defeats the section. Full width gives each step 768x545, and
+the cost is height, taken deliberately.
+
+**Rejected: breaking the progression out to `frame`.** Every figure on every case
+study is currently held to `measure`, and widening one of them is a page-layout
+decision that wants its own argument rather than riding in on a figure pass.
 
 `steps` is a list rather than a tuple because four is this instance's number, not
 the kind's. The renderer takes what it is given.
 
-`link` rides on the kind for the reason `prose` already carries one: the
-prototype belongs at the editor, where a reader most wants to try it, not buried
-in Outcome.
+**No `link` on `progression`.** It was specced with one, on the argument that the
+prototype belongs at the editor rather than buried in Outcome. That argument was
+right about placement and wrong about shape: an embedded application is not a
+caption on a figure. `prototype` is its own kind and its own section, sitting
+directly under the progression, which puts the prototype where the reader most
+wants it and keeps a figure a figure.
 
 ---
 
@@ -290,8 +301,9 @@ viewport parameters, which are ephemeral:
 https://www.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed
 ```
 
-It ships as a **click-to-load facade** on section 02: the wheels step rendered as
-a static image with a play affordance, which on click swaps in
+It ships as its own section directly under the progression, as a **click-to-load
+facade**: the wheels step rendered as a static image with a load affordance,
+which on click swaps in
 
 ```
 https://embed.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed&embed-host=lolesch-github-io
@@ -315,13 +327,14 @@ Figma rejects it the facade falls back to the link and the section still works.
 
 ## What this pass does not claim
 
-- **The page gets longer, by roughly 1,400px.** Retiring the option tree, the
-  before/after panels and the old editor pair saves about 4,100px of rendered
-  height. The four full-width progression steps alone add about 3,100px, and the
-  atoms, variables and debug figures add another 1,700px between them. Leading
-  with visuals costs vertical space; that is the trade, not a side effect of it.
-  Two-up progression steps would have made this a net saving of about 800px, and
-  were rejected above for legibility.
+- **The page gets longer, by roughly 1,300px.** Measured against the 768px
+  reading column rather than the 976px frame, which is the correction that
+  matters: retiring the option tree, the before/after panels and the old editor
+  pair saves about 3,200px of rendered height, while the progression, the
+  prototype facade, the atoms and the two variable figures add about 4,500px.
+  Leading with visuals costs vertical space. That is the trade, not a side effect
+  of it, and two-up progression steps were the version that would have saved
+  height instead.
 - **Modes are shown for the Wheels collection only.** The variables panel
   screenshot has one collection expanded. Nothing claims the other ten are
   structured the same way, because nothing shows it.
