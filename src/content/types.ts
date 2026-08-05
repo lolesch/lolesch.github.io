@@ -53,7 +53,32 @@ export type Section =
       caption: string;
       items: readonly [ComparisonState, ComparisonState];
     }
+  | {
+      kind: 'progression';
+      heading: string;
+      caption: string;
+      steps: readonly ProgressionStep[];
+    }
   | { kind: 'embed'; heading: string; caption: string; figure: FigureId };
+
+// An ordered, cumulative sequence: each step keeps what the one before it added.
+// A separate kind from `comparison`, which is a fixed *pair* whose whole argument
+// is the difference between two things and which therefore renders as a
+// two-column grid. Here the reader follows the list rather than comparing across
+// it, so it renders as an <ol> and a screen reader gets the order for free.
+//
+// A list rather than a tuple: four is this instance's number, not the kind's.
+//
+// No `link`. The prototype is its own section, because an embedded app is not a
+// caption on a figure.
+export type ProgressionStep = {
+  label: string; // "Shoe model". Which decision this step is.
+  note: string; // what it added, and what it left alone
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
 
 // `label` is the one thing a lone screenshot never needs: with both states
 // present, the reader has to be told which is which before the caption can

@@ -130,6 +130,42 @@ function SectionBody({ section, priority }: { section: Section; priority: boolea
         </figure>
       );
 
+    case 'progression':
+      return (
+        <figure className="mt-gap">
+          {/*
+            One step per row at the full reading width, not two-up. At the
+            two-column width these screenshots land near 350px, which puts the
+            panel heading under 5px tall, and the panel changing is half of what
+            the figure is for. Height is the cost and it is taken deliberately.
+
+            <ol> rather than a stack of <figure>s: the steps are cumulative and
+            the order is the argument, so it has to be in the markup rather than
+            only in the layout.
+          */}
+          <ol className="space-y-gap">
+            {section.steps.map((step, index) => (
+              <li key={step.src}>
+                <p className="type-meta text-muted">
+                  <span className="type-emphasis text-fg">
+                    {index + 1}. {step.label}
+                  </span>{' '}
+                  {step.note}
+                </p>
+                <Image
+                  src={step.src}
+                  alt={step.alt}
+                  width={step.width}
+                  height={step.height}
+                  className="mt-tight h-auto w-full rounded-card border border-border"
+                />
+              </li>
+            ))}
+          </ol>
+          <figcaption className="mt-gap type-meta text-muted">{section.caption}</figcaption>
+        </figure>
+      );
+
     case 'embed': {
       const Figure = FIGURES[section.figure];
       return (

@@ -31,6 +31,14 @@ const bodies = (project: Project) =>
         // only thing telling a reader which state is which, so it is copy in
         // the same sense the alt is.
         return [section.caption, ...section.items.flatMap((s) => [s.label, s.alt])];
+      case 'progression':
+        // Label and note as well as alt. The label names which step this is and
+        // the note says what it added, so both are copy in the sense the
+        // comparison label is.
+        return [
+          section.caption,
+          ...section.steps.flatMap((step) => [step.label, step.note, step.alt]),
+        ];
       case 'embed':
         return [section.caption];
       default: {

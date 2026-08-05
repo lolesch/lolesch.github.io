@@ -56,7 +56,7 @@ describe('embedded figures (Seam 2)', () => {
 // them. A prose section has no caption, and the cast that would paper over
 // that is exactly the kind of thing these guards exist to not need.
 type Shipped = {
-  kind: 'figure' | 'comparison';
+  kind: 'figure' | 'comparison' | 'progression';
   heading: string;
   caption: string;
   src: string;
@@ -73,6 +73,17 @@ const imagesOf = (section: Section): Shipped[] => {
     case 'comparison': {
       const { kind, heading, caption } = section;
       return section.items.map(({ src, alt, label }) => ({
+        kind,
+        heading,
+        caption,
+        src,
+        alt,
+        label,
+      }));
+    }
+    case 'progression': {
+      const { kind, heading, caption } = section;
+      return section.steps.map(({ src, alt, label }) => ({
         kind,
         heading,
         caption,
@@ -116,6 +127,23 @@ describe('image figures (Seam 2)', () => {
     expect(IMAGES.length).toBeGreaterThan(0);
     expect(IMAGES.some(({ state }) => state.kind === 'figure')).toBe(true);
     expect(IMAGES.some(({ state }) => state.kind === 'comparison')).toBe(true);
+  });
+
+  it('ships a progression whose steps are numbered in order', () => {
+    const page = body('out/projects/rollhaus/index.html');
+    const progression = projects
+      .flatMap((project) => project.sections)
+      .find((section) => section.kind === 'progression');
+    expect(progression, 'no progression section ships').toBeDefined();
+    if (progression?.kind !== 'progression') throw new Error('unreachable');
+
+    // An <ol> rather than a stack of <figure>s is the whole reason this is a
+    // separate kind: the steps are cumulative, so a screen reader has to get
+    // the order. Asserting the labels appear in source order is what proves
+    // the list was not reshuffled by a grid.
+    const positions = progression.steps.map((step) => page.indexOf(step.label));
+    expect(positions.every((at) => at >= 0), 'a step label is missing').toBe(true);
+    expect([...positions].sort((a, b) => a - b)).toEqual(positions);
   });
 
   for (const { project, index, state } of IMAGES) {
