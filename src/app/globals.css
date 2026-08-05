@@ -357,3 +357,43 @@ body {
   color: var(--ds-color-fg);
   font-family: var(--ds-type-body-family);
 }
+
+/*
+ * The card grows into the page it opens, rather than the page replacing it.
+ *
+ * Cross-document rather than React's ViewTransition, and that is the load-bearing
+ * choice. `@view-transition` only fires on a real document navigation, which is
+ * why src/components/project-tile.tsx uses a plain <a> and gives up Next's
+ * client-side routing on project links. The alternative was
+ * unstable_ViewTransition, which keeps routing and puts an experimental API
+ * under the site's flagship interaction, on a site whose argument is that its
+ * choices are durable. Four static pages make the prefetch a cheap thing to lose.
+ *
+ * The tempo is the site's existing one. A second motion token was drafted and
+ * rejected: src/content/design-system.ts ships the sentence "One motion role",
+ * and a page-level morph is a state change like any other. 160ms is brisk, which
+ * is what Flow Over Flash asks for.
+ *
+ * Nothing here is inside `motion-state`, because that role is for `transition-*`
+ * on an element. This is a document-level at-rule and a pseudo-element tree, and
+ * they cannot be expressed as one utility.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: var(--ds-motion-state);
+    animation-timing-function: var(--ds-motion-ease);
+  }
+
+  /*
+   * The header is the same bar on both documents, so without a name of its own
+   * it joins the root snapshot and cross-fades with everything else, which reads
+   * as the chrome flickering. Named, it is its own group and simply holds still.
+   */
+  header {
+    view-transition-name: site-header;
+  }
+}

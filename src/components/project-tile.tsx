@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { LensChip } from '@/components/lens-chip';
 import type { Project } from '@/content/types';
 import { scrimGradient } from '@/lib/scrim';
@@ -155,6 +154,10 @@ export function ProjectTile({
             // redundant: the role answers the setting by itself, so gating the
             // scale is the whole of what was left to say.
             className="object-cover transition-transform motion-state motion-safe:group-has-[a:focus-visible]:scale-[1.04] motion-safe:group-has-[a:hover]:scale-[1.04]"
+            // Paired against the hero in src/app/projects/[slug]/page.tsx. Per
+            // slug rather than a constant, because only one element carrying a
+            // given name may be visible and this grid renders four cards.
+            style={{ viewTransitionName: `thumb-${project.slug}` }}
           />
         </div>
 
@@ -224,8 +227,13 @@ export function ProjectTile({
           }`}
           style={{ backgroundImage: scrimGradient }}
         >
-          <Link
+          <a
             href={`/projects/${project.slug}/`}
+            // A plain anchor rather than next/link since 2026-08-05, and the
+            // reason is in globals.css: `@view-transition` only fires on a real
+            // document navigation, so a client-side route change would make the
+            // morph never happen and nothing would look broken.
+            //
             // The whole card is the click target. The link name stays the
             // project title, which is what a screen reader reads out of a link
             // list. Wrapping the card in one <a> instead would flatten the
@@ -234,7 +242,7 @@ export function ProjectTile({
             className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
           >
             {project.title}
-          </Link>
+          </a>
         </h3>
       </div>
 
