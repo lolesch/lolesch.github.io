@@ -90,12 +90,20 @@ export function RollhausSlots() {
         ))}
       </div>
 
-      <div
-        className="mt-gap rounded-card border border-border p-gutter"
-        // Depicted in the Rollhaus brand yellow because that is what the source
-        // artifact looks like.
-        style={{ borderLeft: `6px solid ${rollhausPalette.brand}` }}
-      >
+      {/*
+        Bordered on all four sides, not accented on one. This block carried a
+        6px Rollhaus-yellow left border until 2026-08-05, inherited unexamined
+        from the figure it replaced. A thick coloured edge on one side of a card
+        is decoration standing in for hierarchy, and the block does not need it:
+        it is the only unfilled panel here, which already sets it apart from the
+        two `bg-surface` ones above. Same reading as the constraints callout in
+        src/components/sections.tsx, bordered rather than filled, for the same
+        anti-clutter constraint in CONTEXT.md.
+
+        The brand yellow is still in this figure, in the swatch row, where it is
+        the subject rather than the styling.
+      */}
+      <div className="mt-gap rounded-card border border-border p-gutter">
         <Label>{fig.extend.label}</Label>
         <p className="mt-tight type-meta">{fig.extend.body}</p>
       </div>
