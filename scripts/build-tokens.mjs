@@ -16,6 +16,24 @@ const base = [
   'tokens/semantic/type.json',
   'tokens/semantic/radius.json',
   'tokens/semantic/motion.json',
+  /*
+   * Theme-independent on purpose, which is why it sits in the base set beside
+   * space and radius rather than splitting into a light and a dark file.
+   *
+   * A shadow is a claim about a light source, and this site has one light
+   * source in both themes. What changes between them is how much of that claim
+   * is visible: over white, the shadow is what makes a card sit above the page,
+   * and over near-black it is nearly invisible and the raised `surface` fill
+   * carries the elevation instead. Both are true at once with one value, so
+   * there is one value.
+   *
+   * The alternative, a shadow.dark.json, was rejected for a reason worth
+   * writing down: it would need the dark platform's filter below to stop being
+   * about colour, and it would mint a second shadow whose job is to be
+   * invisible. That is inventory, which is the thing /design-system's restraint
+   * claim is about.
+   */
+  'tokens/semantic/shadow.json',
   // Semantic *colours* that do not follow the theme, so they belong in the base
   // set beside space and radius rather than in either theme file.
   //

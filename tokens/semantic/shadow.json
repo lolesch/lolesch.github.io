@@ -1,0 +1,6 @@
+{
+  "shadow": {
+    "raised": { "$value": "{primitive.shadow.sm}" },
+    "lifted": { "$value": "{primitive.shadow.md}" }
+  }
+}

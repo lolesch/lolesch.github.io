@@ -132,6 +132,37 @@ export function TypeRoleProperties({
   );
 }
 
+/*
+ * The two elevations, each rendered as the thing it does rather than as its
+ * value. The specimen sits on `surface` because that is what a raised panel is
+ * filled with, so the swatch is the card from the section above with its
+ * contents removed.
+ *
+ * Worth watching across the theme switch, and it is the one family on this page
+ * where the interesting result is that nothing moves. The tokens do not
+ * re-point under dark, so what changes between the two is only how much of the
+ * shadow the eye can find: over white it is the whole of the elevation, and over
+ * near-black the fill has taken that job and the shadow is nearly gone. One
+ * value, two readings, which is the note in scripts/build-tokens.mjs made
+ * visible.
+ */
+export function ShadowScale({ tokens }: { tokens: readonly Token[] }) {
+  return (
+    <ul className="mt-gap flex flex-wrap gap-gap">
+      {tokens.map((token) => (
+        <li key={token.name}>
+          <span
+            aria-hidden="true"
+            style={{ boxShadow: token.value }}
+            className="block size-20 rounded-card border border-border bg-surface"
+          />
+          <code className="mt-tight block type-code">{token.name}</code>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function RadiusScale({ tokens }: { tokens: readonly Token[] }) {
   return (
     <ul className="mt-gap flex flex-wrap gap-gap">

@@ -1,4 +1,5 @@
 import { ProjectTile } from '@/components/project-tile';
+import { SectionHeading } from '@/components/section-heading';
 import { projects } from '@/content/projects';
 
 /*
@@ -23,10 +24,19 @@ const bridge = projects.filter((project) => project.tier === 'bridge');
 
 export function ProjectGrid() {
   return (
-    <section aria-labelledby="projects" className="mt-section">
-      <h2 id="projects" className="type-heading">
-        Projects
-      </h2>
+    // `mt-section` moved onto SectionHeading on 2026-08-05, so the rule and the
+    // space above it travel together.
+    <section aria-labelledby="projects">
+      {/*
+        No index. Home has one section under the hero, and numbering a list of
+        one promises a second entry that does not exist. See the note on the
+        prop.
+
+        The id stays on the h2 rather than moving to the wrapper: it is both the
+        section's accessible name via aria-labelledby and the target of the
+        hero's "See the work" anchor, and a jump should land on the heading.
+      */}
+      <SectionHeading id="projects">Projects</SectionHeading>
 
       {/*
         One column, so each tile is the full 61rem content box. A grid rather

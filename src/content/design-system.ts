@@ -74,7 +74,8 @@ export type TypeRole = {
  * single property.
  */
 export const TYPE_ROLES: readonly TypeRole[] = [
-  { role: 'display', utility: 'type-display', job: 'The home headline, once there is room for it' },
+  { role: 'hero', utility: 'type-hero', job: 'The home headline, and the only fluid role' },
+  { role: 'display', utility: 'type-display', job: 'The title on a featured project tile' },
   { role: 'title', utility: 'type-title', job: 'The h1 on every route' },
   { role: 'heading', utility: 'type-heading', job: 'Section headings' },
   { role: 'subheading', utility: 'type-subheading', job: 'Card titles and figure titles' },
@@ -106,12 +107,22 @@ export type ContrastPair = {
  * table and it travels with the list rather than being stated on the page.
  *
  * Measured 2026-08-01 against the CV palette and deliberately absent:
- * --ds-color-accent on --ds-color-surface is 4.05:1 in light and
- * --ds-color-capability on surface is 4.02:1, both under AA, so accent text and
- * lens chips sit on --ds-color-bg and never inside a filled panel.
- * --ds-color-border-interactive on surface is 2.71:1 light and 2.89:1 dark,
- * under the 3:1 boundary, so a control does not sit on a panel either. Add any
- * of them here the moment something renders them.
+ * --ds-color-accent on --ds-color-surface is under AA, so accent text sits on
+ * --ds-color-bg and never inside a filled panel.
+ * --ds-color-border-interactive on surface is under the 3:1 boundary, so a
+ * *control* does not sit on a panel. That constraint survived the filled card
+ * on 2026-08-05 rather than being waived by it: the card's own border has the
+ * page on its outer side, which is the adjacency SC 1.4.11 is about and which
+ * is listed below, and nothing inside the card is a control. The one link is on
+ * the scrim over the thumbnail, and the lens chips are list items.
+ *
+ * --ds-color-capability on surface was the third of these until the same day,
+ * at 4.02:1, and it is now a listed pair instead. Filling the card is what
+ * moved it: the chips it holds went from sitting on `bg` to sitting on a panel,
+ * which is precisely the case the old note said to add the moment something
+ * rendered it. The green moved with it, one step darker in light, so the chip
+ * clears AA on both. Add any remaining pair here the moment something renders
+ * it.
  */
 export const CONTRAST_PAIRS: readonly ContrastPair[] = [
   { fg: '--ds-color-fg', bg: '--ds-color-bg', min: 4.5, role: 'body text' },
@@ -131,10 +142,39 @@ export const CONTRAST_PAIRS: readonly ContrastPair[] = [
     role: 'metadata text on a raised panel',
   },
   {
+    fg: '--ds-color-capability',
+    bg: '--ds-color-surface',
+    min: 4.5,
+    // Added 2026-08-05 with the filled project card, which is the first thing
+    // to render a lens chip on a panel rather than on the page. See the note
+    // above: this pair is the reason the light `capability` green is a step
+    // darker than it was, and listing it is what stops the next palette
+    // undoing that quietly.
+    role: 'capability tag text on a raised panel',
+  },
+  {
     fg: '--ds-color-border-interactive',
     bg: '--ds-color-bg',
     min: 3,
     role: 'control boundary (SC 1.4.11)',
+  },
+  {
+    fg: '--ds-color-bg',
+    bg: '--ds-color-accent',
+    min: 4.5,
+    /*
+     * The one filled control on the site, added with the hero on 2026-08-05.
+     * The label takes `bg` rather than a white, and that is the whole reason the
+     * pair clears AA in both themes: gold is dark in light mode and light in
+     * dark mode, so the type on it has to move in the opposite direction, which
+     * is exactly what `bg` does for free.
+     *
+     * It is the tightest pair in this table at 4.54:1 in light, against 6.87:1
+     * in dark, and it is listed rather than eyeballed for that reason. A Brand
+     * change that darkens `accent` by a step in light mode fails here instead of
+     * shipping.
+     */
+    role: 'label on a filled control',
   },
   {
     fg: '--ds-color-border-media',
@@ -329,10 +369,18 @@ export const designSystem: {
 
   families: {
     kind: 'prose',
-    heading: 'Space, type and radius',
+    // Was "Space, type and radius" until 2026-08-05, when elevation became a
+    // fourth family under it and the heading started listing three of four. A
+    // heading that enumerates its contents has to be edited every time they
+    // change, and this page's whole argument is that nothing here drifts from
+    // what ships. Naming the job instead means the next family costs no edit.
+    heading: 'The families under colour',
     body: [
       'The same three layers carry everything else. These are shown at the size they render rather than as a table of numbers, because the question is whether the steps are far enough apart to see.',
       'Type is two things. A size ramp, and the roles built on it. Each role is set below in the utility that renders it, so what you are reading is the role rather than a description of one, and the five properties each one fixes are in the table under them.',
+      // Added with the family, and it says the thing worth knowing about it
+      // rather than describing the swatches, which are directly underneath.
+      'Elevation is the one family that does not move with the theme. Throw the switch and the two shadows hold still while everything above them changes: there is one light source in both themes, and what differs is only how much of it you can see once the surface underneath has gone dark.',
     ],
   },
 

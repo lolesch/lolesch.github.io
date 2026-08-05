@@ -1,6 +1,7 @@
 {
   "text": {
     "$type": "dimension",
+    "hero":       { "$value": "clamp({primitive.font.size.600}, 1.25rem + 5vw, {primitive.font.size.900})" },
     "display":    { "$value": "{primitive.font.size.700}" },
     "title":      { "$value": "{primitive.font.size.600}" },
     "heading":    { "$value": "{primitive.font.size.500}" },

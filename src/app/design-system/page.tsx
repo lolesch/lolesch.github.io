@@ -4,8 +4,10 @@ import { FixedLayer, SemanticLayer } from '@/components/design-system/colour';
 import { ContrastTable, ScrimBound } from '@/components/design-system/contrast-table';
 import { Disclosure } from '@/components/design-system/disclosure';
 import { ComponentGallery } from '@/components/design-system/gallery';
+import { SectionHeading } from '@/components/section-heading';
 import {
   RadiusScale,
+  ShadowScale,
   SpaceScale,
   TypeRoleProperties,
   TypeRoles,
@@ -81,10 +83,10 @@ export default function DesignSystemPage() {
       */}
       <p className="mt-gap type-body">{designSystem.restraint}</p>
 
-      <section aria-labelledby="pillars" className="mt-section">
-        <h2 id="pillars" className="type-heading">
+      <section aria-labelledby="pillars">
+        <SectionHeading id="pillars" index={1}>
           {designSystem.pillars.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.pillars.body} />
 
         <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
@@ -102,10 +104,10 @@ export default function DesignSystemPage() {
         system do its job, which was not true of any earlier version of this
         page.
       */}
-      <section aria-labelledby="in-place" className="mt-section">
-        <h2 id="in-place" className="type-heading">
+      <section aria-labelledby="in-place">
+        <SectionHeading id="in-place" index={2}>
           {designSystem.inPlace.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.inPlace.body} />
         <ComponentGallery />
       </section>
@@ -115,10 +117,10 @@ export default function DesignSystemPage() {
         reader who has just been told to hover the card is one paragraph away
         from what the hover is made of.
       */}
-      <section aria-labelledby="interaction" className="mt-section">
-        <h2 id="interaction" className="type-heading">
+      <section aria-labelledby="interaction">
+        <SectionHeading id="interaction" index={3}>
           {designSystem.interaction.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.interaction.body} />
 
         {/*
@@ -145,10 +147,10 @@ export default function DesignSystemPage() {
         </dl>
       </section>
 
-      <section aria-labelledby="layers" className="mt-section">
-        <h2 id="layers" className="type-heading">
+      <section aria-labelledby="layers">
+        <SectionHeading id="layers" index={4}>
           {designSystem.layers.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.layers.body} />
 
         {/*
@@ -180,10 +182,10 @@ export default function DesignSystemPage() {
         <SemanticLayer entries={SEMANTIC_COLOURS} tokens={tokens} />
       </section>
 
-      <section aria-labelledby="families" className="mt-section">
-        <h2 id="families" className="type-heading">
+      <section aria-labelledby="families">
+        <SectionHeading id="families" index={5}>
           {designSystem.families.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.families.body} />
 
         <h3 className="mt-section type-subheading">Space ({of('semantic', 'space').length})</h3>
@@ -200,12 +202,21 @@ export default function DesignSystemPage() {
 
         <h3 className="mt-section type-subheading">Radius ({of('semantic', 'radius').length})</h3>
         <RadiusScale tokens={of('semantic', 'radius')} />
+
+        {/*
+          Last, and newest: the family landed on 2026-08-05 with the filled
+          project card. It is the only one here whose two values are identical
+          in both themes, which is a decision rather than an oversight and is
+          argued where it is made, in scripts/build-tokens.mjs.
+        */}
+        <h3 className="mt-section type-subheading">Elevation ({of('semantic', 'shadow').length})</h3>
+        <ShadowScale tokens={of('semantic', 'shadow')} />
       </section>
 
-      <section aria-labelledby="rules" className="mt-section">
-        <h2 id="rules" className="type-heading">
+      <section aria-labelledby="rules">
+        <SectionHeading id="rules" index={6}>
           {designSystem.rules.heading} ({ENFORCED_RULES.length})
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.rules.body} />
 
         <dl className="mt-gap grid gap-gap rounded-card border border-border p-gutter type-body">
@@ -218,19 +229,19 @@ export default function DesignSystemPage() {
         </dl>
       </section>
 
-      <section aria-labelledby="contrast" className="mt-section">
-        <h2 id="contrast" className="type-heading">
+      <section aria-labelledby="contrast">
+        <SectionHeading id="contrast" index={7}>
           {designSystem.contrast.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.contrast.body} />
         <ContrastTable />
         <ScrimBound />
       </section>
 
-      <section aria-labelledby="built" className="mt-section">
-        <h2 id="built" className="type-heading">
+      <section aria-labelledby="built">
+        <SectionHeading id="built" index={8}>
           {designSystem.built.heading}
-        </h2>
+        </SectionHeading>
         <Prose body={designSystem.built.body} />
       </section>
     </main>

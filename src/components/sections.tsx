@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { FIGURES } from '@/components/figures/registry';
+import { SectionHeading } from '@/components/section-heading';
 import type { Section } from '@/content/types';
 
 export function ContentSections({ sections }: { sections: readonly Section[] }) {
@@ -19,8 +20,15 @@ export function ContentSections({ sections }: { sections: readonly Section[] }) 
   return (
     <>
       {sections.map((section, index) => (
-        <section key={section.heading} className="mt-section">
-          <h2 className="type-heading">{section.heading}</h2>
+        // No `mt-section` here since 2026-08-05: SectionHeading carries it, so
+        // the rule and the space above it cannot come apart.
+        <section key={section.heading}>
+          {/*
+            1-based, because the index is read by a person rather than used as
+            an offset. It counts sections on this page, which on a case study is
+            the sequence the reader is actually in.
+          */}
+          <SectionHeading index={index + 1}>{section.heading}</SectionHeading>
           <SectionBody section={section} priority={index === lead} />
         </section>
       ))}

@@ -1,5 +1,12 @@
 {
   "type": {
+    "hero": {
+      "size":     { "$type": "dimension",  "$value": "{text.hero}" },
+      "weight":   { "$type": "fontWeight", "$value": "{primitive.font.weight.medium}" },
+      "leading":  { "$type": "number",     "$value": "{primitive.font.leading.solid}" },
+      "tracking": { "$type": "dimension",  "$value": "{primitive.font.tracking.tighter}" },
+      "family":   { "$type": "fontFamily", "$value": "{primitive.font.family.serif}" }
+    },
     "display": {
       "size":     { "$type": "dimension",  "$value": "{text.display}" },
       "weight":   { "$type": "fontWeight", "$value": "{primitive.font.weight.medium}" },

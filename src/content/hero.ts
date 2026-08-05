@@ -8,6 +8,19 @@
 //
 // Do not reword either without a new decision recorded in `_build-log.md`.
 export const hero = {
+  // Added 2026-08-05 with the hero composition. The headline is a point of view
+  // and deliberately says nothing about who holds it, which works in the middle
+  // of a page and not at the top of one: a first-time reader arrived at a
+  // sentence with no name, no discipline and no city attached. This is the same
+  // job layout.tsx's `description` does for a search result, and it is answered
+  // the same way.
+  //
+  // Tracks the first clause of /about's intro exactly. "Design Engineer" is the
+  // title tag and the Track C claim; the eyebrow carries the design half because
+  // the headline and the body below it already carry the engineering half, and a
+  // hero that said engineer twice would leave the UX/UI half of the arc to a
+  // page most readers never open.
+  eyebrow: 'UX/UI Designer · Berlin',
   headline: 'The hard part happens before anyone starts building.',
   body: [
     // Three plain sentences, no subordinate clause. "what nobody had decided
@@ -19,5 +32,22 @@ export const hero = {
     // "More than five years" tracks `cv/work_history.md` and the About intro.
     // It is a fact about a duration, so it moves only when that does.
     'More than five years of building features taught me that. The expensive problems were rarely in the code. They were in what nobody had decided yet, so I went and learned to do that part.',
+  ],
+  // Added 2026-08-05. There was no call to action anywhere on Home before this:
+  // a reader convinced by the hero had a nav bar and nothing else, and the only
+  // contact details on the site were on /about behind a third nav item.
+  //
+  // Two, not three. The grid below is what the page is for, so it is primary and
+  // the link is an anchor rather than a route: the work is already on this page
+  // and sending someone to a second copy of it would be a lie about where they
+  // are. The CV is the one thing a hiring manager reliably wants and cannot get
+  // from reading, so it is second and it is the only other one.
+  //
+  // The href tracks src/components/project-grid.tsx's `id="projects"`, and
+  // tests/export/nav.test.ts is where that link is checked against the rendered
+  // target rather than trusted.
+  actions: [
+    { label: 'See the work', href: '#projects', primary: true },
+    { label: 'Read the CV', href: '/cv/leonid-schreiber-ux-engineer.pdf', primary: false },
   ],
 } as const;

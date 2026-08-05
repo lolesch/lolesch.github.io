@@ -33,10 +33,17 @@ describe('static export (Seam 2)', () => {
     // "one job instead of two" framing, which the same decision rejected: if
     // design and implementation are one job then there is only one job, which
     // was never the claim.
+    //
+    // The eyebrow took index 0 on 2026-08-05, so the body is index 1. Both are
+    // asserted by position rather than the body being searched for anywhere on
+    // the page, which is what this case has always been about: the hero is a
+    // fixed order and a paragraph that drifted out of it would still be found
+    // by a document-wide match.
     const paragraphs = [...rendered(HOME).matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1]);
-    expect(paragraphs.length).toBeGreaterThanOrEqual(1);
-    expect(paragraphs[0]).toContain('The expensive problems were rarely in the code.');
-    expect(paragraphs[0]).toContain('so I went and learned to do that part');
+    expect(paragraphs.length).toBeGreaterThanOrEqual(2);
+    expect(paragraphs[0]).toContain('UX/UI Designer');
+    expect(paragraphs[1]).toContain('The expensive problems were rarely in the code.');
+    expect(paragraphs[1]).toContain('so I went and learned to do that part');
   });
 
   it('has dropped the rejected "one job" framing everywhere on Home', () => {
@@ -46,7 +53,7 @@ describe('static export (Seam 2)', () => {
     expect(rendered(HOME)).not.toContain('one job');
   });
 
-  it('renders the hero headline on the display role, not a Tailwind built-in', () => {
+  it('renders the hero headline on the hero role, not a Tailwind built-in', () => {
     // The walking skeleton used text-4xl/sm:text-5xl and recorded that this
     // plan replaces them. Asserting on the class asserts the thing promised.
     //
@@ -54,8 +61,16 @@ describe('static export (Seam 2)', () => {
     // size utility carried one of the five decisions a heading makes and left
     // the other four at the call site. The role carries all five, and the size
     // ramp is no longer reachable as a utility at all.
+    //
+    // Moved again on 2026-08-05, to a single unprefixed `type-hero`. The
+    // breakpoint prefix is now the interesting half of this assertion rather
+    // than a detail of it: the role is fluid, so a returning `sm:` on this
+    // element would mean someone had rebuilt the 32px-to-48px step the clamp
+    // replaced, and put a jump back in the middle of the largest thing on the
+    // site.
     const h1 = raw(HOME).match(/<h1[^>]*>/)?.[0] ?? '';
-    expect(h1).toContain('sm:type-display');
+    expect(h1).toContain('type-hero');
+    expect(h1).not.toContain('sm:type-');
     expect(h1).not.toContain('text-4xl');
     expect(h1).not.toContain('text-5xl');
   });

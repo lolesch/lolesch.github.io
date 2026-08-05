@@ -12,7 +12,7 @@
 
     "ink-inverse":        { "$value": "{primitive.neutral.0}" },
     "paper-inverse":      { "$value": "{primitive.neutral.1000}" },
-    "shade-inverse":      { "$value": "{primitive.neutral.950}" },
+    "shade-inverse":      { "$value": "{primitive.neutral.900}" },
     "quiet-inverse":      { "$value": "{primitive.neutral.500}" },
     "rule-inverse":       { "$value": "{primitive.neutral.800}" },
     "edge-inverse":       { "$value": "{primitive.neutral.700}" },

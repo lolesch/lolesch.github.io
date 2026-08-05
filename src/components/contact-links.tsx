@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { SectionHeading } from '@/components/section-heading';
 import type { About, ContactIconId, ContactLink } from '@/content/types';
 
 /*
@@ -45,7 +46,12 @@ const ICONS: Record<ContactIconId, ReactNode> = {
   ),
 };
 
-function Icon({ id }: { id: ContactIconId }) {
+// Exported since 2026-08-05, when the footer started carrying the same four
+// links in a shorter row. The drawings stay here, with the section that has the
+// most to say about them, rather than moving to a third file that both import:
+// two call sites is not yet a shared module, and the registry above is the
+// thing either one would have to come back to.
+export function Icon({ id }: { id: ContactIconId }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -71,10 +77,15 @@ function Icon({ id }: { id: ContactIconId }) {
 
 export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[]; cv: About['cv'] }) {
   return (
-    <section aria-labelledby="contact" className="mt-section">
-      <h2 id="contact" className="type-heading">
-        Contact
-      </h2>
+    // `mt-section` moved onto SectionHeading on 2026-08-05, with the rule.
+    <section aria-labelledby="contact">
+      {/*
+        No index, and this is the one place where that is a judgement rather
+        than a count. /about runs four numbered sections and then this, which is
+        not a fifth part of the reading: it is what the page is for. The rule
+        still separates it; the number would file it as more prose.
+      */}
+      <SectionHeading id="contact">Contact</SectionHeading>
 
       <ul className="mt-gap grid gap-x-gap gap-y-tight type-body sm:grid-cols-2">
         {contact.map((link) => (

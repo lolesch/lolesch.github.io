@@ -1,15 +1,44 @@
 import type { Metadata } from 'next';
-import { Source_Serif_4, Inter } from 'next/font/google';
+import { Fraunces, Archivo } from 'next/font/google';
+import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import './globals.css';
 
-const headline = Source_Serif_4({
+/*
+ * Chosen 2026-08-05, replacing Source Serif 4 + Inter. The reason is not that
+ * the old pair was bad; it is that it was *the* pair. Inter and Source Serif are
+ * two of the most-used families on the web, and a portfolio applying for UX/UI
+ * work is read by someone who clocks type before they read a word. Defaults
+ * there say "not designed yet" no matter what the copy says. The rejected
+ * alternatives are in `_build-log.md`.
+ *
+ * `opsz` is requested rather than left off, and it is the whole reason this
+ * family and not a static one. Fraunces carries an optical size axis, and CSS
+ * defaults `font-optical-sizing` to auto, so the browser drives the axis from
+ * the rendered size with nothing at the call site: the hero at 88px gets the
+ * high-contrast cut a display serif should have, and `subheading` at 20px gets
+ * the sturdier one that stays readable. Without the axis both would render at
+ * one compromise weight of contrast, which is what a static display serif costs
+ * and why the first draft of this looked thin at 20px and timid at 88px.
+ *
+ * WONK and SOFT are deliberately not requested. Both are what make Fraunces
+ * quirky, and the copy on this site is dry. At their defaults the face reads as
+ * precise rather than folksy, which is the half of it worth having.
+ */
+const headline = Fraunces({
   subsets: ['latin'],
+  axes: ['opsz'],
   variable: '--font-headline',
   display: 'swap',
 });
 
-const body = Inter({
+/*
+ * A grotesque with a real weight range and slightly narrow proportions, so a
+ * metadata line sets tighter than Inter would at the same size. It also does
+ * something Inter does not: at `eyebrow`, uppercase and tracked out, it holds
+ * its colour instead of going spindly.
+ */
+const body = Archivo({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
@@ -77,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           one place, and it is the same edge the header's wordmark sits on.
         */}
         <div className="frame mx-auto px-gutter">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -88,6 +88,22 @@
   --radius-tag: var(--ds-radius-tag);
 
   /*
+   * Two elevations, and unlike every colour above they do not re-point under
+   * [data-theme="dark"]. That is the decision recorded in
+   * scripts/build-tokens.mjs rather than an omission: one light source, one
+   * value, and how much of it you can see is the theme's business. Over white
+   * the shadow is the elevation; over near-black the raised `surface` fill is,
+   * and the shadow costs nothing by still being there.
+   *
+   * Bridged despite the motion and size ramps deliberately not being, because
+   * the failure those two avoid does not exist here. A shadow is one property
+   * carrying one decision, so there is no second half of it for a call site to
+   * forget.
+   */
+  --shadow-raised: var(--ds-shadow-raised);
+  --shadow-lifted: var(--ds-shadow-lifted);
+
+  /*
    * Motion is deliberately *not* bridged, for the same reason the size ramp
    * below is not. Tailwind would give back `duration-state` and `ease-state` as
    * two separate utilities, and a call site that reaches for one and forgets the
@@ -164,6 +180,30 @@ html {
  *
  * Every declaration is a var(--ds-type-*) with one exception, marked below.
  */
+/*
+ * The page headline, and the one role whose size is a range rather than a step.
+ *
+ * It exists because `display` had two jobs and they stopped agreeing. `display`
+ * is the featured tile's title, sized so 2rem of serif does not read as a
+ * caption on a 610px image, and it is correct at that. The home h1 is the
+ * loudest moment on the site and wants to be roughly twice as large, which is a
+ * different job, so it is a different role rather than the same one stretched.
+ *
+ * Fluid rather than the `title` -> `display` breakpoint swap the h1 used before.
+ * Two roles at a breakpoint is right when the two are genuinely different jobs;
+ * here it is one job at every width, and the swap put a visible 16px jump at
+ * `sm` in the middle of the thing a first-time reader looks at first. The floor
+ * and the ceiling are both Primitives, so the range is bounded by the same ramp
+ * every other role steps along.
+ */
+@utility type-hero {
+  font-family: var(--ds-type-hero-family);
+  font-size: var(--ds-type-hero-size);
+  font-weight: var(--ds-type-hero-weight);
+  line-height: var(--ds-type-hero-leading);
+  letter-spacing: var(--ds-type-hero-tracking);
+}
+
 @utility type-display {
   font-family: var(--ds-type-display-family);
   font-size: var(--ds-type-display-size);

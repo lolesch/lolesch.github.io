@@ -9,7 +9,9 @@
         "400": { "$value": "1.25rem" },
         "500": { "$value": "1.5rem" },
         "600": { "$value": "2rem" },
-        "700": { "$value": "3rem" }
+        "700": { "$value": "3rem" },
+        "800": { "$value": "4rem" },
+        "900": { "$value": "5.5rem" }
       },
       "weight": {
         "$type": "fontWeight",
@@ -19,6 +21,7 @@
       },
       "leading": {
         "$type": "number",
+        "solid": { "$value": 0.95 },
         "tight": { "$value": 1.1 },
         "snug": { "$value": 1.25 },
         "normal": { "$value": 1.5 },
@@ -26,6 +29,7 @@
       },
       "tracking": {
         "$type": "dimension",
+        "tighter": { "$value": "-0.035em" },
         "tight": { "$value": "-0.02em" },
         "none": { "$value": "0em" },
         "wide": { "$value": "0.1em" }

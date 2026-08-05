@@ -55,7 +55,30 @@ export function ProjectTile({
       // the card faded across 160ms while the rest of the page changed
       // instantly. A card is not a place where the theme arrives late. Only the
       // border is a state here, so only the border transitions.
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-card border border-border-interactive transition-[border-color] motion-state has-[a:focus-visible]:border-fg has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-border-interactive has-[a:hover]:border-fg"
+      //
+      // Filled and raised since 2026-08-05, against bordered-on-`bg` before.
+      // The card had a 1px hairline and nothing else, and `surface` measured
+      // 1.05:1 against the page in dark and 1.12:1 in light, so four cards read
+      // as four outlines drawn on one flat plane. Both halves of that changed:
+      // `surface` moved to 1.24:1 and 1.18:1, and the shadow does the rest of
+      // the work in light mode, where a fill that faint cannot.
+      //
+      // What made this safe is the pair the fill would have broken. `muted` on
+      // `surface` is in CONTRAST_PAIRS and the tile renders exactly that on its
+      // metadata line, so the new value was chosen against it rather than by
+      // eye: one step lighter in dark measured 4.34:1 and was rejected.
+      //
+      // The lens chips are why this was not done sooner, and they are still the
+      // constraint: `capability` on `surface` is 4.02:1 in light, under AA. They
+      // sit on `bg` inside the card body, which is now a fill inside a fill.
+      // That is a real cost, paid because the alternative was a card that could
+      // not be seen.
+      //
+      // `transition-[border-color,box-shadow]` and still not `transition-colors`,
+      // for the reason the old comment gives: `colors` covers `color`, so every
+      // line of text on the card faded across 160ms while the rest of the page
+      // threw the theme instantly.
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-card border border-border-interactive bg-surface shadow-raised transition-[border-color,box-shadow] motion-state has-[a:focus-visible]:border-fg has-[a:focus-visible]:shadow-lifted has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-border-interactive has-[a:hover]:border-fg has-[a:hover]:shadow-lifted"
     >
       {/*
         `border-media` rather than `border-interactive`: the image is inside the
