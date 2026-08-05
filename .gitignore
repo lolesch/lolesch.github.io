@@ -40,6 +40,9 @@ yarn-error.log*
 # Local Claude Code settings (machine-specific permissions)
 .claude/settings.local.json
 
+# Vendored agent skill (reinstall with `npx impeccable install`)
+/.claude/skills/impeccable/
+
 # Generated design tokens (built by `npm run tokens`, never hand-edited)
 /src/styles/generated/
 

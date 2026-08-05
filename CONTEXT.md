@@ -18,7 +18,7 @@ The portfolio site itself, treated as a Track C case study: a token-driven desig
 
 ## Hero Case Study
 
-The single full case study that ships in v1. Currently: Rollhaus.
+The full case study that carried v1 on its own: Rollhaus. Superseded as a concept by **Tier** when FerMentor shipped on 2026-08-02 (`42f5bc9`) and the grid held two featured entries rather than one. Recorded here 2026-08-05. The phrase is kept defined because earlier entries in `_build-log.md` and `docs/plans/` use it.
 
 ## Flow Over Flash
 
@@ -40,18 +40,24 @@ The UI control that switches between light and dark mode. Ships in v1. Driven by
 
 The four pages that ship at launch, each one full (no skeleton/"coming soon" pages):
 
-- `/` — Home: hero + Rollhaus card
-- `/projects/rollhaus` — Project Detail: the hero case study
+- `/` — Home: hero + the project grid
+- `/projects/[slug]` — Project Detail: one page per project record
 - `/design-system` — Design System: full docs, live system the site runs on
 - `/about` — About + Contact merged: the craft-origin arc + email/LinkedIn/GitHub/CV download
 
-URL structure is forward-designed: `/projects/rollhaus` lets a `/projects` listing page slot in at v2 without breaking the case study URL. Deferred to v2: `/projects` listing (a list of one is just a link), Playground/Experiments.
+Four project records ship as of 2026-08-05: FerMentor and Rollhaus at `featured`, GlyphsHero and How to God at `bridge`.
+
+URL structure is forward-designed: `/projects/rollhaus` lets a `/projects` listing page slot in at v2 without breaking the case study URL. Deferred to v2: `/projects` listing, Playground/Experiments. The original reason for deferring the listing was that a list of one is just a link; that reason expired at four, so the deferral now rests on the Router being the thing that makes a listing worth having.
 
 **Named Work until 2026-08-02**, in the nav label and in the route alike. "Work" reads as employment, which is the wrong promise on a grid where most entries are not jobs. The route moved with the label rather than leaving the URL arguing with the nav. Nothing is deployed at the old paths, so no redirect is owed.
 
 ## Tile Schema
 
-The fixed shape every project entry takes, down to archive tier: three first-person lines — `Problem` / `What I did` / `What changed` — plus a metadata line (year · context · role) and lens tags. It exists because the old portfolio's core failure was showing projects but not what Leonid did in them: the old template had no slot for a decision. Recorded as the v2 standard; v1 ships one case study and no tile grid, but any v1 content that will later become a tile is written to this shape.
+The fixed shape every project entry takes, down to archive tier: three first-person lines — `Problem` / `What I did` / `What changed` — plus a metadata line (year · context · role) and lens tags. It exists because the old portfolio's core failure was showing projects but not what Leonid did in them: the old template had no slot for a decision. Recorded as the v2 standard before anything rendered it. Tiles have rendered on Home since 2026-07-30 (`098c549`) and every one is written to this shape.
+
+## Tier
+
+The sort rank carried on every project record: `featured`, `bridge`, or `archive`. Defined in `src/content/types.ts` from the start so the split and the Router cost no model change later. Featured tiles are the argument and render at the full frame; bridge tiles are the evidence and render two-up. Nothing carries `archive` yet, and the first thing that does needs its own decision rather than falling into `bridge` by default.
 
 ## Lens
 
@@ -71,7 +77,7 @@ The seam that keeps the framework replaceable: tokens live as CSS custom propert
 
 ## Case Study Template
 
-A flexible *superset* of possible sections (the brief's 9 are available slots), not a fixed mold. Hard rule: a section exists only if it has substance — never pad to look complete. Rollhaus is the lean instance (Hook → Context → Process → Key Decisions → Outcome → Learnings). Pending polish: add a Constraints callout box (time/team/tools) to Rollhaus.
+A flexible *superset* of possible sections (the brief's 9 are available slots), not a fixed mold. Hard rule: a section exists only if it has substance — never pad to look complete. Rollhaus is the lean instance (Hook → Context → Process → Key Decisions → Outcome → Learnings). The Constraints callout (time/team/tools) that sat here as pending polish shipped as a `constraints` section kind and is carried by both featured case studies.
 
 ## Source of Truth
 
