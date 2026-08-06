@@ -227,12 +227,47 @@ const fermentor: Project = {
       ],
     },
     {
+      // Added 2026-08-06. The section above states the appearance-first rule and
+      // then shows only its first rung, which left the most specific research
+      // consequence in this project asserted and unillustrated. The crop starts
+      // below the two cards the comparison already ships full size.
+      //
+      // "as the component library holds it" is doing real work in the caption:
+      // these states are built, and nothing in the sources proves the prototype
+      // wires all of them. Guardrail 1.
+      kind: 'figure',
+      heading: 'When appearance is not enough',
+      caption:
+        'The rest of the ladder, as the component library holds it. Smell only comes up when looking has not settled it, and the smell prompt is the one that says to open the jar, drawn at the highest attention level in the set. Taste comes after that. Both endings are built: the estimate updates and the batch moves on, or the batch is irrecoverable and the app says to discard it rather than leaving the user to work that out.',
+      src: '/figures/fermentor-ladder.png',
+      alt: 'Six cards in two columns. On the left, "You should do a smell test", reading "Carefully open the jar - observe the pressure buildup and the smell", with dropdowns for Pressure, Smell and Intensity set to None, Sour / tangy and Mild. Below it "You should taste it", with Texture and Taste set to Slightly softened and Tangy / sour. Below that a green card, "Great! Your ferment is doing well. Estimations are updated. We can enter the next stage", with a CONTINUE button. On the right, two matching processing cards, "Assessing fermentation smell" and "Assessing fermentation taste", each reading "This should take about a minute, hold tight", and at the bottom a red card, "Oh no! Something is off. From your data, this batch is irrecoverable. You should discard it!", with TRY AGAIN and DISCARD buttons.',
+      width: 1401,
+      height: 1248,
+    },
+    {
       kind: 'prose',
       heading: 'The system',
       body: [
         'The screens run on Figma variables rather than colour styles, so a change to a token updates everywhere that token is used. The component library is organised as an explicit hierarchy, from sub atomic through atomic, molecule, organism and template to the screens themselves, with one frame holding every component and every state laid out together.',
         'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention.',
       ],
+    },
+    {
+      // Added 2026-08-06, against a claim the page had made since 2026-08-02
+      // with nothing behind it. The caption deliberately does not map these four
+      // rows onto the four jobs named in the paragraph above: those are the
+      // message cards, recorded in `fermentor_source_of_truth.md` from
+      // graduation slide 19, and this is the same four levels applied to a
+      // different component. Saying otherwise would be the kind of tidy 1:1 that
+      // is wrong on inspection.
+      kind: 'figure',
+      heading: 'One component, four levels',
+      caption:
+        'The four levels on a dashboard row. Colour, icon and urgency move together, and the red state is the only one that stops counting down and says now. The message cards further up this page are the same four levels on a different component, which is the whole of what Clear State bought. The dashed boundary is Figma marking a component set: one component in four states, not four rows drawn four times.',
+      src: '/figures/fermentor-feedback.png',
+      alt: 'Four rows of one component, each on its own tint and carrying its own icon. A green row with a filled check, a cream row with an amber information dot and a pale orange row with an orange warning triangle, all three reading "Task Label" and "in 2d", then a pink row with a red diamond alert reading "Task Label" and "now". A dashed violet rectangle encloses all four.',
+      width: 1201,
+      height: 882,
     },
     {
       // The first paragraph used to enumerate the four states of the flow and
