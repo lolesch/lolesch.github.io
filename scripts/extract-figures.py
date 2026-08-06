@@ -84,6 +84,13 @@ COMPONENTS = "Project3_Rollhaus (Components).pdf"
 SCREENS = "Screens.pdf"
 PLANNING = "Capstone Task & Planning Group 2.pdf"
 
+# The component library, one canvas per level of the hierarchy the case study
+# claims. Untouched until 2026-08-06, when two sections turned out to be
+# asserting things these files show: the four feedback levels and the order the
+# product asks you to assess in.
+MOLECULE = "Molecule.pdf"
+ORGANISM = "Organism.pdf"
+
 # The Figma section outline, a dashed violet rectangle, sits a few points
 # outside each frame on the Components canvas. Every box below is pulled in to
 # the frame's own fill so the outline does not ship as decoration.
@@ -348,6 +355,122 @@ FIGURES = [
             "it. Identical crop box to the early state, deliberately."
         ),
     },
+    # The four flow states, added 2026-08-06. Every phone frame on this canvas
+    # measures exactly 390x844pt, found with `get_drawings` rather than by eye,
+    # so these four boxes are the same box at four offsets and any difference
+    # between the images is a difference in the product. The prose in Outcome
+    # used to list these four in a sentence; it does not any more.
+    {
+        "out": "public/figures/fermentor-flow-notice.jpg",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.48596, 0.07968, 0.56418, 0.24331],
+        "width": 700,
+        "why": (
+            "Step 1 of 4. The cold-open row holds seven screens, and this is the "
+            "only one where FerMentor does anything: a lock-screen notification "
+            "saying the Cauliflower should be ready for preservation, which the "
+            "app worked out from the stage model rather than from a timer the "
+            "user set. Chosen over the home screen with the app icon installed, "
+            "which is any app, and over the splash frame, which is a logo. JPEG "
+            "rather than PNG because the wallpaper is a photographic gradient, "
+            "which is the one screen in this set that is not flat colour and "
+            "type."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-flow-dashboard.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.04412, 0.28286, 0.12234, 0.44649],
+        "width": 700,
+        "why": (
+            "Step 2 of 4, the dashboard: next actions with their countdowns "
+            "above the batches in progress, which is what the Outcome section "
+            "describes. Column 1 of four on the canvas, not column 2, which is "
+            "already on this page as the early half of the dashboard pair. Two "
+            "images of one screen on one page would read as a mistake."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-flow-batch.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.04392, 0.71016, 0.12214, 0.87379],
+        "width": 700,
+        "why": (
+            "Step 3 of 4, and the product in one screen: the five stages as a "
+            "stack, Preparation done, Activation in progress and carrying the "
+            "SHOW ME button, the rest waiting. Also the prototype section's "
+            "poster, for the reason the Rollhaus wheels step is its own: the "
+            "facade should open on a screen the page has already shown. This "
+            "frame is inside the card thumbnail too, at a fifth of the size and "
+            "beside two others."
+        ),
+        "open": (
+            "The Maturing stage reads 'Maturing description here', a placeholder "
+            "left in the capstone file, and the step counter reads 3/5 on the "
+            "Ready screen where all five are complete. Both are in the source "
+            "and neither is quoted in the alt text, which names the stages "
+            "instead. Recorded here so a clean re-export can fix them rather "
+            "than the next reader finding them."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-flow-ready.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.22603, 0.71016, 0.30425, 0.87379],
+        "width": 700,
+        "why": (
+            "Step 4 of 4, the way out: every stage checked off and the Ready "
+            "card offering KEEP MATURING or STORE. A decision rather than a "
+            "congratulation, which is the point of ending the flow here instead "
+            "of on a success screen."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-ladder.png",
+        "project": "fermentor",
+        "pdf": ORGANISM,
+        "page": 0,
+        "clip": [0.03483, 0.33987, 0.22537, 0.66587],
+        "width": 1400,
+        "why": (
+            "The assessment ladder as the component library holds it, and the "
+            "evidence for a rule the page has stated since 2026-08-02 and never "
+            "shown: assessment is ordered so the jar stays shut as long as "
+            "possible. Three rows by two columns. Smell, then taste, each beside "
+            "its own processing state, then the two verdicts. The smell prompt "
+            "is the one that says 'carefully open the jar', and it is drawn at "
+            "the highest attention level in the set, which is the ordering rule "
+            "visible in the styling rather than asserted in prose. Box sits "
+            "inside the group's dashed outline on all four sides, and starts "
+            "below the two cards the comparison above already ships full size."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-feedback.png",
+        "project": "fermentor",
+        "pdf": MOLECULE,
+        "page": 0,
+        "clip": [0.05250, 0.54111, 0.25550, 0.68356],
+        "width": 1200,
+        "why": (
+            "The four feedback levels as one component in four states, which is "
+            "what The system section claims and could not show. Colour, icon and "
+            "urgency move together: green check, amber dot, orange triangle, red "
+            "diamond, and the last one reads 'now' where the others read 'in "
+            "2d'. The dashed violet outline is kept for the reason the Rollhaus "
+            "atoms crop keeps its own, that it is what makes this a component "
+            "set rather than four screenshots, and the placeholder Task Label "
+            "text is the same argument: a component has no content of its own."
+        ),
+    },
 ]
 
 # Rejected while scanning, recorded so the next session does not re-derive them:
@@ -377,6 +500,25 @@ FIGURES = [
 #   card that made the old rollhaus-editor.jpg a placeholder, but the two-state
 #   pair retires that figure's job entirely, and one page does not need two
 #   near-identical editor shots.
+#
+#   The FerMentor home screen and splash frames, screens clip [0.12174, 0.07968,
+#   0.19996, 0.24331] and [0.2128, ...] at the same box as the flow states.
+#   Rejected on 2026-08-06 as step 1 of the flow: an app icon on an iOS home
+#   screen is the same picture for every app ever shipped, and a splash frame is
+#   a logo. The notification screen two frames along shows the product doing the
+#   one thing this case study is about.
+#
+#   A second Kimchi batch detail, screens clip [0.43562, 0.71016, 0.51384,
+#   0.87379], sitting alone outside the Current Batch group. It is the same
+#   screen one stage later, with SHOW ME moved from Activation to Stabilizing,
+#   and it would make a two-state pair proving the stack advances. Cut because
+#   the flow progression already spends four images on this product and the
+#   difference between the two is one row.
+#
+#   The whole assessment organism group, organism clip [0.0328, 0.0942, 0.2274,
+#   0.6696]. It carries the prediction and observation cards as well, which the
+#   comparison two sections above already ships at full size, so the crop starts
+#   below them instead.
 
 
 def render(figure, out_path):
