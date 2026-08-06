@@ -1070,11 +1070,12 @@ and neither is quoted in the alt text, which names the stages instead. They are
 `open` notes on the figure entries, so a clean re-export fixes them rather than
 the next reader finding them.
 
-**The three framings screenshot: not deleted, and the alternative is built on
-`figure/framings-alternative`.** The comment on that record defends it
-deliberately, so this is a trade rather than a session's call. The branch
-transcribes the three options and their reasoning verbatim, second person and
-all, into an `embed` on this site's own tokens. Measured rather than argued:
+**The three framings screenshot is retired, and Leonid took the call the same
+day.** The comment on that record defended it deliberately, so the alternative
+was built on `figure/framings-alternative` and put to him rendered rather than
+described. It transcribes the three options and their reasoning verbatim, second
+person and all, into an `embed` on this site's own tokens. What decided it was
+measurement rather than argument:
 
 - In dark theme the current figure is a **768x1950 pure white slab** at
   rgb(255,255,255) against a page at rgb(24,26,27). It is the only element on
@@ -1086,10 +1087,18 @@ all, into an `embed` on this site's own tokens. Measured rather than argued:
 - A screen reader gets **one alt string** standing in for about 250 words of
   argument, and that argument is the whole reason the section exists.
 
-Against all that, the screenshot is the only thing on the page that shows the
-research board as an artifact, and the second-person voice is visible evidence of
-the AI drafting rather than a claim about it. The branch keeps the disclosure as
-a footnote at the point of the evidence instead. **Not merged.**
+Against all that, the screenshot was the only thing on the page that showed the
+research board as an artifact, and the second-person voice was visible evidence
+of the AI drafting rather than a claim about it. **That is what the trade cost,
+and it is the reason the decision was put to Leonid rather than taken here.** The
+disclosure survives as a footnote at the point of the evidence, which states the
+same thing instead of showing it.
+
+**`public/figures/fermentor-framings.png` is now referenced by nothing** and is
+left on disk in this pass rather than deleted in the same breath as the merge.
+Retiring an asset is its own decision, the Rollhaus retirements each got one, and
+the entry in `extract-figures.py` is what makes the crop reproducible if the call
+ever reverses.
 
 **Still open.** The facade's label sits on a 90% scrim across the bottom of the
 poster and at rest reads more like a caption baked into a screenshot than like a
