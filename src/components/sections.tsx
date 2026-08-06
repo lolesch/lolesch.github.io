@@ -174,14 +174,29 @@ function SectionBody({ section }: { section: Section }) {
     case 'prototype':
       return (
         <figure className="mt-gap">
-          {/* `href` is not passed: the facade is the button, and the link
-              below it is this renderer's job. */}
-          <PrototypeEmbed
-            embedSrc={section.embedSrc}
-            poster={section.poster}
-            title={section.title}
-            action={section.action}
-          />
+          {/*
+            A portrait poster is a phone. Across the full reading column it
+            renders at roughly twice life size, and Figma then letterboxes the
+            prototype inside that box down to about a fifth of it. 22rem is the
+            width the comparison renderer already gives every phone screenshot
+            on this site, so a mobile prototype sits at the same size as the
+            figures around it. A landscape poster is untouched and still takes
+            the column, which is what Rollhaus wants.
+          */}
+          <div
+            className={
+              section.poster.height > section.poster.width ? 'mx-auto max-w-[22rem]' : undefined
+            }
+          >
+            {/* `href` is not passed: the facade is the button, and the link
+                below it is this renderer's job. */}
+            <PrototypeEmbed
+              embedSrc={section.embedSrc}
+              poster={section.poster}
+              title={section.title}
+              action={section.action}
+            />
+          </div>
           <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
           <p className="mt-gap type-body">
             <a

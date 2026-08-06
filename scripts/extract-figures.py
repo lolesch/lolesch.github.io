@@ -412,11 +412,9 @@ FIGURES = [
         ),
         "open": (
             "The Maturing stage reads 'Maturing description here', a placeholder "
-            "left in the capstone file, and the step counter reads 3/5 on the "
-            "Ready screen where all five are complete. Both are in the source "
-            "and neither is quoted in the alt text, which names the stages "
-            "instead. Recorded here so a clean re-export can fix them rather "
-            "than the next reader finding them."
+            "left in the capstone file. It is in the source and it is not quoted "
+            "in the alt text, which names the stages instead. Recorded so a "
+            "clean re-export can fix it rather than the next reader finding it."
         ),
     },
     {
@@ -431,6 +429,13 @@ FIGURES = [
             "card offering KEEP MATURING or STORE. A decision rather than a "
             "congratulation, which is the point of ending the flow here instead "
             "of on a success screen."
+        ),
+        "open": (
+            "Two states in this frame disagree with each other. The step counter "
+            "reads 3/5 while all five stages are complete, and the batch info "
+            "card still reads Status Activation. Both are stale mock data rather "
+            "than design, so the alt text describes the stage stack and the "
+            "Ready card and quotes neither."
         ),
     },
     {

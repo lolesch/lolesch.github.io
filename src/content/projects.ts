@@ -66,6 +66,77 @@ const fermentor: Project = {
       ],
     },
     {
+      // Added 2026-08-06, in the position the Rollhaus editor progression
+      // occupies: the product first, the reasoning that produced it after. The
+      // Outcome section used to carry these four states as a sentence, which is
+      // a list standing in for a picture on a page that had one product
+      // screenshot before section 8.
+      //
+      // One crop box at four offsets. Every phone frame on the Screens canvas
+      // is exactly 390x844pt, so any difference between these images is a
+      // difference in the product rather than in the framing.
+      kind: 'progression',
+      heading: 'The flow',
+      caption:
+        'Four points in the flow, in the order you meet them. Not four taps in one sitting: the app is the thing that decides when to speak, so the first screen arrives before the user has thought to check. Everything after it runs off the stage model rather than a step list, which is why the batch screen can put one control on the stage in progress and leave the other four quiet.',
+      steps: [
+        {
+          label: 'The notification',
+          note: 'Sent because the model put the Cauliflower at the end of its window, not because anyone set a reminder.',
+          src: '/figures/fermentor-flow-notice.jpg',
+          alt: 'An iPhone lock screen reading 19:41, Tuesday 20 May, carrying one notification from FerMentor: "Time to check your ferments. Your Cauliflower should be ready for preservation", sent 2 minutes ago.',
+          width: 701,
+          height: 1516,
+        },
+        {
+          label: 'The dashboard',
+          note: 'Next actions with their countdowns, above the batches in progress. The list is ordered by what needs something soonest.',
+          src: '/figures/fermentor-flow-dashboard.png',
+          alt: 'The FerMentor dashboard. Under NEXT ACTION, "Cauliflower preservation in 2d" with an orange warning triangle and "Observe your Carrots in 6d" with an amber dot. Under MY BATCHES, cards for Carrots and Cauliflower, each with an estimated end date and a progress bar. A tab bar carries Actions, Dashboard, New Batch and Settings.',
+          width: 701,
+          height: 1516,
+        },
+        {
+          label: 'One batch',
+          note: 'Five stages, one of them in progress, and SHOW ME on that one alone.',
+          src: '/figures/fermentor-flow-batch.png',
+          alt: 'A batch screen headed Kimchi. Cards along the top give the status as Activation, an estimated end of May 29, and three 500 ml jars at 3% salt. Below them five stages: Preparation complete, Activation in progress under the description "Active microbial culture growth" and carrying a SHOW ME button, then Stabilizing, Maturing and Ready still waiting.',
+          width: 701,
+          height: 1516,
+        },
+        {
+          label: 'The way out',
+          note: 'Storing it and leaving it to mature longer are both reasonable, so the screen asks rather than picking one.',
+          src: '/figures/fermentor-flow-ready.png',
+          alt: 'The same screen for a Cauliflower batch, with Preparation, Activation, Stabilizing and Maturing all checked off. The last card reads "Ready. Fermentation complete, time to taste!" above two buttons, KEEP MATURING and STORE.',
+          width: 701,
+          height: 1516,
+        },
+      ],
+    },
+    {
+      // Promoted 2026-08-06 from a `link` on the Outcome section, where the one
+      // interactive thing in this case study was a line of blue text eleven
+      // sections down. Poster is the batch screen from the step above, for the
+      // reason the Rollhaus poster is its own progression's last step: a facade
+      // should open on a screen the reader has already been shown.
+      kind: 'prototype',
+      heading: 'Try it',
+      caption:
+        'The whole flow, cold open to storage. Nothing loads from Figma until you press the button, and the prototype is a mobile one, so it runs at phone size rather than filling the column.',
+      href: 'https://www.figma.com/proto/Pbd2s3zJgdo5q2d15lvqjE/Capstone_Design_Leonid?node-id=2110-8314&starting-point-node-id=2110%3A8314',
+      embedSrc:
+        'https://embed.figma.com/proto/Pbd2s3zJgdo5q2d15lvqjE/Capstone_Design_Leonid?node-id=2110-8314&starting-point-node-id=2110%3A8314&scaling=scale-down&content-scaling=fixed&embed-host=lolesch-github-io',
+      action: 'Load the prototype and open a batch',
+      title: 'The FerMentor prototype, running in Figma',
+      poster: {
+        src: '/figures/fermentor-flow-batch.png',
+        alt: 'The FerMentor batch screen for a Kimchi batch, with the Activation stage in progress and a SHOW ME button on it.',
+        width: 701,
+        height: 1516,
+      },
+    },
+    {
       kind: 'prose',
       heading: 'Context',
       body: [
@@ -164,16 +235,16 @@ const fermentor: Project = {
       ],
     },
     {
+      // The first paragraph used to enumerate the four states of the flow and
+      // carry the prototype link. Both moved to the top of the page on
+      // 2026-08-06, as a progression and a section of its own, and the sentence
+      // that listed them came out rather than being left to restate a figure
+      // eleven sections above it.
       kind: 'prose',
       heading: 'Outcome',
       body: [
-        'What shipped is a prototype covering the full flow, clickable end to end. The cold open and install, a dashboard carrying both the next actions with their countdowns and the batches in progress, the batch detail with the stage stack and SHOW ME on the current step, and the logging and evaluation path back out of it.',
         'The dashboard is where the model becomes visible without being explained. Each batch card carries a progress bar that moves through its range as the estimated end approaches and passes, and the next action list is sorted by what is closest to needing something. A batch that has gone past its window says so plainly rather than sitting quietly in a grid.',
       ],
-      link: {
-        label: 'Open the prototype in Figma',
-        href: 'https://www.figma.com/proto/Pbd2s3zJgdo5q2d15lvqjE/Capstone_Design_Leonid?node-id=2110-8314&starting-point-node-id=2110%3A8314',
-      },
     },
     {
       // The pair is dated by its own content: the two countdowns that are not
