@@ -202,19 +202,56 @@ describe('image figures (Seam 2)', () => {
   }
 });
 
+// Walked rather than named, since 2026-08-06. This block asserted against
+// `out/projects/rollhaus/index.html` and a hardcoded poster filename, so the
+// second project to ship a prototype would have shipped it unguarded. That is
+// the same registration failure that retired the hand-written FIGURE_COPY array
+// and the parallel `comparison` describe block, arriving a third time.
 describe('the prototype facade (Seam 2)', () => {
-  const page = 'out/projects/rollhaus/index.html';
+  const prototypes = projects.flatMap((project) =>
+    project.sections
+      .filter((section) => section.kind === 'prototype')
+      .map((section) => ({ project, section })),
+  );
 
-  it('ships the poster and the outward link without the iframe', () => {
-    const markup = body(page);
-    // The whole point of a facade: nothing third-party is requested until the
-    // reader asks. An <iframe> in the exported HTML means the facade regressed
-    // into a plain embed, which loads Figma's application for someone who never
-    // clicked.
-    expect(markup).not.toContain('embed.figma.com');
-    expect(markup).toContain('figma.com/proto/');
-    expect(markup).toContain('rollhaus-editor-wheels.jpg');
+  it('ships at least one prototype, so the cases below are not vacuous', () => {
+    expect(prototypes.length).toBeGreaterThan(0);
   });
+
+  for (const { project, section } of prototypes) {
+    describe(project.slug, () => {
+      const page = `out/projects/${project.slug}/index.html`;
+
+      it('ships the poster and the outward link without the iframe', () => {
+        const markup = body(page);
+        // The whole point of a facade: nothing third-party is requested until
+        // the reader asks. An <iframe> in the exported HTML means the facade
+        // regressed into a plain embed, which loads Figma's application for
+        // someone who never clicked.
+        expect(markup).not.toContain('embed.figma.com');
+        expect(markup).toContain(section.poster.src);
+      });
+
+      it('links this project, not merely something on figma.com', () => {
+        // `text`, not `body`: the href carries query parameters, so React
+        // escapes every ampersand in it. The old form of this case matched the
+        // bare prefix `figma.com/proto/`, which stays green when a page links
+        // the wrong project's file.
+        expect(text(page)).toContain(section.href);
+      });
+
+      it('names what pressing the button will do', () => {
+        expect(body(page)).toContain(section.action);
+      });
+
+      it('points at a poster that actually shipped', () => {
+        expect(
+          existsSync(`out${section.poster.src}`),
+          `${section.poster.src} is missing from the export`,
+        ).toBe(true);
+      });
+    });
+  }
 });
 
 describe('the project hero (Seam 2)', () => {

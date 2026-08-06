@@ -17,13 +17,24 @@ import { useState } from 'react';
  * `loaded` is one-way on purpose. There is no close button, because a reader who
  * opened the prototype and wants the picture back can scroll four hundred pixels
  * up to the step it was cropped from.
+ *
+ * `title` and `action` arrive as props rather than as literals, which they were
+ * until 2026-08-06. Both named a roller skate, so the second project to ship a
+ * prototype would have offered to configure one and announced itself to a screen
+ * reader as Rollhaus. They live on the content record because they are copy: one
+ * reaches assistive technology, the other is a visible button label, and both are
+ * walked by the copy guards there.
  */
 export function PrototypeEmbed({
   embedSrc,
   poster,
+  title,
+  action,
 }: {
   embedSrc: string;
   poster: { src: string; alt: string; width: number; height: number };
+  title: string;
+  action: string;
 }) {
   const [loaded, setLoaded] = useState(false);
 
@@ -31,10 +42,14 @@ export function PrototypeEmbed({
     return (
       <iframe
         src={embedSrc}
-        title="The Rollhaus prototype, running in Figma"
-        // 16:10, matching the poster it replaces, so the page does not jump when
-        // the iframe arrives.
-        className="aspect-[16/10] w-full rounded-card border border-border-media"
+        title={title}
+        // The poster's own ratio, so the page does not jump when the iframe
+        // arrives. Read off the image rather than fixed at 16:10, which was true
+        // only for as long as one project shipped a prototype: a mobile flow
+        // posters differently from a desktop one, and a promise the content has
+        // to remember to keep is not a promise.
+        style={{ aspectRatio: `${poster.width} / ${poster.height}` }}
+        className="w-full rounded-card border border-border-media"
         allowFullScreen
       />
     );
@@ -61,7 +76,7 @@ export function PrototypeEmbed({
         in one direction so it stays legible in both themes.
       */}
       <span className="absolute inset-x-0 bottom-0 bg-scrim/90 p-gutter text-center type-body text-on-scrim">
-        Load the prototype and configure a skate
+        {action}
       </span>
     </button>
   );

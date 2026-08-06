@@ -40,7 +40,10 @@ const bodies = (project: Project) =>
           ...section.steps.flatMap((step) => [step.label, step.note, step.alt]),
         ];
       case 'prototype':
-        return [section.caption, section.poster.alt];
+        // `action` and `title` moved here from literals inside the component on
+        // 2026-08-06. A button label and an iframe's accessible name are copy,
+        // and inside a component neither was reachable by any rule in this file.
+        return [section.caption, section.poster.alt, section.action, section.title];
       case 'embed':
         return [section.caption];
       default: {

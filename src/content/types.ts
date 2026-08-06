@@ -70,6 +70,12 @@ export type Section =
       caption: string;
       href: string;
       embedSrc: string;
+      // The button the reader presses, and the name assistive technology reads
+      // once the iframe is there. Both were literals inside the component until
+      // 2026-08-06, and both named a roller skate, so they could not survive a
+      // second project. On the record because they are copy.
+      action: string;
+      title: string;
       poster: { src: string; alt: string; width: number; height: number };
     }
   | { kind: 'embed'; heading: string; caption: string; figure: FigureId };

@@ -176,7 +176,12 @@ function SectionBody({ section }: { section: Section }) {
         <figure className="mt-gap">
           {/* `href` is not passed: the facade is the button, and the link
               below it is this renderer's job. */}
-          <PrototypeEmbed embedSrc={section.embedSrc} poster={section.poster} />
+          <PrototypeEmbed
+            embedSrc={section.embedSrc}
+            poster={section.poster}
+            title={section.title}
+            action={section.action}
+          />
           <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
           <p className="mt-gap type-body">
             <a

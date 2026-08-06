@@ -334,6 +334,8 @@ export const projects: readonly Project[] = [
         href: 'https://www.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed',
         embedSrc:
           'https://embed.figma.com/proto/y7bE7LrAbTqplVEh7y44ID/Project3_Rollhaus-Copy?node-id=1927-3157&starting-point-node-id=1927%3A3157&scaling=scale-down&content-scaling=fixed&embed-host=lolesch-github-io',
+        action: 'Load the prototype and configure a skate',
+        title: 'The Rollhaus prototype, running in Figma',
         poster: {
           src: '/figures/rollhaus-editor-wheels.jpg',
           alt: 'The Rollhaus editor with a fully configured skate: a colourblock boot on a quad plate with yellow wheels.',
