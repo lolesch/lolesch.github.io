@@ -955,3 +955,148 @@ Pattern active"), so the case was passing or failing on which occurrence the
 string happened to hit first. It asserts on the image sources and on the notes
 instead, which are unique, and it asserts both because a grid that reflowed and
 a list that reordered are different bugs and only one of them is visible.
+
+## 2026-08-06: FerMentor gets the same pass, and two claims that had been asserting themselves
+
+The Rollhaus figure pass ran on 2026-08-05. FerMentor was the same job on a
+different project, and it started worse: 12 sections, 20 prose paragraphs, four
+real product screenshots, one ported diagram, and a 1101x2811 picture of text.
+The Rollhaus spec opened by calling 17 paragraphs against 6 images an inverted
+ratio. This page was further out on both terms. It is 16 sections now, with a
+four state progression, a prototype, six new figures and no new section kind.
+
+**Nothing needed a new `Section` arm, which is the part worth noticing.**
+`progression` and `prototype` were built for Rollhaus a day earlier and both took
+a second project without a model change. The four `never` switches never fired.
+What did have to change is everything those two kinds had quietly hardcoded.
+
+**The facade named a roller skate twice, in the component.** `title="The Rollhaus
+prototype, running in Figma"` and a button reading "Load the prototype and
+configure a skate" were literals inside `PrototypeEmbed`. A second prototype
+would have offered a FerMentor reader a skate to configure and announced itself
+to a screen reader as the wrong project. Both are on the content record now,
+because a button label and an iframe's accessible name are copy, and inside a
+component neither was reachable by any rule in `content.test.ts`. The iframe's
+`aspect-[16/10]` was the same mistake in a third place: it carried a comment
+promising the page would not jump when the iframe arrived, which was true for
+exactly as long as one project shipped a prototype. It reads the poster's own
+ratio now.
+
+**And the guard named one page.** The prototype facade block asserted against
+`out/projects/rollhaus/index.html` and the string `rollhaus-editor-wheels.jpg`,
+so FerMentor's prototype would have shipped completely unguarded while the suite
+stayed green. This is the registration failure that retired the hand-written
+`FIGURE_COPY` array and the parallel `comparison` describe block, arriving a
+third time. It walks every `prototype` section now, the way the `embed` block
+directly above it already walked every embed. **It also stopped matching a
+prefix.** The old assertion looked for `figma.com/proto/`, which stays green when
+a page links the wrong project's file; it asserts the whole `href` through
+`text()` now, proved by swapping the file key in the built HTML and watching only
+the new case fail.
+
+**A mobile prototype is not a desktop one, and the difference is a layout
+decision the data can make.** Across the 48rem column a phone poster renders at
+about twice life size, and Figma then letterboxes the prototype inside that box
+down to roughly a fifth of it. The renderer caps the facade at 22rem when the
+poster is portrait, which is the width the `comparison` renderer already gives
+every phone screenshot on this site, so the prototype sits at the same size as
+the figures around it. **Rejected: an `aspect` field on the content record.**
+Whether a prototype is phone-shaped is visible in the poster it already carries,
+and a second field that has to agree with the first is a second thing to get
+wrong.
+
+**The four flow states share one crop box, and the box was found rather than
+guessed.** `get_drawings` on the Screens canvas returns every phone frame at
+exactly 390x844pt, in four bands, so the four states are one box at four offsets
+and every one of them wrote at an identical 701x1516. Any difference between the
+images is a difference in the product.
+
+**Step 1 is the notification, and that was a choice against the literal
+instruction.** The Outcome prose called the first beat "the cold open and
+install", and the cold-open row holds seven screens: a home screen with the app
+installed, a splash frame, and five lock screens. An app icon on an iOS
+springboard is the same picture for every app ever shipped, and a splash frame is
+a logo. The one screen where FerMentor does anything is the lock screen carrying
+"Your Cauliflower should be ready for preservation", which the app worked out
+from the stage model. **Rejected: the home screen and the splash**, boxes
+recorded so the literal reading is one line away if Leonid wants it.
+
+**The dashboard step is column 1, not column 2.** Column 2 is already on this
+page as the early half of the dashboard pair, and the same picture twice on one
+page reads as a mistake rather than as a callback. The cost is that the
+progression's dashboard shows two batches where the pair below shows three, which
+is a different moment in the demo data and not a contradiction. The caption
+carries the load instead: "Not four taps in one sitting." **The alternative was
+column 3**, which follows the notification perfectly and is the other half of
+that same pair.
+
+**The Outcome section lost the sentence that listed the four states.** With the
+progression at position 2, that sentence was a list standing in for a picture
+eleven sections above it. This is the Rollhaus finding repeating from the other
+side: the option tree retired there because the prose already enumerated it, and
+here the prose retired because the figure now shows it. Outcome is one paragraph
+and still has substance, which is the CONTEXT.md rule for whether a section
+exists at all.
+
+**Two sections had been asserting things the sibling repo could prove.**
+`Molecule.pdf` and `Organism.pdf` had never been opened by
+`extract-figures.py`, and between them they hold the two claims this page had
+been making since 2026-08-02 with nothing behind them.
+
+- **The appearance-first rule** is the sharpest research consequence in the
+  project, and the page showed only its first rung. The organism canvas holds the
+  rest as built states: the smell prompt, which is the one that says "carefully
+  open the jar" and which is drawn at the highest attention level in the set,
+  then taste, then both verdicts including "this batch is irrecoverable". The
+  styling carries the ordering rule without the caption having to assert it.
+- **The four level feedback stack** is now shown, and the caption deliberately
+  does **not** map its four rows onto the four jobs the paragraph above names.
+  Those jobs come from graduation slide 19 and describe the message cards;
+  `fermentor_source_of_truth.md` lists them as green success, amber
+  informational, orange prompt for input, red assessment. What the crop shows is
+  the same four levels applied to a dashboard row. The tidy 1:1 was the obvious
+  caption and it would have been wrong on inspection, which is the same class of
+  error as the three over-claiming alts caught on Rollhaus.
+
+**Both captions say "as the component library holds it".** Nothing in the sources
+proves the prototype wires every state in the ladder, and a caption under a crop
+of built components implies it does unless it says otherwise. Guardrail 1.
+
+**Two placeholder defects ship, recorded rather than hidden.** The Maturing stage
+reads "Maturing description here" in the capstone file, and the Ready screen's
+step counter reads 3/5 with all five complete while its batch info still says
+Status Activation. Both are in the source, both are visible in the shipped crops,
+and neither is quoted in the alt text, which names the stages instead. They are
+`open` notes on the figure entries, so a clean re-export fixes them rather than
+the next reader finding them.
+
+**The three framings screenshot: not deleted, and the alternative is built on
+`figure/framings-alternative`.** The comment on that record defends it
+deliberately, so this is a trade rather than a session's call. The branch
+transcribes the three options and their reasoning verbatim, second person and
+all, into an `embed` on this site's own tokens. Measured rather than argued:
+
+- In dark theme the current figure is a **768x1950 pure white slab** at
+  rgb(255,255,255) against a page at rgb(24,26,27). It is the only element on
+  this site that ignores the theme toggle.
+- At a 390px viewport it renders **327px wide**, which puts the board's body type
+  at roughly **8px** against the site's own 14px at that width.
+- It carries **three em-dashes**, in a project that bans them in copy. The copy
+  guard cannot see them, because they are pixels.
+- A screen reader gets **one alt string** standing in for about 250 words of
+  argument, and that argument is the whole reason the section exists.
+
+Against all that, the screenshot is the only thing on the page that shows the
+research board as an artifact, and the second-person voice is visible evidence of
+the AI drafting rather than a claim about it. The branch keeps the disclosure as
+a footnote at the point of the evidence instead. **Not merged.**
+
+**Still open.** The facade's label sits on a 90% scrim across the bottom of the
+poster and at rest reads more like a caption baked into a screenshot than like a
+control. That was logged as open on 2026-08-05 and is now on two pages rather
+than one. FerMentor's poster has empty cream space under the stage stack, so it
+reads better there than on Rollhaus, which is why it was left alone in this pass
+rather than redesigned in passing.
+
+Typecheck clean, 76 unit, 202 export, up from 168. Checked in a browser at 1280
+in both themes and at 390, where the page does not scroll horizontally.
