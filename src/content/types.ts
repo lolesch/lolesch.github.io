@@ -7,7 +7,11 @@ export type Tier = 'featured' | 'bridge' | 'archive';
 // `embed` resolves through a registry (FigureId -> React component), which is
 // what keeps "content is data" true: the data names a figure, it does not
 // carry one.
-export type FigureId = 'rollhaus-slots' | 'glyphshero-chain' | 'fermentor-stages';
+export type FigureId =
+  | 'rollhaus-slots'
+  | 'glyphshero-chain'
+  | 'fermentor-stages'
+  | 'fermentor-framings';
 
 // A page renders the sections that exist and stops. There is no fixed template
 // and no required section: CONTEXT.md's rule is that a section exists only if

@@ -160,18 +160,18 @@ const fermentor: Project = {
       ],
     },
     {
-      // The artifact rather than the write-up's summary of it. The reasoning
-      // paragraphs are the point: three framings without them is a list of
-      // options, and what makes this worth showing is that each one was argued
-      // before one was picked.
-      kind: 'figure',
+      // The reasoning paragraphs are still the point, which is the argument the
+      // screenshot version of this section made for two years' worth of a
+      // fortnight. What changed on 2026-08-06 is the medium, not the content:
+      // the three options and their reasoning are transcribed verbatim, so
+      // nothing is lost and the argument becomes readable on a phone, in the
+      // dark theme, and to a screen reader that previously got one alt string
+      // in place of 250 words.
+      kind: 'embed',
       heading: 'The three framings, as they were written',
       caption:
-        'The candidate problem framings on the research board. Option 1 became the shipped statement, on the argument in the paragraph above rather than the one written here.',
-      src: '/figures/fermentor-framings.png',
-      alt: 'A column from the research board holding three options. Option 1, confidence as a result of uncertainty in state and timing. Option 2, confidence as a result of invisible variables and unpredictability. Option 3, confidence as a breakdown in decision-making during execution. Each carries a problem statement and a Reasoning paragraph weighing it, and the third closes on a list of when to act, what signals to trust, and fear of interference.',
-      width: 1101,
-      height: 2811,
+        'The candidate framings from the research board, transcribed rather than screenshotted, second person and all. Option 1 became the shipped statement, on the argument in the paragraph above.',
+      figure: 'fermentor-framings',
     },
     {
       kind: 'prose',
