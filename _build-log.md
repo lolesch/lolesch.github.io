@@ -1626,3 +1626,86 @@ The ladder is unreadable on a phone, logged 2026-08-07, unchanged.
 11.5rem wraps a long heading to three lines. "Contrast, measured on every build"
 is the worst case on the site and it reads, but the rail is the one component
 with no room to grow while `frame` is 64rem.
+
+## 2026-08-07, fourth pass: the rail holds one line, and four Rollhaus headings get shorter
+
+Leonid's note on the rail was that the labels must not wrap. They were wrapping
+to two and three lines, which gave a thirteen-entry list a ragged right edge and
+no fixed row height, so scanning it meant reading it.
+
+### Clipped, then measured
+
+One line per entry, `truncate` with `min-w-0`, which is what actually makes the
+clip happen: a flex item's floor is its content, so without it the span refuses
+to shrink and there is nothing to truncate against. Every row is 37px now.
+
+Then the cost was measured rather than assumed. The label column is 142px. Four
+of thirteen clipped on Rollhaus and four of eight on /design-system, and the
+widest heading on the site needed 222px.
+
+Two of the Rollhaus four did not survive it. "One system, not a sc..." and
+"Where the configurat..." are not shortened headings, they are broken ones.
+The /design-system four still read: "Contrast, measured on ev..." loses its last
+word and keeps its subject. Leonid's call was that only Rollhaus was a problem,
+which is the same line the measurements draw.
+
+### The headings, not the rail
+
+Three fixes were on the table: reach past `frame` into the viewport margin at
+wide sizes, shorten the headings, or accept the ellipsis. Leonid took the second.
+
+It is also the one that improves the page rather than only the rail. The four
+that clipped were the four longest headings on the site, and a heading that
+cannot be read at a glance was already too long for the section it opens.
+
+  What you can actually change -> What actually varies
+  One system, not a screen per option -> One system
+  Where the configuration is defined -> Where it is defined
+  The same boot on a different mount -> The same boot
+
+"actually" is kept in the first because it is the whole rhetorical move, marking
+what looks configurable against what is. The second loses a contrast that the
+section then argues at length anyway, and lands in the register the rest of the
+page already uses: "The flow", "The editor", "Outcome". The third is the one
+that gained something: it and the section under it are one claim in two halves,
+and at "Where it is defined" and "And where it is read" they finally look like
+the pair they have always been. The fourth was announcing its own caption, which
+opens by naming which boot is on which base.
+
+### Rejected
+
+  Widening the rail past `frame` into the viewport margin at wide sizes. It
+  fits every label and needs no copy change, and it moves the breakpoint from
+  1024px to about 1152px, so the rail disappears on a screen that currently has
+  one. Still the answer if the headings ever grow back.
+
+  Shortening the /design-system headings to match. Not asked for, and the
+  measurements say they do not need it: all four clip late enough to keep their
+  subject.
+
+  A separate short label on the record for the rail to use. Two strings that
+  must agree, which is the arrangement the derived ids exist to avoid, and it
+  would have let the rail say something the page does not.
+
+### Verification
+
+`npm run typecheck` clean, 96 unit, 218 export. Rollhaus now clips nothing: the
+widest label is "One card, four screens" at 140px against 142px of column.
+
+That is two pixels of headroom, and it is the thing to watch. The next heading
+on that page written longer than twenty-two characters clips, and nothing fails
+when it does. A guard asserting a character budget was considered and not
+written: the budget is a rendered width in a specific face at a specific size,
+and a character count standing in for it would be wrong in both directions.
+
+### Still open
+
+The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
+
+The ladder is unreadable on a phone, logged 2026-08-07, unchanged.
+
+Four /design-system labels clip. Accepted rather than fixed, because all four
+keep their subject. Revisit with the rail-past-frame option if a fifth arrives.
+
+Rollhaus has two pixels of headroom on its longest label, with nothing guarding
+it.

@@ -433,7 +433,20 @@ export const projects: readonly Project[] = [
         // ball bearings, so the tree was restating a paragraph in a lower
         // resolution.
         kind: 'figure',
-        heading: 'What you can actually change',
+        /*
+         * Shortened 2026-08-07, with three more below, from "What you can
+         * actually change". The section rail holds one line per section and its
+         * label column is 142px; this was 184px and lost its last word to an
+         * ellipsis, which on this one took the verb with it.
+         *
+         * The rail is the occasion rather than the reason. Rollhaus was the only
+         * page where the clipped headings stopped meaning anything, and the four
+         * that clipped were the four longest on the site: a heading that does
+         * not survive being read at a glance was already too long for the page
+         * it opens. "actually" is kept because it is the whole rhetorical move,
+         * marking the difference between what looks configurable and what is.
+         */
+        heading: 'What actually varies',
         caption:
           'The parts, as they are built in the file. Two lasts and eight patterns make sixteen boots, three mounts and eight wheel colourways multiply that again, and none of it is a screen. The dashed outlines are Figma component-set boundaries, left in because they are what makes these sets rather than a page of product shots.',
         src: '/figures/rollhaus-atoms.jpg',
@@ -443,7 +456,12 @@ export const projects: readonly Project[] = [
       },
       {
         kind: 'prose',
-        heading: 'One system, not a screen per option',
+        // From "One system, not a screen per option". The contrast was the
+        // heading's point and it is also the first thing the section argues, at
+        // length, so it is not lost by being said once instead of twice. Terse
+        // also matches the register of every other heading on this page: "The
+        // flow", "The editor", "Outcome".
+        heading: 'One system',
         body: [
           'We wrote four design principles in week one, from a user story and a moodboard, and checked components against them. Highlight Individuality, Flow Over Flash, Guidance Over Selling, Design for Joy. Writing principles down is ordinary practice and it bought us something modest but real: each one names a tradeoff we would otherwise have argued about every week. Flow Over Flash settles personality against usability, so usability wins the structure and the personality lives in the copy. Guidance Over Selling settles conversion pressure against trust, which is why the editor recommends and never pushes.',
           'That gave the copy a rule of its own. The interface talks like a knowledgeable skate friend rather than a salesperson: "Nice choice. Now pick your wheels." moves someone forward without inventing a points system, and progress reads as readiness, "Your setup is 80% complete", instead of as a checklist.',
@@ -462,7 +480,11 @@ export const projects: readonly Project[] = [
         // comparison renderer is a two-column grid that would put each of them
         // near 350px and make both unreadable.
         kind: 'figure',
-        heading: 'Where the configuration is defined',
+        // From "Where the configuration is defined", and the shortening does
+        // something the long version was in the way of: this and the section
+        // under it are one claim in two halves, defined and read, and at this
+        // length they finally look like the pair they are.
+        heading: 'Where it is defined',
         caption:
           'Eleven collections, nine of them named for what they drive, and the Wheels collection open with its modes as columns. Green sets the colour, the outdoor type and 26 euro together. Black sets black, outdoor and 17. One switch, three linked values, which is the whole of what modes are doing in this file.',
         src: '/figures/rollhaus-variables.png',
@@ -528,7 +550,11 @@ export const projects: readonly Project[] = [
         // makes. Shoe-only is not in this crop, so the caption does not claim
         // it: the copy above already names it.
         kind: 'figure',
-        heading: 'The same boot on a different mount',
+        // From "The same boot on a different mount". The mount is what the
+        // caption directly below opens with, naming which boot is on which
+        // base, so the heading was announcing the caption. What it has to carry
+        // on its own is the reuse, and that is the two words that stayed.
+        heading: 'The same boot',
         caption:
           'The shop page after the extension round. The checkerboard boot is here as a quad and as an ice skate, the tartan as an inline and an ice, the colourblock as a quad and an inline. Nothing was redrawn to do that.',
         src: '/figures/rollhaus-extension.jpg',
