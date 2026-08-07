@@ -95,8 +95,8 @@ SCREENS = "Screens.pdf"
 # The component library, one canvas per level of the hierarchy the case study
 # claims. Untouched until 2026-08-06, when two sections turned out to be
 # asserting things these files show: the four feedback levels and the order the
-# product asks you to assess in.
-MOLECULE = "Molecule.pdf"
+# product asks you to assess in. `Molecule.pdf` was the first of those and is no
+# longer read here; its crop is in the rejected notes at the bottom of the list.
 ORGANISM = "Organism.pdf"
 
 # The Figma section outline, a dashed violet rectangle, sits a few points
@@ -282,65 +282,6 @@ FIGURES = [
             "argument rather than its navigation."
         ),
     },
-    {
-        "out": "public/figures/fermentor-predict.png",
-        "project": "fermentor",
-        "pdf": SCREENS,
-        "page": 0,
-        "clip": [0.31588, 0.71001, 0.39009, 0.74952],
-        "width": 800,
-        "why": (
-            "Left half of the SHOW ME exchange: what the system says to expect "
-            "at this stage, as Brine, Surface and Appearance. Cropped to the card "
-            "alone rather than shown on the phone, because its pair below is a "
-            "separate overlay and the two only read as one exchange at the same "
-            "size. The dead canvas between them on the source page is why."
-        ),
-    },
-    {
-        "out": "public/figures/fermentor-report.png",
-        "project": "fermentor",
-        "pdf": SCREENS,
-        "page": 0,
-        "clip": [0.31588, 0.82590, 0.39009, 0.87418],
-        "width": 800,
-        "why": (
-            "Right half of the same exchange: what the user reports back, in the "
-            "same three categories and the same order, through dropdowns rather "
-            "than a text field. The matching order is the appearance-first "
-            "assessment rule made visible, so both crops keep the full category "
-            "column even though it costs some height."
-        ),
-    },
-    {
-        "out": "public/figures/fermentor-dash-early.png",
-        "project": "fermentor",
-        "pdf": SCREENS,
-        "page": 0,
-        "clip": [0.13498, 0.28131, 0.21380, 0.44532],
-        "width": 700,
-        "why": (
-            "Left half of the dashboard comparison, two days before the "
-            "Cauliflower window closes. Same three batches as its pair, same "
-            "crop box, so the only thing that differs between the two images is "
-            "what the interface is saying."
-        ),
-    },
-    {
-        "out": "public/figures/fermentor-dash-late.png",
-        "project": "fermentor",
-        "pdf": SCREENS,
-        "page": 0,
-        "clip": [0.22603, 0.28131, 0.30465, 0.44532],
-        "width": 700,
-        "why": (
-            "Right half, two days later: the top row has gone from a countdown "
-            "to 'act now', and the Cauliflower bar has run past its range. The "
-            "other two countdowns move 6d to 4d and 11d to 9d, which is what "
-            "dates the pair at two days and stops the caption having to assert "
-            "it. Identical crop box to the early state, deliberately."
-        ),
-    },
     # The four flow states, added 2026-08-06 and re-cut on 2026-08-07. Every
     # phone frame on this canvas measures exactly 390x844pt, found with
     # `get_drawings` rather than by eye, so these four boxes are the same box at
@@ -358,9 +299,10 @@ FIGURES = [
             "Step 1 of 4 since 2026-08-07, when the lock-screen notification "
             "that opened the progression came out. The dashboard: next actions "
             "with their countdowns above the batches in progress. Column 1 of "
-            "four on the canvas, not column 2, which is already on this page as "
-            "the early half of the dashboard pair. Two images of one screen on "
-            "one page would read as a mistake."
+            "four on the canvas, chosen while column 2 was still on the page as "
+            "the early half of the dashboard pair. That pair came out later the "
+            "same day, so this is the only dashboard on the page now and the "
+            "reason for picking between the two columns went with it."
         ),
     },
     {
@@ -426,9 +368,11 @@ FIGURES = [
             "the card that button opens. The card commits to what this stage "
             "should look like right now, for this batch, before the user has "
             "reported anything, which is the whole argument of the case study "
-            "and was previously only readable six sections further down. The "
-            "same card also ships full size in the Predict, then report pair, "
-            "where it is half of an exchange rather than a result."
+            "and was previously only readable six sections further down. Since "
+            "2026-08-07 this composite is the only place that card appears at "
+            "all: the Predict, then report pair that shipped it full size, "
+            "beside the observation card the user answers with, came out the "
+            "same day."
         ),
         "open": (
             "The Maturing stage reads 'Maturing description here', a placeholder "
@@ -474,26 +418,20 @@ FIGURES = [
             "is the one that says 'carefully open the jar', and it is drawn at "
             "the highest attention level in the set, which is the ordering rule "
             "visible in the styling rather than asserted in prose. Box sits "
-            "inside the group's dashed outline on all four sides, and starts "
-            "below the two cards the comparison above already ships full size."
+            "inside the group's dashed outline on all four sides. Since "
+            "2026-08-07 it is the only image in The system section, which is "
+            "the merge of the section this crop was made for and the prose that "
+            "followed it."
         ),
-    },
-    {
-        "out": "public/figures/fermentor-feedback.png",
-        "project": "fermentor",
-        "pdf": MOLECULE,
-        "page": 0,
-        "clip": [0.05250, 0.54111, 0.25550, 0.68356],
-        "width": 1200,
-        "why": (
-            "The four feedback levels as one component in four states, which is "
-            "what The system section claims and could not show. Colour, icon and "
-            "urgency move together: green check, amber dot, orange triangle, red "
-            "diamond, and the last one reads 'now' where the others read 'in "
-            "2d'. The dashed violet outline is kept for the reason the Rollhaus "
-            "atoms crop keeps its own, that it is what makes this a component "
-            "set rather than four screenshots, and the placeholder Task Label "
-            "text is the same argument: a component has no content of its own."
+        "open": (
+            "The box starts below the prediction and observation cards because "
+            "the comparison above it shipped those two full size. That section "
+            "came out on 2026-08-07, so the reason for the top edge no longer "
+            "holds and the wider box, organism clip [0.0328, 0.0942, 0.2274, "
+            "0.6696], would put the whole exchange back on the page inside this "
+            "figure. Not taken: Leonid cut that section, and widening a crop to "
+            "carry its content back in is the same content arriving through a "
+            "side door. One line to change if he wants it."
         ),
     },
 ]
@@ -542,8 +480,45 @@ FIGURES = [
 #
 #   The whole assessment organism group, organism clip [0.0328, 0.0942, 0.2274,
 #   0.6696]. It carries the prediction and observation cards as well, which the
-#   comparison two sections above already ships at full size, so the crop starts
-#   below them instead.
+#   comparison two sections above shipped at full size, so the crop started
+#   below them instead. That comparison is gone as of 2026-08-07 and this box is
+#   now live again rather than rejected: see the `open` note on
+#   `fermentor-ladder.png` for why it is still not taken.
+#
+#   The SHOW ME exchange as a pair, `fermentor-predict.png` at screens clip
+#   [0.31588, 0.71001, 0.39009, 0.74952] and `fermentor-report.png` at
+#   [0.31588, 0.82590, 0.39009, 0.87418], both at width 800. Shipped 2026-08-02
+#   to 2026-08-07 as the Predict, then report comparison: the system committing
+#   to what a stage should look like, and the user answering in the same three
+#   categories in the same order. Leonid cut the section on 2026-08-07 and the
+#   two crops went with it. The prediction card survives on the page as the
+#   overlay in `fermentor-flow-showme.png`; the observation card, with its
+#   dropdowns, is not on the site any more, and the matching-order argument is
+#   now carried by one sentence of prose in `From model to product` rather than
+#   by a picture. That is the sharpest thing this pass gave up.
+#
+#   The dashboard pair, `fermentor-dash-early.png` at screens clip [0.13498,
+#   0.28131, 0.21380, 0.44532] and `fermentor-dash-late.png` at [0.22603,
+#   0.28131, 0.30465, 0.44532], both at width 700 and both the same box two
+#   columns apart. Shipped 2026-08-02 to 2026-08-07. The two countdowns that are
+#   not the subject move 6d to 4d and 11d to 9d, which dated the pair at two
+#   days without the caption having to assert it, and nothing between the two
+#   frames was edited: time passing was the only input. Cut with the section
+#   that held it. Nothing else on the site shows one screen at two moments, so
+#   if a later pass wants that argument back these are the two boxes.
+#
+#   The four feedback levels as one component set, `fermentor-feedback.png` at
+#   `Molecule.pdf` clip [0.05250, 0.54111, 0.25550, 0.68356] at width 1200.
+#   Green check, amber dot, orange triangle, red diamond, the last reading 'now'
+#   where the others read 'in 2d'. Added 2026-08-06 against a claim The system
+#   had been making since 2026-08-02 with nothing behind it, shipped for one day
+#   as the page's only inset, and cut on 2026-08-07 when that section merged
+#   with the ladder figure. Less is lost than it looks: the ladder that stayed
+#   carries three of the four levels on real cards, green check, orange triangle
+#   and red diamond, each on its own tint. What only this crop shows is the four
+#   as one component set, which is the difference between a system and a set of
+#   choices that happen to agree. Re-derive it here if that difference has to be
+#   made again.
 #
 #   The three candidate problem framings on the UX Research board, planning clip
 #   [0.48621, 0.49157, 0.54490, 0.55771] at width 1100, from `Capstone Task &

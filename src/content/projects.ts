@@ -216,43 +216,36 @@ const fermentor: Project = {
       ],
     },
     {
-      // Two halves of one exchange rather than two states of one screen, which
-      // stretches the kind slightly and is still the right one: the claim lives
-      // in the difference between them, and split across two sections a reader
-      // compares from memory. What makes the pair work is the category column,
-      // identical and in the same order on both sides.
-      kind: 'comparison',
-      heading: 'Predict, then report',
-      caption:
-        'The system commits to what this stage should look like before the user says what they see, and both sides speak in the same three categories in the same order. The observation here does not match the prediction, which is the case the product is actually for.',
-      items: [
-        {
-          label: 'What the system expects',
-          src: '/figures/fermentor-predict.png',
-          alt: 'A card headed "What you should see", listing Brine as slightly cloudy, Surface as fine bubbles and Appearance as bright red, above an Adjust button and a Confirm button.',
-          width: 801,
-          height: 441,
-        },
-        {
-          label: 'What the user reports',
-          src: '/figures/fermentor-report.png',
-          alt: 'A card headed "Enter your visual observation", reading "Before we enter the next stage, we need to assess the current state." The same three categories follow as dropdowns, set to opaque and settled, thin white film, and translucent, above a Confirm button.',
-          width: 801,
-          height: 539,
-        },
-      ],
-    },
-    {
-      // Added 2026-08-06. The section above states the appearance-first rule and
-      // then shows only its first rung, which left the most specific research
-      // consequence in this project asserted and unillustrated. The crop starts
-      // below the two cards the comparison already ships full size.
+      // Two sections until 2026-08-07: the assessment ladder had its own
+      // heading and this prose had another, and Leonid merged them. The prose
+      // is what the section says and the ladder is what it shows, which is one
+      // section's worth of work rather than two, and it is why `figure` gained
+      // a `body`.
+      //
+      // What came out with the merge: an inset showing the four feedback levels
+      // as one component in four states, added 2026-08-06 against the claim in
+      // the second paragraph. That claim is not back to being unevidenced,
+      // which is what it looked like on paper. The ladder below carries three
+      // of the four levels on real cards, checked in the rendered page: green
+      // with a filled check on the success card, pale orange with an orange
+      // triangle on the two processing cards, pink with a red diamond on the
+      // prompts and on the discard card. Only the cream and amber level is
+      // absent. So the paragraph is followed by its own evidence at a coarser
+      // grain, and no clause has to point at it.
       //
       // "as the component library holds it" is doing real work in the caption:
       // these states are built, and nothing in the sources proves the prototype
       // wires all of them. Guardrail 1.
       kind: 'figure',
-      heading: 'When appearance is not enough',
+      heading: 'The system',
+      body: [
+        'The screens run on Figma variables rather than colour styles, so a change to a token updates everywhere that token is used. The component library is organised as an explicit hierarchy, from sub atomic through atomic, molecule, organism and template to the screens themselves, with one frame holding every component and every state laid out together.',
+        'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention.',
+        // The bridge from the prose to the image, and the reason the two are one
+        // section. Deliberately short and deliberately not a summary of the
+        // caption below it, which says what is in the frame.
+        'Clear State also decides how much of the library exists: every state a batch can reach is a built card rather than a described one, including the ones the section above only names.',
+      ],
       caption:
         'The rest of the ladder, as the component library holds it. Smell only comes up when looking has not settled it, and the smell prompt is the one that says to open the jar, drawn at the highest attention level in the set. Taste comes after that. Both endings are built: the estimate updates and the batch moves on, or the batch is irrecoverable and the app says to discard it rather than leaving the user to work that out.',
       src: '/figures/fermentor-ladder.png',
@@ -261,68 +254,24 @@ const fermentor: Project = {
       height: 1248,
     },
     {
-      kind: 'prose',
-      heading: 'The system',
-      body: [
-        'The screens run on Figma variables rather than colour styles, so a change to a token updates everywhere that token is used. The component library is organised as an explicit hierarchy, from sub atomic through atomic, molecule, organism and template to the screens themselves, with one frame holding every component and every state laid out together.',
-        // The last sentence is load-bearing since 2026-08-07. The image below
-        // shows the four levels on a dashboard row, not on the message cards
-        // this sentence lists, and with the caption gone there is nothing but
-        // this clause to stop a reader reading the rows as those four jobs.
-        // That 1:1 would be tidy and wrong: the jobs are the message cards,
-        // recorded in `fermentor_source_of_truth.md` off graduation slide 19.
-        'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention. The same four levels carry onto anything else that has to report status.',
-      ],
-      // Was a section of its own, "One component, four levels", added
-      // 2026-08-06 against a claim the page had made since 2026-08-02 with
-      // nothing behind it. Leonid's call on 2026-08-07 was that the evidence is
-      // worth keeping and the section around it is not: a heading, an index and
-      // a caption for one small figure is three pieces of furniture for a thing
-      // that only has to be looked at. So it stays, indented into the paragraph
-      // that names it, and says nothing.
-      inset: {
-        src: '/figures/fermentor-feedback.png',
-        alt: 'Four rows of one component, each on its own tint and carrying its own icon. A green row with a filled check, a cream row with an amber information dot and a pale orange row with an orange warning triangle, all three reading "Task Label" and "in 2d", then a pink row with a red diamond alert reading "Task Label" and "now". A dashed violet rectangle encloses all four, which is Figma marking a component set.',
-        width: 1201,
-        height: 882,
-      },
-    },
-    {
       // The first paragraph used to enumerate the four states of the flow and
       // carry the prototype link. Both moved to the top of the page on
       // 2026-08-06, as a progression and a section of its own, and the sentence
       // that listed them came out rather than being left to restate a figure
       // eleven sections above it.
+      //
+      // The dashboard pair that followed this section from 2026-08-02 came out
+      // on 2026-08-07. It was the one image on the site where nothing had been
+      // edited between two states and time passing was the only input, which is
+      // the sharpest form of this paragraph's claim. What is left standing it
+      // up is the dashboard in the flow at the top of the page, which carries
+      // the countdowns, the progress bars and the warning but only at one
+      // moment. Do not restate the pair's claim here in prose to compensate:
+      // that trade is a picture for an assertion, which is the wrong direction.
       kind: 'prose',
       heading: 'Outcome',
       body: [
         'The dashboard is where the model becomes visible without being explained. Each batch card carries a progress bar that moves through its range as the estimated end approaches and passes, and the next action list is sorted by what is closest to needing something. A batch that has gone past its window says so plainly rather than sitting quietly in a grid.',
-      ],
-    },
-    {
-      // The pair is dated by its own content: the two countdowns that are not
-      // the subject move 6d to 4d and 11d to 9d, so the caption does not have
-      // to assert how much time passed. Identical crop boxes, for the reason
-      // the Rollhaus editor pair uses identical crops.
-      kind: 'comparison',
-      heading: 'The same three batches, two days apart',
-      caption:
-        'Nothing here was edited between the two. Time passing is the only input, and the interface goes from counting down to asking for something, while the Cauliflower bar runs past the end of its range.',
-      items: [
-        {
-          label: 'Two days out',
-          src: '/figures/fermentor-dash-early.png',
-          alt: 'A dashboard headed Next Action, listing Cauliflower preservation in 2 days with a warning icon, Observe your Carrots in 6 days, and Kimchi taste test in 11 days. Below, under My Batches, cards for Kimchi, Carrots and Cauliflower each carry a progress bar still inside its green range.',
-          width: 701,
-          height: 1508,
-        },
-        {
-          label: 'Two days later',
-          src: '/figures/fermentor-dash-late.png',
-          alt: 'The same dashboard with the top row replaced by Maturing overtime, act now, on a red band. The other two rows have counted down to 4 days and 9 days, and the Cauliflower progress bar has run past green into orange.',
-          width: 701,
-          height: 1511,
-        },
       ],
     },
     {

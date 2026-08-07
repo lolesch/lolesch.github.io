@@ -112,7 +112,6 @@ const imagesOf = (section: Section): Shipped[] => {
     }
     // Named rather than defaulted, for the reason content.test.ts spells out:
     // a `default` arm answers for kinds nobody has thought about yet.
-    case 'prose':
     case 'constraints':
     case 'embed':
     // The poster is checked by the facade's own describe block below, not by
@@ -133,13 +132,30 @@ const IMAGES = projects.flatMap((project) =>
 );
 
 describe('image figures (Seam 2)', () => {
-  it('ships an image of every kind that can carry one, so the cases below are not vacuous', () => {
+  // Named four kinds until 2026-08-07 and went red the moment two of them
+  // stopped shipping, which is the guard asserting on the content instead of on
+  // itself: `comparison` lost both its instances in one pass and `prose` lost
+  // its only inset, and neither is a bug. What the case is actually for is the
+  // walker above returning nothing for a section that does carry an image, so
+  // that is what it checks now, per section rather than per kind. A new image
+  // kind is caught by this whether or not anyone remembered to add it to a list.
+  it('ships images, and walks every section that carries one', () => {
     expect(IMAGES.length).toBeGreaterThan(0);
-    for (const kind of ['figure', 'comparison', 'progression', 'prose'] as const) {
-      expect(
-        IMAGES.some(({ state }) => state.kind === kind),
-        `no ${kind} image ships, so its guards below run against nothing`,
-      ).toBe(true);
+    for (const project of projects) {
+      for (const section of project.sections) {
+        // The one deliberate exception, and it is the reason this reads the
+        // section rather than trusting a list: the facade's poster is a
+        // control's label, so `imagesOf` returns nothing for it on purpose and
+        // the prototype block below owns it instead.
+        if (section.kind === 'prototype') continue;
+        const carries = JSON.stringify(section).includes('"src":');
+        expect(
+          imagesOf(section).length > 0,
+          carries
+            ? `${project.slug} / ${section.heading} carries an image the walker does not return`
+            : `${project.slug} / ${section.heading} has no image and the walker invented one`,
+        ).toBe(carries);
+      }
     }
   });
 

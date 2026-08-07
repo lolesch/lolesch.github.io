@@ -32,6 +32,12 @@ export type SectionLink = { label: string; href: string };
 // Deliberately not a `figure` with an optional caption. The absence of a
 // caption is the point, and an optional field would let one drift back in; a
 // section that wants to say something about its image already has a kind.
+//
+// No instances since 2026-08-07, one day after it was added: the merge that
+// day removed the one image using it. Kept rather than deleted because the
+// shape was asked for by name and describes a real thing, and because deleting
+// it would take the reasoning above with it. If nothing has used it by the time
+// the v2 work starts, delete it then.
 export type Inset = { src: string; alt: string; width: number; height: number };
 
 export type Section =
@@ -53,6 +59,16 @@ export type Section =
   | {
       kind: 'figure';
       heading: string;
+      // Optional lead-in prose, added 2026-08-07 when two sections merged and
+      // the result had to say its piece before showing the artifact. A figure
+      // section is still about its image; this is the paragraph or three that
+      // earn it, rendered above the image and outside the <figure> element,
+      // because a section's argument is not part of the figure.
+      //
+      // Not the same shape as `prose` + `inset` and it should not collapse into
+      // one. An inset is small, indented and silent. This is the full-width
+      // artifact a section exists to show, and it keeps its caption.
+      body?: readonly string[];
       caption: string;
       src: string;
       alt: string;
@@ -68,6 +84,13 @@ export type Section =
   // A fixed pair, not a list. The renderer is a two-column grid and there is no
   // reading of "before, after, and a third thing" that the caption could carry,
   // so the type says two and the layout never has to guess.
+  //
+  // No instances since 2026-08-07: FerMentor shipped both of them and both came
+  // out in the same pass. Kept for the same reason `Inset` is, and with more
+  // behind it, since the argument above is the one thing on this site that says
+  // why a pair is not a two-step progression. Nothing exercises the renderer
+  // now, which is stated here rather than discovered by whoever ships the next
+  // one.
   | {
       kind: 'comparison';
       heading: string;

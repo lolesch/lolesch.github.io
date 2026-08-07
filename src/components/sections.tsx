@@ -101,16 +101,31 @@ function SectionBody({ section }: { section: Section }) {
 
     case 'figure':
       return (
-        <figure className="mt-gap">
-          <Image
-            src={section.src}
-            alt={section.alt}
-            width={section.width}
-            height={section.height}
-            className="h-auto w-full rounded-card border border-border"
-          />
-          <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
-        </figure>
+        <>
+          {/*
+            Outside the <figure>, not inside it. A figure is self-contained
+            content that can be moved away from the flow without breaking it,
+            and the section's own argument is not that. Inside, a screen reader
+            would announce these paragraphs as part of the image's caption.
+          */}
+          {section.body ? (
+            <div className="mt-gap space-y-gap type-body">
+              {section.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+              ))}
+            </div>
+          ) : null}
+          <figure className="mt-gap">
+            <Image
+              src={section.src}
+              alt={section.alt}
+              width={section.width}
+              height={section.height}
+              className="h-auto w-full rounded-card border border-border"
+            />
+            <figcaption className="mt-tight type-meta text-muted">{section.caption}</figcaption>
+          </figure>
+        </>
       );
 
     case 'comparison':

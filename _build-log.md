@@ -1338,3 +1338,167 @@ inside test assertions, not markup. Left unchanged.
 The facade's label sits on a 90% scrim across the bottom of the poster and at
 rest reads more like a caption baked into a screenshot than like a control.
 Logged open 2026-08-05, unchanged, now on two pages.
+
+## 2026-08-07, second pass: three more sections go, and two kinds run out of instances
+
+Leonid, on the thirteen-section version written earlier the same day: "remove 08
+and 12 and merge 09 and 10, first the text, followed by the visuals of 09.
+remove the visuals of 10."
+
+Ten sections now. Sixteen this morning. Two passes in a row where the only
+direction was down, which is the correction to the 2026-08-05 spec noted in the
+entry above: that spec asks whether a claim has evidence and never whether a
+section has earned a heading, so applying it grows a page every time.
+
+### The merge needed a shape that did not exist
+
+`When appearance is not enough` was a `figure`: heading, image, caption. `The
+system` was `prose` with an inset. Merged, the section has to say its piece and
+then show the artifact, and nothing in `Section` did that. `figure` has no body
+and `prose` has no caption.
+
+Three ways to get there, and the deciding argument was legibility rather than
+taste:
+
+  1. `prose` with the ladder as an `inset`. This is the shape built yesterday
+     and it reuses the type unchanged, which made it the obvious first choice.
+     It fails on the image: the inset renderer caps at 26rem, and the ladder is
+     six cards of dropdown labels at 1401px wide. At 416px the type in it is
+     gone. An inset works for four dashboard rows and not for this.
+  2. Widening `Inset`, by a flag or by aspect ratio. Aspect ratio does not
+     separate the two images, both are landscape, so it would have to be a flag,
+     and a flag that says "not actually an inset" means the kind stopped
+     describing one thing.
+  3. `figure` gains an optional `body`. Taken.
+
+The prose renders *outside* the `<figure>` element, which is the part worth
+recording. A figure is self-contained content that can be moved out of the flow
+without breaking the surrounding text, and a section's own argument is not that.
+Inside, a screen reader announces those paragraphs as part of the image's
+caption.
+
+`Inset` survives with no instances, one day after it was added. Kept rather than
+deleted: Leonid asked for that shape by name, it describes a real thing, and the
+reasoning attached to it is the kind of thing this log exists to preserve. If
+nothing uses it by the time v2 starts, delete it then.
+
+### What the two removed comparisons took with them
+
+`Predict, then report` is the bigger loss and it should be written down plainly.
+It was the only place on the site showing the system committing to what a stage
+should look like *before* the user reports anything, next to the card the user
+answers with, both speaking the same three categories in the same order. That is
+the whole argument of the case study in two pictures. The prediction card
+survives as the overlay in `fermentor-flow-showme.png`. The observation card,
+with its dropdowns, is not on the site any more, and the matching-order claim is
+now carried by one sentence of prose in `From model to product`.
+
+`The same three batches, two days apart` was the only image anywhere on this
+site where nothing had been edited between two states and time passing was the
+only input. The Outcome paragraph it stood under is now supported by the
+dashboard in the flow at the top of the page, which carries the countdowns, the
+progress bars and the warning, but only at one moment.
+
+Both crop boxes are in the rejected notes with what they showed, so either can
+come back as a one-line change. What was deliberately *not* done is compensating
+in prose: trading a picture for an assertion is the wrong direction on a page
+whose problem was never a shortage of sentences. There is a comment on the
+Outcome section saying so, because the temptation will recur.
+
+### `comparison` has no instances either
+
+FerMentor shipped both of them. With both gone the kind is unexercised: type,
+renderer and test scaffolding with nothing running through them.
+
+Kept, and this is the closer call of the two. The argument for deleting is the
+one this repo usually makes, that dead code with reasoning attached is still
+dead code. The argument that won: the comment on that kind is the only place on
+the site that says why a fixed pair is not a two-step progression, and that
+distinction is load-bearing for the next case study rather than for this one.
+Deleting the kind deletes the reasoning. Both zero-instance shapes are now
+stated as such in `types.ts`, so nobody discovers it by shipping the next one.
+
+Worth noticing anyway: the content got a third shorter today and the type system
+got slightly heavier. That is not a stable direction and it is the thing to
+watch on the next pass.
+
+### The guard that would have failed for the wrong reason
+
+`figures.test.ts` had a vacuity case naming four kinds and asserting each one
+ships at least one image. Removing two comparisons and the one inset turns that
+red, and it would have been red about the content rather than about the guards.
+
+Rewritten to walk sections instead of naming kinds: for every section that is not
+a prototype, `imagesOf` has to return something exactly when the section carries
+an image path. That still catches the bug the case exists for, a kind whose arm
+returns nothing when it should return something, and it catches it for kinds
+nobody has added yet. `prototype` stays the one named exception, because its
+poster is a control's label and the facade block owns it.
+
+Also removed: a dead duplicate `case 'prose'` label left in the fallthrough group
+yesterday when the inset got its own arm above. Harmless, unreachable, and
+exactly the sort of thing that makes the next reader mistrust the switch.
+
+### A thing I had wrong until I looked at the rendered page
+
+Removing the feedback inset looked, on paper, like returning the four-level
+stack claim to being asserted with nothing behind it, which is what it was from
+2026-08-02 to 2026-08-06. Written into the code comment that way, then checked
+against the built page.
+
+It is not true. The ladder that stayed carries three of the four levels on real
+cards: green with a filled check on the success card, pale orange with an orange
+triangle on the two processing states, pink with a red diamond on the prompts and
+on the discard card. Only the cream and amber level is missing. The paragraph is
+followed by its own evidence at a coarser grain, and no clause has to point at
+it. What the retired inset showed and this does not is the four as *one component
+set*, which is the difference between a system and four choices that happen to
+agree. That is the reason to re-derive it, and it is in the rejected note.
+
+Both comments were corrected rather than left standing. A wrong note in this file
+is worse than no note.
+
+### Rejected
+
+  Widening the ladder crop to the whole assessment organism group, organism clip
+  [0.0328, 0.0942, 0.2274, 0.6696]. The current box starts below the prediction
+  and observation cards precisely because the comparison shipped them full size,
+  and that comparison is gone, so the box is available again and would put the
+  whole exchange back on the page. Not taken. Leonid cut that section; carrying
+  its content back in through a wider crop is the same content arriving through
+  a side door. Recorded as an `open` note on the figure, one line to change.
+
+  Adding a sentence to Outcome to replace what the dashboard pair showed. See
+  above.
+
+  Deleting `comparison` and `Inset` now that neither ships. See above.
+
+  Keeping the ladder as its own section and merging only the prose upward. It is
+  what the type system already supported, and it is not what was asked for.
+
+### Verification
+
+`npm run typecheck` clean, 76 unit, 186 export. Export went 214 to 186: five
+images left the site, and the four-kind vacuity case collapsed into one walked
+case. Sections 13 to 10, images 7, iframes 0.
+
+Rendered and measured at 1280 and at 390. The merged section: three paragraphs
+at 145 to 913, image and caption on the same edges, 24px from the last paragraph
+to the image and 8px from the image to its caption, which is `gap` and `tight`,
+the same rhythm the rest of the page uses. Nothing overflows at 390 and the
+prose is outside the `<figure>`, both checked in the DOM rather than by eye.
+
+The ladder at a 390px viewport renders 327px wide and is not readable there.
+That was already true when it was its own section and it is not a regression,
+but it is the one image on this page that a phone cannot deliver.
+
+`impeccable` flagged the same two `broken-image` findings in
+`tests/export/figures.test.ts`. Third time: they are `<img[^>]*` regex strings
+inside test assertions, not markup. False positives, left unchanged.
+
+### Still open
+
+The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
+
+The ladder is unreadable on a phone. Either it gets a crop per breakpoint, or
+the section accepts that its evidence is desktop only, or it splits. Not decided.

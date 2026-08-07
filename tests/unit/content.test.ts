@@ -32,7 +32,11 @@ const bodies = (project: Project) =>
       case 'constraints':
         return section.items.flatMap((item) => [item.label, item.value]);
       case 'figure':
-        return [section.caption, section.alt];
+        // `body` since 2026-08-07. A figure section may now carry the prose
+        // that earns it, which is the same copy a prose section's body is and
+        // owes the same rules. It is optional, so it is the one arm here that
+        // can silently contribute nothing.
+        return [section.caption, section.alt, ...(section.body ?? [])];
       case 'comparison':
         // Both alts and both labels, not just the caption. The label is the
         // only thing telling a reader which state is which, so it is copy in
@@ -114,6 +118,13 @@ describe('project content', () => {
         for (const section of project.sections) {
           expect(section.heading.length).toBeGreaterThan(0);
           if (section.kind === 'prose') {
+            expect(section.body.length).toBeGreaterThan(0);
+            for (const paragraph of section.body) expect(paragraph.length).toBeGreaterThan(0);
+          }
+          if (section.kind === 'figure' && section.body) {
+            // A figure's body is optional, so absent is fine and present-but-
+            // empty is the padding the rule above bans. An empty array would
+            // also render a spacer div above the image for nothing.
             expect(section.body.length).toBeGreaterThan(0);
             for (const paragraph of section.body) expect(paragraph.length).toBeGreaterThan(0);
           }
