@@ -626,8 +626,14 @@ export const projects: readonly Project[] = [
         figure: 'glyphshero-chain',
       },
       {
+        // Heading shortened 2026-08-07: measured at 163px against the rail's
+        // 142px label column, the pre-existing clip caught while checking the
+        // two new headings this pass added. Unrelated to the content change in
+        // this pass, but the same fix already applied four times on Rollhaus,
+        // for the same reason: a heading that cannot be read at a glance is
+        // too long for the section it opens.
         kind: 'prose',
-        heading: 'Why the axes are separate',
+        heading: 'Separate axes',
         body: [
           'The first version had an item type per behaviour: a piercing weapon, a splitting weapon, a homing weapon. Every new combination meant a new type, and the combinations multiply faster than you can author them.',
           'Splitting an attack into independent axes fixed it. Target selection picks what the attack aims at, delivery decides which hexes it covers, propagation decides what it spawns on impact. An item reclassifies one axis and leaves the others alone, so a converter that turns a single-hex hit into a line does not need to know what payload is attached behind it.',
@@ -663,8 +669,13 @@ export const projects: readonly Project[] = [
         // New 2026-08-07. Source: Docs/agents/night-shift.md in the game repo,
         // confirmed against real branches (night-base, night/2026-07-01,
         // night/2026-07-02) via `git branch -a`.
+        //
+        // Heading shortened from "Two shifts, one backlog" the same day: it
+        // measured 145px against the rail's 142px column and clipped. The
+        // caption immediately below still carries the "one backlog" half of
+        // the argument, so nothing is lost.
         kind: 'embed',
-        heading: 'Two shifts, one backlog',
+        heading: 'Two shifts',
         caption:
           "Day shift decides what's safe to hand off. Night shift, an unattended Claude session working a GitHub Issues queue, only ever touches what's been cleared.",
         figure: 'glyphshero-night-shift',
