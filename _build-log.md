@@ -1709,3 +1709,48 @@ keep their subject. Revisit with the rail-past-frame option if a fifth arrives.
 
 Rollhaus has two pixels of headroom on its longest label, with nothing guarding
 it.
+
+## 2026-08-07: GlyphsHero drops game art for workflow evidence
+
+GlyphsHero was the last of the four case studies still running its original
+five sections, and the AI-collaboration workflow it leads with was described
+only in the abstract: "a grilling session," "focused task sessions," nothing a
+reader could point at. Scoped in
+`docs/superpowers/specs/2026-08-07-glyphshero-case-study-pass-design.md`.
+
+**Concept art as a fallback screenshot: rejected.** The game only runs from the
+Unity Editor, so no gameplay capture exists, and the README names Backpack
+Battles as a direct inventory reference. The item art in `Assets/Art` is
+`bpb_`-prefixed. The obvious fallback, the two existing `ItemChaining-0/1.png`
+concept sketches, uses the same placeholder art, and the hex grid art is
+placeholder too, confirmed with Leonid. Checking what art is actually in frame,
+not just whether a file looks like a diagram, is what caught this: a sketch can
+carry the same borrowed asset a screenshot does.
+
+**A disclaimer on the borrowed art: rejected.** Considered as a middle path,
+shipping the concept sketches with a footnote naming the art as reference only.
+Rejected because a disclaimer on art the reader cannot easily verify is a worse
+position than not showing it.
+
+**Fix scope for the itch.io claim: misattribution, not fabrication.**
+`lolesch.itch.io` is a real, live page. It hosts four unrelated game jam
+projects, not GlyphsHero. `PRODUCT.md`'s GlyphsHero record pointed at the wrong
+project rather than at a fake one, corrected to link `github.com/lolesch/GlyphsHero`
+directly.
+
+**The commit count: cut, not corrected.** 75 to 168, and Leonid's call was to
+drop the number outright rather than update it: not a signal he wants attached
+to a project he considers still prototype-phase, count aside.
+
+**A Constraints callout: rejected.** Drafted to match Rollhaus and FerMentor,
+then dropped on a second look. GlyphsHero's top-line `<dl>` already states
+Duration and Team ("2023-present, Solo, active"), so only Platform and Tools
+would have been new, and a two-row table reads as unfinished rather than
+deliberate.
+
+**Decision: build the pass from real internal docs instead.** Two new `embed`
+figures, typed as data and rendered on Semantic tokens, sourced from
+`Docs/agents/design-gate.md` and `Docs/agents/night-shift.md`: the two-way/
+one-way door test and the day-shift/night-shift split. One real screenshot, the
+Unity Test Runner at 213/213 EditMode tests green, Leonid's own capture and the
+one step the agent cannot do itself. Five sections became eight.

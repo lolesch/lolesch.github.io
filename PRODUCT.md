@@ -67,7 +67,7 @@ guardrails are in `CLAUDE.md`.
   but its URL is not recorded in this repo: source it before linking, never
   reconstruct it.
 - **GlyphsHero**, a real and active repo carrying a `CLAUDE.md`, nine ADRs, and
-  an Obsidian doc vault. Public at `lolesch.itch.io` and `github.com/lolesch`.
+  an Obsidian doc vault. Public at `github.com/lolesch/GlyphsHero`.
 - **Thoughtfish press kit**, source of `/figures/how-to-god.jpg` and available
   for further imagery on that project.
 - **In-repo assets:** CV PDF in `public/cv/`, figures in `public/figures/`,
