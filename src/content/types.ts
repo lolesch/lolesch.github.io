@@ -11,7 +11,11 @@ export type Tier = 'featured' | 'bridge' | 'archive';
 // were retired for the same reason and it is worth keeping: a ported figure is
 // still a figure, and neither of those two was carrying an argument the prose
 // around it was not already making. See `_build-log.md`.
-export type FigureId = 'rollhaus-slots' | 'glyphshero-chain';
+export type FigureId =
+  | 'rollhaus-slots'
+  | 'glyphshero-chain'
+  | 'glyphshero-design-gate'
+  | 'glyphshero-night-shift';
 
 // A page renders the sections that exist and stops. There is no fixed template
 // and no required section: CONTEXT.md's rule is that a section exists only if

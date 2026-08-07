@@ -1,5 +1,7 @@
 import type { ComponentType } from 'react';
 import { GlyphsheroChain } from '@/components/figures/glyphshero-chain';
+import { GlyphsheroDesignGate } from '@/components/figures/glyphshero-design-gate';
+import { GlyphsheroNightShift } from '@/components/figures/glyphshero-night-shift';
 import { RollhausSlots } from '@/components/figures/rollhaus-slots';
 import type { FigureId } from '@/content/types';
 
@@ -9,4 +11,6 @@ import type { FigureId } from '@/content/types';
 export const FIGURES: Record<FigureId, ComponentType> = {
   'rollhaus-slots': RollhausSlots,
   'glyphshero-chain': GlyphsheroChain,
+  'glyphshero-design-gate': GlyphsheroDesignGate,
+  'glyphshero-night-shift': GlyphsheroNightShift,
 };
