@@ -25,7 +25,12 @@ describe('embedded figures (Seam 2)', () => {
       const page = `out/projects/${project.slug}/index.html`;
 
       it('renders its heading and caption', () => {
-        const visible = body(page);
+        // `text`, not `body`: an apostrophe ships as `&#x27;` even inside a
+        // text node, not only inside an attribute, and GlyphsHero's
+        // night-shift caption is the first heading/caption pair on the site
+        // to carry one. Same fix already applied to alt text below, for the
+        // same reason.
+        const visible = text(page);
         expect(visible).toContain(section.heading);
         expect(visible).toContain(section.caption);
       });
