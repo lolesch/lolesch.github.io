@@ -33,9 +33,13 @@ Investigating what the repo actually holds turned up more than expected:
   / two-way-door test for which gaps stop the work, a slice-end ledger, and an
   actual unattended night runner working a GitHub Issues queue on a quarantined
   branch. None of it is visible on the site.
-- **Two claims are stale.** `PRODUCT.md` names an itch.io page that has no
-  trace anywhere in the repo (Leonid confirmed: stale, correct to the GitHub
-  link). The copy says "75 commits"; the repo is at 168.
+- **One claim is misattributed, one is irrelevant.** `PRODUCT.md` says
+  GlyphsHero is "public at `lolesch.itch.io`." The itch.io account is real,
+  Leonid confirmed, it just holds four unrelated game jam projects, not this
+  one: the claim was pointing at the wrong project, not fabricated. Separately,
+  the copy opens two sentences with a commit count ("75 commits so far"), which
+  Leonid does not consider a meaningful signal for a project still in prototype
+  phase, count aside.
 - **The thumb carries a generator watermark**, a faint text strip along the
   bottom of the 340x340 source, visible in the live tile.
 
@@ -52,15 +56,21 @@ cannot easily verify is a worse position than not showing it.
 
 | What | From | To |
 |---|---|---|
-| `PRODUCT.md` itch.io claim | "Public at `lolesch.itch.io`" | "Public at `github.com/lolesch/GlyphsHero`" |
-| `whatChanged` commit count | "75 commits so far." | "168 commits so far." |
-| Outcome opening line | "Seventy-five commits in, the thing that actually moved…" | "168 commits in, the thing that actually moved…" |
+| `PRODUCT.md` project record | "Public at `lolesch.itch.io` and `github.com/lolesch`." | "Public at `github.com/lolesch/GlyphsHero`." |
+| `whatChanged` | "75 commits so far. The work moved upstream, into defining a goal precisely enough that it can be delegated." | "The work moved upstream, into defining a goal precisely enough that it can be delegated." |
+| Outcome opening line | "Seventy-five commits in, the thing that actually moved is where my time goes." | "The thing that actually moved is where my time goes." |
 | Thumb | 340x340, watermark strip visible along the bottom | 340x318, cropped `[0, 0, 340, 318]`, watermark gone |
 
-**The commit count will drift again.** Recorded as measured via `git log --oneline | wc -l`
-on 2026-08-07 in the repo at `C:\Users\loles\Desktop\LEONID\AutoBattler`, same
-handling as every other measured-not-guessed number on this site. Not a claim
-this pass keeps current going forward.
+**The itch.io fix is a misattribution, not a retraction.** `lolesch.itch.io` is
+a real, live page; it just hosts four game jam projects that have nothing to do
+with GlyphsHero or this site. The correction is scoped to GlyphsHero's own
+record, not a claim that the itch.io account itself is fake.
+
+**The commit count is cut, not corrected.** Leonid's call: a raw commit count
+is not a signal he wants attached to a project he considers still in prototype
+phase, independent of whether the number is accurate. Both sentences read
+cleanly without the numeric opener, so nothing is lost by dropping it rather
+than swapping in 168.
 
 **The thumb's softness is not fixed.** `G.png` in the game repo is the same
 340x340 file already live, at native resolution: there is no sharper source to
@@ -75,19 +85,23 @@ discipline Rollhaus and FerMentor already have.
 
 ---
 
-## Part 2: Constraints callout
+## Part 2: no Constraints callout, and that is deliberate
 
-GlyphsHero is currently the only one of the four projects with no `constraints`
-section. Adding one, same shape as the other three:
+GlyphsHero is the only one of the four projects with no `constraints` section,
+and the first draft of this spec added one to match Rollhaus and FerMentor.
+**Rejected on a second look, on Leonid's instinct not to fill a gap that
+shouldn't exist in the first place.**
 
-| Label | Value |
-|---|---|
-| Duration | 2023-present, ongoing |
-| Team | Solo |
-| Platform | Desktop, Unity 6 |
-| Tools | Claude Code, Unity Editor, Obsidian, GitHub Issues |
-
-Placed first, matching Rollhaus and FerMentor.
+The reason it does not survive: for Rollhaus and FerMentor, Duration and Team
+are facts the reading `<dl>` at the top of the page does not otherwise carry
+("Course project, pair", "5 weeks, SPICED capstone"). For GlyphsHero, that
+`<dl>` already reads *"2023-present · Solo, active · Direction, architecture,
+review,"* so a Constraints table's Duration and Team rows would just restate it
+in a second format. Only Platform and Tools would be new information, and a
+two-row table looks like an unfinished four-row one rather than a deliberate
+choice. CONTEXT.md's own rule is that a section exists only if it has
+substance; this one would not have carried any that the page doesn't already
+show.
 
 ---
 
@@ -95,20 +109,19 @@ Placed first, matching Rollhaus and FerMentor.
 
 | # | Section | Kind | Change |
 |---|---|---|---|
-| 1 | Constraints | `constraints` | **new** |
-| 2 | Context | `prose` | unchanged |
-| 3 | How an attack is built | `embed` | unchanged |
-| 4 | Why the axes are separate | `prose` | unchanged |
-| 5 | How it gets built | `prose` | **trimmed 5 paragraphs to 3, gains a link out to the repo** |
-| 6 | The design gate | `embed` | **new** |
-| 7 | Two shifts, one backlog | `embed` | **new** |
-| 8 | The suite, green | `figure` | **new**, the one real screenshot |
-| 9 | Outcome | `prose` | commit count only |
+| 1 | Context | `prose` | unchanged |
+| 2 | How an attack is built | `embed` | unchanged |
+| 3 | Why the axes are separate | `prose` | unchanged |
+| 4 | How it gets built | `prose` | **trimmed 5 paragraphs to 3, gains a link out to the repo** |
+| 5 | The design gate | `embed` | **new** |
+| 6 | Two shifts, one backlog | `embed` | **new** |
+| 7 | The suite, green | `figure` | **new**, the one real screenshot |
+| 8 | Outcome | `prose` | commit count removed |
 
-Five sections become nine. The growth is functionally identical to what
-happened to Rollhaus: prose paragraph count barely moves (two paragraphs in
-section 5 fold into one), and what's added is evidence for a claim the page
-was already making, not a new claim.
+Five sections become eight. No Constraints callout (Part 2). The growth is
+functionally identical to what happened to Rollhaus: prose paragraph count
+barely moves (two paragraphs in section 4 fold into one), and what's added is
+evidence for a claim the page was already making, not a new claim.
 
 **Why the evidence sits after "How it gets built" rather than replacing it.**
 The prose still has to carry the parts a diagram can't: that the thinking has to
@@ -312,8 +325,10 @@ thumb currently has no tracked source anywhere; this is what closes that gap.
 
 - **1, claim only what ships.** Every new sentence traces to a file that exists
   today: two docs, nine ADRs (one cited by number), a real screenshot, a real
-  git history. The itch.io correction removes a claim that had gone stale
-  rather than adding one.
+  git history. The itch.io correction points GlyphsHero's own claim at the
+  right project rather than adding a new one, and the commit count comes out
+  rather than being corrected, on Leonid's read that it is not a meaningful
+  signal for a project he considers still prototype-phase.
 - **2, the AI story belongs to this site.** GlyphsHero already carries the AI
   Workflow lens and already claims to use AI in its own build; this pass makes
   an existing claim concrete, it does not import the meta-narrative from
