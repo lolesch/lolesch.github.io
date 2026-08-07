@@ -131,6 +131,10 @@ export function SectionNav({ sections }: { sections: readonly SectionRef[] }) {
                  * that is exactly what 'location' is for.
                  */
                 aria-current={current ? 'location' : undefined}
+                // Puts a clipped heading back on hover. Not the accessible
+                // name: the link's own text is that, and it is the whole
+                // heading whether or not the ellipsis is showing.
+                title={section.heading}
                 /*
                  * The marker is a segment of the rule, pulled one pixel left so
                  * its 2px covers the list's 1px rather than sitting beside it.
@@ -153,7 +157,25 @@ export function SectionNav({ sections }: { sections: readonly SectionRef[] }) {
                   sit on one left edge instead of shifting by a character at ten.
                 */}
                 <span className="shrink-0">{String(index + 1).padStart(2, '0')}</span>
-                <span>{section.heading}</span>
+                {/*
+                  One line, clipped rather than wrapped. Thirteen entries of one
+                  or two or three lines each gave the rail a ragged right edge
+                  and no fixed row height, so scanning it meant reading it. At
+                  one line per section the list is a column of even rows and the
+                  eye finds the marked one without stopping.
+
+                  The cost is real and it is paid by the longest headings, which
+                  lose their last few words to an ellipsis. Three things keep
+                  that from being a defect: the number beside it is unambiguous
+                  on its own, the full heading is still the link's accessible
+                  name and still reaches a screen reader, and `title` puts it
+                  back on hover for anyone who wants it.
+
+                  `min-w-0` is what makes the clip happen at all. A flex item's
+                  floor is its content, so without this the span refuses to
+                  shrink and `truncate` has nothing to truncate against.
+                */}
+                <span className="min-w-0 truncate">{section.heading}</span>
               </a>
             </li>
           );
