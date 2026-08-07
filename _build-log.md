@@ -1502,3 +1502,127 @@ The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
 
 The ladder is unreadable on a phone. Either it gets a crop per breakpoint, or
 the section accepts that its evidence is desktop only, or it splits. Not decided.
+
+## 2026-08-07, third pass: the reading pages get a rail, and 7rem stops being written twice
+
+Leonid asked for a table of contents that sits outside the reading column, shows
+where you are, jumps to a heading, and does not exist on a phone. Four
+requirements, and the fourth is the one that decided the geometry.
+
+### The space was already there
+
+`main` on every reading page was `measure` flush left inside `frame`, so the
+right of the column has been empty since the two widths were split. The first
+answer given to Leonid was that this left 16rem. That was wrong: `frame` is
+border-box, so its 64rem includes the two gutters and the inner box is 61rem.
+48 for the reading, one gutter of separation, 11.5 left. The rail is 11.5rem and
+that is not a design choice, it is what the subtraction returns. It is in
+globals.css beside `frame` and `measure` for exactly that reason: change either
+of those and this one is wrong.
+
+The correction moved the breakpoint too. At 16rem of slack there was an argument
+for waiting until `xl`; at 11.5rem the honest line is `lg`, because 64rem is
+where `frame` stops growing and the slack appears all at once. Below it the slack
+shrinks continuously and there is no width at which a narrower rail would be
+correct rather than merely smaller.
+
+### Ids are derived, not authored
+
+`SectionHeading` has taken an optional `id` since it was written and only
+/design-system passed one. The rail needs every heading to have one.
+
+An `id` field on the Section record was the obvious move and was rejected. Two
+fields that must agree eventually do not, and this pair fails silently: a heading
+rewritten without its id is an entry that scrolls to the wrong place, which is
+invisible in every screenshot and wrong for whoever clicks it. Derived from the
+heading, there is one string and it cannot come apart. The cost is that a
+rewritten heading breaks a bookmarked anchor, which nothing outside this site
+holds.
+
+/design-system cannot do this. It composes its eight sections by hand because it
+interleaves prose with generated tables, so its ids stay authored and short
+(`in-place`, not `the-system-in-place`) and `DESIGN_SYSTEM_SECTIONS` lists them
+beside the headings they point at. That list references the headings rather than
+retyping them, which solves half the problem. The half it cannot solve is a ninth
+section being added to the page and not to the list, so the export test asserts
+the list against the ids the built page carries, in order.
+
+### Rects, not an observer
+
+The active entry is computed by a scroll listener that reads the headings'
+`getBoundingClientRect().top` inside one animation frame and marks the last one
+at or above the clearance line.
+
+An IntersectionObserver was the default and it answers the wrong question. It
+says whether an element is inside a band, so a section taller than the band
+leaves no heading in it and the rail must either blank or remember. Rects answer
+"which heading did I pass most recently", which has no dead zone at any section
+length. The usual argument for the observer is avoiding layout reads; that is an
+argument about hundreds of elements, and the longest page here has thirteen.
+
+Nothing is marked above the first heading. A case study opens on a hero, a
+metadata line and three schema rows, none of which is a numbered section, so
+marking 01 there would claim a position the reader is not in.
+
+### 7rem, once
+
+`scroll-padding-top: 7rem` has been in globals.css since the header was pinned.
+The rail sticks to the same line, so the number was about to exist twice and
+disagree the first time the bar changed height. It is `--header-clearance` now,
+declared once, and the rail reads the computed value back off the document rather
+than carrying a copy. Not a `--ds-*` token: that layer is generated from the DTCG
+source, and a hand-written name in it would be the one value the pipeline does
+not own.
+
+### Rejected
+
+  Widening `frame` on large screens so the rail gets its own column and the
+  slack stays as breathing room. It would have bought a wider rail at a lower
+  breakpoint. `frame` is also the header row, so the wordmark, the nav and the
+  toggle all move to make room for a navigation aid. The site's proportions are
+  not the price of this.
+
+  A rail outside the frame, fixed in the viewport margin. Needs about 1536px
+  before that margin is wide enough to read, so most laptops never see it.
+
+  A scroll-progress line alongside the entries. Two things tracking one fact,
+  and a scroll-linked animation the reduced-motion rule would then have to cover.
+
+  Labels without the numbers. Quieter, and it drops the one thing tying the rail
+  to the 01/02 labels already on the page.
+
+  Reusing the header's `text-accent` + underline for the active entry, which was
+  the recommendation on consistency grounds: one way to say "you are here". Not
+  taken. Leonid chose the marker on the rule. It is the stronger call on a second
+  look, because the rail's hairline is the same device the section openers use
+  and the marker is a segment of it lighting up, which is the page's own
+  structure rather than a borrowed idiom. Presence of the segment is also a
+  non-colour channel, which is what SC 1.4.1 wants and what the underline was
+  doing in the header.
+
+  Smooth scrolling on the jump. Animating a reader ten thousand pixels down a
+  case study is worse than arriving. The anchor is plain, so it also works before
+  hydration.
+
+### Verification
+
+`npm run typecheck` clean, 96 unit, 218 export. `tests/export/nav.test.ts` now
+scopes its aria-current count to the header: the rail marks with
+`aria-current="location"` and emits nothing at build time, so the old count still
+passed, but it would have failed there for a reason that is not a defect.
+
+Measured in the built export at 1440: rail 184px, `main` 768px, row gap 24px,
+sticky top 112px, active marker on the accent. Rollhaus ships all thirteen
+entries, /design-system all eight with its ids in page order. At 1023px the rail
+is `display: none` and `main` is unchanged at 768px; at 375px nothing overflows.
+Both themes checked.
+
+### Still open
+
+The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
+
+The ladder is unreadable on a phone, logged 2026-08-07, unchanged.
+
+11.5rem wraps a long heading to three lines. "Contrast, measured on every build"
+is the worst case on the site and it reads, but the rail is the one component
+with no room to grow while `frame` is 64rem.

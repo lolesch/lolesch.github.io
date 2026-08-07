@@ -4,6 +4,7 @@ import { FixedLayer, SemanticLayer } from '@/components/design-system/colour';
 import { ContrastTable, ScrimBound } from '@/components/design-system/contrast-table';
 import { Disclosure } from '@/components/design-system/disclosure';
 import { ComponentGallery } from '@/components/design-system/gallery';
+import { ReadingPage } from '@/components/reading-page';
 import { SectionHeading } from '@/components/section-heading';
 import {
   RadiusScale,
@@ -14,6 +15,7 @@ import {
   TypeScale,
 } from '@/components/design-system/scales';
 import {
+  DESIGN_SYSTEM_SECTIONS,
   designSystem,
   ENFORCED_RULES,
   INTERACTION_RULES,
@@ -74,7 +76,14 @@ export default function DesignSystemPage() {
   const brand = of('brand');
 
   return (
-    <main className="measure pt-gap pb-section">
+    /*
+      The one reading page whose contents are a list rather than derived from
+      one. This page composes its eight sections by hand, because it interleaves
+      prose with generated tables and a linear walk cannot express that, so the
+      rail is fed from DESIGN_SYSTEM_SECTIONS and an export test asserts that
+      list still matches the headings this page renders, in order.
+    */
+    <ReadingPage sections={DESIGN_SYSTEM_SECTIONS}>
       <h1 className="type-title text-balance">Design System</h1>
       <p className="mt-gap type-lead text-muted">{designSystem.intro}</p>
       {/*
@@ -244,6 +253,6 @@ export default function DesignSystemPage() {
         </SectionHeading>
         <Prose body={designSystem.built.body} />
       </section>
-    </main>
+    </ReadingPage>
   );
 }

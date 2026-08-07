@@ -65,8 +65,19 @@ describe('site navigation', () => {
   });
 
   it('marks exactly one link per page, so two never claim the same place', () => {
+    // Scoped to the header since the section rail landed. The rail marks the
+    // section the reader is in with aria-current="location", which is a
+    // different claim from the route they are on and belongs to a different
+    // navigation. It emits nothing at build time, because where the reader is
+    // depends on scroll position, so counting across the whole body still
+    // passes today. It would stop passing the moment anything marked a section
+    // server-side, and the failure would land here, in a test about the header,
+    // naming a defect that is not one. The claim this makes is about the site
+    // nav, so it looks at the site nav.
     for (const page of ROUTES) {
-      const marks = body(page).match(/aria-current=/g) ?? [];
+      const header = body(page).match(/<header[\s\S]*?<\/header>/)?.[0] ?? '';
+      expect(header, `${page} has no header`).not.toBe('');
+      const marks = header.match(/aria-current=/g) ?? [];
       expect(marks.length, `${page} marks ${marks.length} links`).toBe(1);
     }
   });

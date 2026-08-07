@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { ReadingPage } from '@/components/reading-page';
 import { ContentSections } from '@/components/sections';
 import { projects } from '@/content/projects';
 import { scrimGradient } from '@/lib/scrim';
+import { contentsOf } from '@/lib/sections';
 
 // trailingSlash: true is already set, so the export emits
 // out/projects/<slug>/index.html rather than out/projects/<slug>.html.
@@ -32,7 +34,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound();
 
   return (
-    <main className="measure pt-gap pb-section">
+    <ReadingPage sections={contentsOf(project.sections)}>
       {/*
         The card's image, in the card's treatment, at the top of the page it
         opens. Added 2026-08-05: Leonid's note was that clicking a card entered a
@@ -147,6 +149,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           Back to all projects
         </a>
       </p>
-    </main>
+    </ReadingPage>
   );
 }

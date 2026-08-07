@@ -1,3 +1,7 @@
+// Relative, like `./types` below, rather than the @/ alias the components use.
+// tests/unit/copy.test.ts pulls every module under src/content through an eager
+// import.meta.glob, and vitest.config.mts declares no path aliases.
+import type { SectionRef } from '../lib/sections';
 import type { Section } from './types';
 
 type Prose = Extract<Section, { kind: 'prose' }>;
@@ -416,3 +420,36 @@ export const designSystem: {
     ],
   },
 };
+
+/*
+ * This page's contents, in the order it reads them.
+ *
+ * Every other reading page derives its contents from the Section[] it renders,
+ * so the rail and the headings are one list by construction. This page cannot:
+ * it composes its eight sections by hand because it interleaves prose with
+ * generated tables, and the ids below are authored rather than slugged for the
+ * same reason, so `in-place` stays short instead of becoming
+ * `the-system-in-place`.
+ *
+ * The headings are referenced rather than retyped, which is the half of the
+ * problem that can be solved here. The half that cannot is order and
+ * completeness: nothing stops a ninth section being added to the page without
+ * being added here. tests/export/section-nav.test.ts closes that by asserting
+ * this list against the ids the exported page actually carries, in order, which
+ * is a stronger check than anything expressible in the type.
+ *
+ * `rules` carries its count because the heading on the page does. A contents
+ * entry that quietly differs from the heading it points at is the drift this
+ * whole arrangement exists to avoid, even when the difference is an
+ * improvement.
+ */
+export const DESIGN_SYSTEM_SECTIONS: readonly SectionRef[] = [
+  { id: 'pillars', heading: designSystem.pillars.heading },
+  { id: 'in-place', heading: designSystem.inPlace.heading },
+  { id: 'interaction', heading: designSystem.interaction.heading },
+  { id: 'layers', heading: designSystem.layers.heading },
+  { id: 'families', heading: designSystem.families.heading },
+  { id: 'rules', heading: `${designSystem.rules.heading} (${ENFORCED_RULES.length})` },
+  { id: 'contrast', heading: designSystem.contrast.heading },
+  { id: 'built', heading: designSystem.built.heading },
+];

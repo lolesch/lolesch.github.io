@@ -3,6 +3,7 @@ import { FIGURES } from '@/components/figures/registry';
 import { PrototypeEmbed } from '@/components/prototype-embed';
 import { SectionHeading } from '@/components/section-heading';
 import type { Section } from '@/content/types';
+import { sectionId } from '@/lib/sections';
 
 export function ContentSections({ sections }: { sections: readonly Section[] }) {
   // No lead-figure rule since 2026-08-05. Every project page now opens on a
@@ -14,13 +15,23 @@ export function ContentSections({ sections }: { sections: readonly Section[] }) 
       {sections.map((section, index) => (
         // No `mt-section` here since 2026-08-05: SectionHeading carries it, so
         // the rule and the space above it cannot come apart.
-        <section key={section.heading}>
+        // `aria-labelledby` rather than an aria-label repeating the heading:
+        // the id exists now, and pointing at the real element means the
+        // landmark's name cannot drift from the words on the page. This is what
+        // /design-system already did by hand for its eight sections.
+        <section key={section.heading} aria-labelledby={sectionId(section.heading)}>
           {/*
             1-based, because the index is read by a person rather than used as
             an offset. It counts sections on this page, which on a case study is
             the sequence the reader is actually in.
+
+            The id is derived from the heading rather than authored beside it,
+            so the anchor the rail points at and the words it shows are one
+            string. See src/lib/sections.ts.
           */}
-          <SectionHeading index={index + 1}>{section.heading}</SectionHeading>
+          <SectionHeading id={sectionId(section.heading)} index={index + 1}>
+            {section.heading}
+          </SectionHeading>
           <SectionBody section={section} />
         </section>
       ))}

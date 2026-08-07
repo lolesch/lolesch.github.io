@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { ContactLinks } from '@/components/contact-links';
+import { ReadingPage } from '@/components/reading-page';
 import { ContentSections } from '@/components/sections';
 import { about } from '@/content/about';
+import { contentsOf } from '@/lib/sections';
 
 // trailingSlash: true is already set, so the export emits out/about/index.html
 // rather than out/about.html, which Pages serves more predictably.
@@ -15,12 +17,15 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     /*
-     * `measure` and nothing else. The frame and the gutter are on the layout,
-     * so this page says only how wide its own reading is, and it sits flush
-     * left inside that frame rather than centred in the viewport. Centring it
-     * would put the text 8rem inside the wordmark above it.
+     * The frame and the gutter are on the layout, so this page says only how
+     * wide its own reading is, and it sits flush left inside that frame rather
+     * than centred in the viewport. Centring it would put the text 8rem inside
+     * the wordmark above it.
+     *
+     * `measure` moved onto ReadingPage when the section rail landed, along with
+     * the row it needs. All three reading pages had these exact classes.
      */
-    <main className="measure pt-gap pb-section">
+    <ReadingPage sections={contentsOf(about.sections)}>
       <div className="flex flex-wrap items-center gap-gap">
         <Image
           src={about.portrait.src}
@@ -60,6 +65,6 @@ export default function AboutPage() {
       <ContentSections sections={about.sections} />
 
       <ContactLinks contact={about.contact} cv={about.cv} />
-    </main>
+    </ReadingPage>
   );
 }
