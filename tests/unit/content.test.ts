@@ -21,7 +21,14 @@ const bodies = (project: Project) =>
       case 'prose':
         // The link label is copy: it is what the reader clicks and what a
         // screen reader announces, so it owes the same rules as a paragraph.
-        return [...section.body, ...(section.link ? [section.link.label] : [])];
+        // So is the inset's alt, and more so than most: an inset ships no
+        // caption at all, which makes its alt the only description of it that
+        // exists anywhere.
+        return [
+          ...section.body,
+          ...(section.link ? [section.link.label] : []),
+          ...(section.inset ? [section.inset.alt] : []),
+        ];
       case 'constraints':
         return section.items.flatMap((item) => [item.label, item.value]);
       case 'figure':

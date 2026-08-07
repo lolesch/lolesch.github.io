@@ -7,11 +7,11 @@ export type Tier = 'featured' | 'bridge' | 'archive';
 // `embed` resolves through a registry (FigureId -> React component), which is
 // what keeps "content is data" true: the data names a figure, it does not
 // carry one.
-export type FigureId =
-  | 'rollhaus-slots'
-  | 'glyphshero-chain'
-  | 'fermentor-stages'
-  | 'fermentor-framings';
+// `fermentor-stages` and `fermentor-framings` were here until 2026-08-07. Both
+// were retired for the same reason and it is worth keeping: a ported figure is
+// still a figure, and neither of those two was carrying an argument the prose
+// around it was not already making. See `_build-log.md`.
+export type FigureId = 'rollhaus-slots' | 'glyphshero-chain';
 
 // A page renders the sections that exist and stops. There is no fixed template
 // and no required section: CONTEXT.md's rule is that a section exists only if
@@ -23,8 +23,25 @@ export type FigureId =
 // cannot open is a claim rather than evidence.
 export type SectionLink = { label: string; href: string };
 
+// An image inside a prose section, with no caption and nothing said about it.
+// Added 2026-08-07 for a figure that had been given a section of its own and
+// did not need one: a heading, a section index and a caption is a lot of
+// furniture around a picture whose only job is to be looked at while you read
+// the sentence above it.
+//
+// Deliberately not a `figure` with an optional caption. The absence of a
+// caption is the point, and an optional field would let one drift back in; a
+// section that wants to say something about its image already has a kind.
+export type Inset = { src: string; alt: string; width: number; height: number };
+
 export type Section =
-  | { kind: 'prose'; heading: string; body: readonly string[]; link?: SectionLink }
+  | {
+      kind: 'prose';
+      heading: string;
+      body: readonly string[];
+      link?: SectionLink;
+      inset?: Inset;
+    }
   // The time/team/tools callout CONTEXT.md lists as pending polish on the case
   // study template. Label/value pairs rather than prose, because the reader
   // scans them: they answer "what was this" before the writing has to.

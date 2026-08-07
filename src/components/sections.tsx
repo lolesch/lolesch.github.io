@@ -52,6 +52,32 @@ function SectionBody({ section }: { section: Section }) {
               </a>
             </p>
           ) : null}
+          {section.inset ? (
+            /*
+              Indented and held short of the reading width, which is what makes
+              this read as part of the section rather than as an unlabelled
+              figure that lost its caption. No <figure> element and no
+              <figcaption>: a figure is a thing with a caption, and this one
+              deliberately says nothing. The alt still carries the description,
+              because that is where a reader who cannot see it gets one.
+
+              Padding on a wrapper rather than a margin on the image. `ml-gutter`
+              with `w-full` adds the indent to a width that is already the whole
+              column, so on a phone the image ran a gutter past the text it is
+              indented from. Padding takes the indent out of the width instead,
+              which is the only version that holds at every viewport.
+            */
+            <div className="pl-gutter">
+              <Image
+                src={section.inset.src}
+                alt={section.inset.alt}
+                width={section.inset.width}
+                height={section.inset.height}
+                sizes="(max-width: 40rem) 100vw, 26rem"
+                className="h-auto w-full max-w-[26rem] rounded-card border border-border"
+              />
+            </div>
+          ) : null}
         </div>
       );
 

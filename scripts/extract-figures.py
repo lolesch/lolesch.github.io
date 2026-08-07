@@ -17,7 +17,7 @@ Usage (needs `pip install pymupdf`, and the sibling repo checked out):
     python scripts/extract-figures.py            # write every figure
     python scripts/extract-figures.py --list     # show provenance, write nothing
 
-Three extraction modes:
+Four extraction modes:
 
   xref  Copy an embedded image out of a PDF byte for byte. No re-encode, so
         this is the original asset at native resolution. Preferred whenever the
@@ -30,6 +30,12 @@ Three extraction modes:
         exported from Figma as PNGs rather than onto a canvas, so there is no
         page to clip. Coordinates here are source pixels, because that is what
         the export is measured in.
+  over  A `clip` with a second `clip` laid over it behind a scrim. One figure
+        needs this and it is the one place in this file that composes rather
+        than crops, so the record carries every number: which two regions, the
+        scrim's opacity, and where on the first the second lands. See the
+        `over` key on `fermentor-flow-showme.png` for why that is honest there
+        and would not be somewhere else.
 
 The four Rollhaus canvas exports are each *one PDF page holding a whole Figma
 canvas*, not a deck: `page` is always 0 and there is nothing to select but a
@@ -79,10 +85,12 @@ COMPONENTS = "Project3_Rollhaus (Components).pdf"
 
 # The FerMentor exports, whole Figma canvases rather than decks, so `page` is
 # always 0 and there is nothing to select but a region. `Screens.pdf` is the
-# Components page's Screens frame at 4986x5158pt; the planning board is a FigJam
-# export at 21472x48681pt, which is why its fractions carry five decimals.
+# Components page's Screens frame at 4986x5158pt.
+#
+# `Capstone Task & Planning Group 2.pdf`, the FigJam board, is no longer read
+# by anything here. Its one crop is in the rejected notes at the bottom of this
+# list, with the reason.
 SCREENS = "Screens.pdf"
-PLANNING = "Capstone Task & Planning Group 2.pdf"
 
 # The component library, one canvas per level of the hierarchy the case study
 # claims. Untouched until 2026-08-06, when two sections turned out to be
@@ -275,28 +283,6 @@ FIGURES = [
         ),
     },
     {
-        "out": "public/figures/fermentor-framings.png",
-        "project": "fermentor",
-        "pdf": PLANNING,
-        "page": 0,
-        "clip": [0.48621, 0.49157, 0.54490, 0.55771],
-        "width": 1100,
-        "why": (
-            "The three candidate problem framings on the UX Research board, each "
-            "with its written reasoning, which is the artifact behind the reframe "
-            "section. Tall and narrow because the column is: cropping it wider "
-            "would pull in the neighbouring Problem Statement and HMW columns "
-            "and make it a picture of a board rather than of an argument."
-        ),
-        "open": (
-            "The reasoning paragraphs address Leonid in the second person "
-            "('evidenced in your research'), which is visible in the crop and is "
-            "the AI-assisted drafting the case study discloses in prose. Left in "
-            "rather than cropped out: removing it would be hiding the thing the "
-            "copy already states."
-        ),
-    },
-    {
         "out": "public/figures/fermentor-predict.png",
         "project": "fermentor",
         "pdf": SCREENS,
@@ -355,30 +341,12 @@ FIGURES = [
             "it. Identical crop box to the early state, deliberately."
         ),
     },
-    # The four flow states, added 2026-08-06. Every phone frame on this canvas
-    # measures exactly 390x844pt, found with `get_drawings` rather than by eye,
-    # so these four boxes are the same box at four offsets and any difference
-    # between the images is a difference in the product. The prose in Outcome
-    # used to list these four in a sentence; it does not any more.
-    {
-        "out": "public/figures/fermentor-flow-notice.jpg",
-        "project": "fermentor",
-        "pdf": SCREENS,
-        "page": 0,
-        "clip": [0.48596, 0.07968, 0.56418, 0.24331],
-        "width": 700,
-        "why": (
-            "Step 1 of 4. The cold-open row holds seven screens, and this is the "
-            "only one where FerMentor does anything: a lock-screen notification "
-            "saying the Cauliflower should be ready for preservation, which the "
-            "app worked out from the stage model rather than from a timer the "
-            "user set. Chosen over the home screen with the app icon installed, "
-            "which is any app, and over the splash frame, which is a logo. JPEG "
-            "rather than PNG because the wallpaper is a photographic gradient, "
-            "which is the one screen in this set that is not flat colour and "
-            "type."
-        ),
-    },
+    # The four flow states, added 2026-08-06 and re-cut on 2026-08-07. Every
+    # phone frame on this canvas measures exactly 390x844pt, found with
+    # `get_drawings` rather than by eye, so these four boxes are the same box at
+    # four offsets and any difference between the images is a difference in the
+    # product. The prose in Outcome used to list these four in a sentence; it
+    # does not any more.
     {
         "out": "public/figures/fermentor-flow-dashboard.png",
         "project": "fermentor",
@@ -387,34 +355,86 @@ FIGURES = [
         "clip": [0.04412, 0.28286, 0.12234, 0.44649],
         "width": 700,
         "why": (
-            "Step 2 of 4, the dashboard: next actions with their countdowns "
-            "above the batches in progress, which is what the Outcome section "
-            "describes. Column 1 of four on the canvas, not column 2, which is "
-            "already on this page as the early half of the dashboard pair. Two "
-            "images of one screen on one page would read as a mistake."
+            "Step 1 of 4 since 2026-08-07, when the lock-screen notification "
+            "that opened the progression came out. The dashboard: next actions "
+            "with their countdowns above the batches in progress. Column 1 of "
+            "four on the canvas, not column 2, which is already on this page as "
+            "the early half of the dashboard pair. Two images of one screen on "
+            "one page would read as a mistake."
         ),
     },
     {
-        "out": "public/figures/fermentor-flow-batch.png",
+        "out": "public/figures/fermentor-flow-new.png",
+        "project": "fermentor",
+        "pdf": SCREENS,
+        "page": 0,
+        "clip": [0.04392, 0.49651, 0.12214, 0.66014],
+        "width": 700,
+        "why": (
+            "Step 2 of 4, added 2026-08-07 on Leonid's call that the flow should "
+            "show a batch being started rather than a notification arriving. The "
+            "only New Batch frame on the canvas, and it is the first of four "
+            "setup steps: a checklist of ingredients, supplies and optional "
+            "equipment under a MATERIALS tab, with 2, 3 and 4 still to come. "
+            "Same 390x844pt box as its three siblings, one row up."
+        ),
+        "open": (
+            "What steps 2, 3 and 4 of the setup ask for is not in this frame and "
+            "is not recorded in `fermentor_source_of_truth.md`, so nothing on "
+            "the page claims it. The batch info the rest of the app reads, jars, "
+            "salt percentage and start date, has to be entered somewhere and "
+            "this wizard is the only candidate, but that is an inference and it "
+            "stays out of the copy."
+        ),
+    },
+    {
+        "out": "public/figures/fermentor-flow-showme.png",
         "project": "fermentor",
         "pdf": SCREENS,
         "page": 0,
         "clip": [0.04392, 0.71016, 0.12214, 0.87379],
         "width": 700,
+        # The one composed figure in this file. The design file draws the
+        # overlay card beside the screen it belongs to rather than over it, and
+        # the working TODO list on the same canvas carries "add system prompts
+        # as overlay" struck through as done, so the presentation is decided in
+        # the source and only the rendering of it is missing. Composing is what
+        # puts the control and the thing it opens in one image; the alternative
+        # is a screen with a button on it and, six sections later, a card that
+        # the reader has to connect back by memory.
+        #
+        # Every number here is a choice and none of it is design work of mine:
+        # the card is at its native size, horizontally centred (390-360)/2 = 15pt
+        # in from the left, and sits at 468pt from the top, which is the gap
+        # directly under the Activation card that carries SHOW ME. Leonid asked
+        # for it vertically centred; that placement covers the button, so the
+        # image would show the result of an interaction whose trigger is hidden
+        # behind it. Move `at[1]` to 0.38152 for the centred version.
+        "over": {
+            "clip": [0.31688, 0.70996, 0.38909, 0.74874],
+            "at": [0.03846, 0.55450],
+            "scrim": 0.15,
+            # The flat Figma canvas the card is drawn against. Keyed out at the
+            # four corners so the card's own radius survives the composite
+            # instead of shipping four grey wedges.
+            "canvas": (68, 68, 68),
+            "corner": 10,
+        },
         "why": (
-            "Step 3 of 4, and the product in one screen: the five stages as a "
-            "stack, Preparation done, Activation in progress and carrying the "
-            "SHOW ME button, the rest waiting. Also the prototype section's "
-            "poster, for the reason the Rollhaus wheels step is its own: the "
-            "facade should open on a screen the page has already shown. This "
-            "frame is inside the card thumbnail too, at a fifth of the size and "
-            "beside two others."
+            "Step 3 of 4, and the product in one image: the five stages as a "
+            "stack with SHOW ME on the one in progress, and behind a 15% scrim, "
+            "the card that button opens. The card commits to what this stage "
+            "should look like right now, for this batch, before the user has "
+            "reported anything, which is the whole argument of the case study "
+            "and was previously only readable six sections further down. The "
+            "same card also ships full size in the Predict, then report pair, "
+            "where it is half of an exchange rather than a result."
         ),
         "open": (
             "The Maturing stage reads 'Maturing description here', a placeholder "
-            "left in the capstone file. It is in the source and it is not quoted "
-            "in the alt text, which names the stages instead. Recorded so a "
-            "clean re-export can fix it rather than the next reader finding it."
+            "left in the capstone file. It is behind the card in this crop and "
+            "it is not quoted in the alt text. Recorded so a clean re-export can "
+            "fix it rather than the next reader finding it."
         ),
     },
     {
@@ -524,6 +544,108 @@ FIGURES = [
 #   0.6696]. It carries the prediction and observation cards as well, which the
 #   comparison two sections above already ships at full size, so the crop starts
 #   below them instead.
+#
+#   The three candidate problem framings on the UX Research board, planning clip
+#   [0.48621, 0.49157, 0.54490, 0.55771] at width 1100, from `Capstone Task &
+#   Planning Group 2.pdf`. Shipped 2026-08-02 to 2026-08-06 as a 1101x2811 PNG,
+#   then ported to text, then dropped entirely on 2026-08-07 when the section
+#   holding it merged into the prose above it. Both versions were the same
+#   mistake at different resolutions: by the time a reader reaches them the
+#   choice between the three has already been made and argued, so the artifact
+#   is restating a decision rather than evidencing one. The three statements are
+#   in the copy now, in the paragraph that picks between them.
+#
+#   The FerMentor lock-screen notification, screens clip [0.48596, 0.07968,
+#   0.56418, 0.24331] at width 700, written as `fermentor-flow-notice.jpg`
+#   between 2026-08-06 and 2026-08-07. It was step 1 of the flow on the argument
+#   that the app decides when to speak. Leonid cut it: a notification is the one
+#   screen in the flow that is not the product, and the claim it carried is made
+#   twice more on the page, by the next-action list and by the dashboard pair
+#   where time passing is the only input. The New Batch frame took its slot.
+
+
+# How far a pixel has to sit from the canvas colour before it counts as card
+# rather than as background. Small, because the only thing being separated is a
+# flat fill from a card whose lightest edge is nowhere near it; the values in
+# between are the renderer's antialiasing, and letting them through as partial
+# alpha is what gives the composited card a clean rounded corner.
+KEY_SPAN = 40
+
+
+def clip_box(page, fractions):
+    """The `clip` convention: a region as fractions of the page rect, so a box
+    survives a re-export at a different page size."""
+    import fitz
+
+    x0, y0, x1, y1 = fractions
+    rect = page.rect
+    return fitz.Rect(
+        rect.x0 + x0 * rect.width, rect.y0 + y0 * rect.height,
+        rect.x0 + x1 * rect.width, rect.y0 + y1 * rect.height,
+    )
+
+
+def keyed_corners(pix, inset, canvas):
+    """Alpha for a card rendered against a flat canvas: opaque everywhere except
+    the four corner squares, where distance from the canvas colour gives the
+    card's rounded edge, antialiasing included.
+
+    Keying is confined to the corners on purpose. Nothing but the card's own
+    radius lives there, whereas run over the whole image it would eat the card's
+    body text, which is dark enough to sit inside KEY_SPAN of a mid grey.
+    """
+    width, height = pix.width, pix.height
+    inset = min(inset, width // 2, height // 2)
+    alpha = bytearray(b"\xff" * (width * height))
+    for top in (0, height - inset):
+        for left in (0, width - inset):
+            for y in range(top, top + inset):
+                row = y * width
+                for x in range(left, left + inset):
+                    r, g, b = pix.pixel(x, y)[:3]
+                    off = max(abs(r - canvas[0]), abs(g - canvas[1]), abs(b - canvas[2]))
+                    alpha[row + x] = 255 if off >= KEY_SPAN else off * 255 // KEY_SPAN
+    return bytes(alpha)
+
+
+def compose(doc, figure, base, zoom):
+    """The `over` mode: a region, a scrim, and a second region laid on top.
+
+    The base and the scrim stay vector all the way to the final rasterise. Only
+    the overlay goes through a pixmap, because it needs an alpha channel to keep
+    its rounded corners, and it is rendered at four times the output scale so
+    that detour is invisible at the size that ships.
+    """
+    import fitz
+
+    over = figure["over"]
+    card = clip_box(doc[figure["page"]], over["clip"])
+
+    out = fitz.open()
+    page = out.new_page(width=base.width, height=base.height)
+    page.show_pdf_page(page.rect, doc, figure["page"], clip=base)
+    page.draw_rect(page.rect, color=None, fill=(0, 0, 0), fill_opacity=over["scrim"])
+
+    detail = 4
+    pix = doc[figure["page"]].get_pixmap(
+        clip=card, matrix=fitz.Matrix(zoom * detail, zoom * detail), alpha=False
+    )
+    alpha = keyed_corners(pix, round(over["corner"] * zoom * detail), over["canvas"])
+    pix = fitz.Pixmap(pix, 1)  # RGB -> RGBA; set_alpha needs the channel to exist
+    pix.set_alpha(alpha)
+
+    left = base.width * over["at"][0]
+    top = base.height * over["at"][1]
+    page.insert_image(
+        fitz.Rect(left, top, left + card.width, top + card.height), pixmap=pix
+    )
+    # This lands one pixel narrower and shorter than the same region taken
+    # through the plain `clip` mode, and the three siblings it sits beside in a
+    # progression come through that mode. The cause is rounding and nothing
+    # else: a clip box at x=218.99 rounds outward to 701 pixels, while the same
+    # width starting at a page origin of exactly 0 rounds to 700. Same region,
+    # same zoom, same framing. Not worth offsetting a synthetic page to hide.
+    return page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), alpha=False)
 
 
 def render(figure, out_path):
@@ -560,13 +682,19 @@ def render(figure, out_path):
         out_path.write_bytes(data["image"])
         return f"{data['width']}x{data['height']} {data['ext']}, unmodified"
 
-    x0, y0, x1, y1 = figure["clip"]
-    rect = page.rect
-    box = fitz.Rect(
-        rect.x0 + x0 * rect.width, rect.y0 + y0 * rect.height,
-        rect.x0 + x1 * rect.width, rect.y0 + y1 * rect.height,
-    )
+    box = clip_box(page, figure["clip"])
     zoom = figure["width"] / box.width
+
+    if "over" in figure:
+        pix = compose(doc, figure, box, zoom)
+        pix.save(out_path, **quality)
+        over = clip_box(page, figure["over"]["clip"])
+        return (
+            f"{pix.width}x{pix.height} from a {box.width:.0f}x{box.height:.0f}pt region, "
+            f"with a {over.width:.0f}x{over.height:.0f}pt region composed over it "
+            f"behind a {figure['over']['scrim']:.0%} scrim"
+        )
+
     pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), clip=box, alpha=False)
     pix.save(out_path, **quality)
     return f"{pix.width}x{pix.height} from a {box.width:.0f}x{box.height:.0f}pt region"
@@ -578,6 +706,11 @@ def source_of(figure):
     where = f"page {figure['page']}"
     if "xref" in figure:
         return figure["pdf"], f"{where} xref {figure['xref']}"
+    if "over" in figure:
+        return figure["pdf"], (
+            f"{where} clip {figure['clip']} "
+            f"under clip {figure['over']['clip']} at {figure['over']['at']}"
+        )
     return figure["pdf"], f"{where} clip {figure['clip']}"
 
 

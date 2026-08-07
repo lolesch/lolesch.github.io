@@ -72,22 +72,20 @@ const fermentor: Project = {
       // a list standing in for a picture on a page that had one product
       // screenshot before section 8.
       //
+      // Re-cut 2026-08-07. The lock-screen notification that opened it came
+      // out: it is the one frame in the flow that is not the product, and the
+      // claim it carried, that the app decides when to speak, is made twice
+      // more on this page. The New Batch frame took its slot, and the batch
+      // screen now carries the card SHOW ME opens.
+      //
       // One crop box at four offsets. Every phone frame on the Screens canvas
       // is exactly 390x844pt, so any difference between these images is a
       // difference in the product rather than in the framing.
       kind: 'progression',
       heading: 'The flow',
       caption:
-        'Four points in the flow, in the order you meet them. Not four taps in one sitting: the app is the thing that decides when to speak, so the first screen arrives before the user has thought to check. Everything after it runs off the stage model rather than a step list, which is why the batch screen can put one control on the stage in progress and leave the other four quiet.',
+        'Four points in one flow: opening the app, starting a batch, the one control on the batch screen, and how a batch ends. All of it runs off the stage model rather than a step list, which is why only the stage in progress carries a control, and why the card that control opens can say what to expect before the user has reported anything.',
       steps: [
-        {
-          label: 'The notification',
-          note: 'Sent because the model put the Cauliflower at the end of its window, not because anyone set a reminder.',
-          src: '/figures/fermentor-flow-notice.jpg',
-          alt: 'An iPhone lock screen reading 19:41, Tuesday 20 May, carrying one notification from FerMentor: "Time to check your ferments. Your Cauliflower should be ready for preservation", sent 2 minutes ago.',
-          width: 701,
-          height: 1516,
-        },
         {
           label: 'The dashboard',
           note: 'Next actions with their countdowns, above the batches in progress. The list is ordered by what needs something soonest.',
@@ -97,12 +95,24 @@ const fermentor: Project = {
           height: 1516,
         },
         {
-          label: 'One batch',
-          note: 'Five stages, one of them in progress, and SHOW ME on that one alone.',
-          src: '/figures/fermentor-flow-batch.png',
-          alt: 'A batch screen headed Kimchi. Cards along the top give the status as Activation, an estimated end of May 29, and three 500 ml jars at 3% salt. Below them five stages: Preparation complete, Activation in progress under the description "Active microbial culture growth" and carrying a SHOW ME button, then Stabilizing, Maturing and Ready still waiting.',
+          label: 'Starting one',
+          note: 'Four setup steps, and the first is a checklist of what to have on the table before anything goes in a jar.',
+          src: '/figures/fermentor-flow-new.png',
+          alt: 'A New Batch screen headed Project Name, with a four step tab row whose first tab, MATERIALS, is active. Under "Gather all required materials", three cards of checkboxes: Ingredients with Vegetables, Filtered Water and Sea Salt, Supplies with Jar and Label, and Optional with Spices and Glass Weight.',
           width: 701,
           height: 1516,
+        },
+        {
+          // The one composed image on this site: the design file draws this
+          // card beside the screen rather than over it, and the canvas TODO
+          // list has "add system prompts as overlay" struck through as done.
+          // Every number in the composite is in `scripts/extract-figures.py`.
+          label: 'What SHOW ME does',
+          note: 'Preparation is done, Activation is in progress and is the only stage carrying a control, and the card is what pressing it produces.',
+          src: '/figures/fermentor-flow-showme.png',
+          alt: 'The Kimchi batch screen dimmed behind an open card. Behind the card, batch info giving the status as Activation and an estimated end of May 29, then Preparation complete and Activation in progress carrying a SHOW ME button. In front, a card headed "What you should see" giving Brine as slightly cloudy, Surface as fine bubbles and Appearance as bright red, above an ADJUST button and a CONFIRM button.',
+          width: 700,
+          height: 1515,
         },
         {
           label: 'The way out',
@@ -115,11 +125,51 @@ const fermentor: Project = {
       ],
     },
     {
+      kind: 'prose',
+      heading: 'Context',
+      body: [
+        'Fermentation runs on its own. Bacteria and yeast break down what you give them in an anaerobic environment, and in the right conditions the process needs almost no intervention, so most of the work is waiting and knowing when to stop. Temperature and the state of the culture move the timing, the end point is not a clock, and the reliable way to check is to open the jar, which is also the fastest way to contaminate it.',
+        // The paragraph on how the capstone arrived at fermentation, a time
+        // management app and a gardening companion dropped in turn, came out on
+        // 2026-08-07. Leonid's call, and the right one: it is the only part of
+        // this page that is about what happened before the project rather than
+        // about the project.
+        'Leith Gow and I ran the research together. Partway through it became clear the findings were pulling toward two different people. His was an experienced fermenter losing track across several batches at once. Mine was a beginner in the first month, who has no baseline to compare anything against. Rather than average them into one product we split there, and from that point the two designs share a research phase and nothing else.',
+      ],
+    },
+    {
+      // Was "The reframe", three paragraphs opening on "the obvious framing is
+      // that beginners lack confidence" and followed by a whole section
+      // transcribing the three candidates off the research board. Merged into
+      // one on 2026-08-07, on Leonid's reading: by the time the reader reached
+      // the transcript the choice had already been argued, so the artifact was
+      // restating a decision rather than evidencing one. What was worth keeping
+      // out of it is the three statements themselves, which are here, and they
+      // are what the old prose was vague about.
+      kind: 'prose',
+      heading: 'Lack of confidence',
+      body: [
+        'The research board put it down to three things acting together: ambiguous signals, high consequences, low expertise. Which of those a product can actually move is the question that decides everything after it.',
+        'So I wrote three problem statements, one per cause, and argued each one before picking. The first said users cannot reliably interpret the state of their process or judge the timing of actions. The second said outcomes are driven by variables that are hard to observe, temperature and microbial activity, which is why results resist prediction and why following instructions is not enough. The third said the breakdown happens during execution: not knowing when to act, which signals to trust, or how to evaluate progress without risking the batch.',
+        // Disclosure at the point of the claim, which is what guardrail 2
+        // allows. It is a fact about one artifact in one project, not the
+        // code-first workflow narrative that belongs only to this site.
+        'I used AI to write the argument under each, to pressure-test the three rather than to settle them, and it rated the third the strongest for being the most behaviourally anchored. I took the first, on a different test: which of these names something a product can change? Microbial activity cannot be made visible to someone looking at a jar, so the second describes the world rather than a brief. The third is a list of symptoms, and each of them resolves back into a question about state or about timing, which makes it the first one at a finer grain. State can be made legible and timing can be made predictable. What shipped is that: fermentation beginners need to know what to expect, because variable conditions and unclear progress make it hard to decide whether action is required or what that action should be.',
+      ],
+    },
+    {
       // Promoted 2026-08-06 from a `link` on the Outcome section, where the one
       // interactive thing in this case study was a line of blue text eleven
-      // sections down. Poster is the batch screen from the step above, for the
-      // reason the Rollhaus poster is its own progression's last step: a facade
-      // should open on a screen the reader has already been shown.
+      // sections down. Moved below the two prose sections on 2026-08-07: the
+      // progression shows the product, these say what it is for, and the offer
+      // to go and press it yourself lands after both rather than between the
+      // pictures and the reason for them.
+      //
+      // Poster is the dashboard from the progression above, for the reason the
+      // Rollhaus poster is its own progression's last step: a facade should
+      // open on a screen the reader has already been shown. Not the batch
+      // screen beside it, which is composited and would promise the prototype
+      // opens on a state it does not.
       kind: 'prototype',
       heading: 'Try it',
       caption:
@@ -130,70 +180,36 @@ const fermentor: Project = {
       action: 'Load the prototype and open a batch',
       title: 'The FerMentor prototype, running in Figma',
       poster: {
-        src: '/figures/fermentor-flow-batch.png',
-        alt: 'The FerMentor batch screen for a Kimchi batch, with the Activation stage in progress and a SHOW ME button on it.',
+        src: '/figures/fermentor-flow-dashboard.png',
+        alt: 'The FerMentor dashboard, with a next action list above two batches in progress.',
         width: 701,
         height: 1516,
       },
     },
     {
-      kind: 'prose',
-      heading: 'Context',
-      body: [
-        'Fermentation runs on its own. Bacteria and yeast break down what you give them in an anaerobic environment, and in the right conditions the process needs almost no intervention, so most of the work is waiting and knowing when to stop. That is what makes it a bad fit for a recipe. Temperature and the state of the culture move the timing, the end point is not a clock, and the reliable way to check is to open the jar, which is also the fastest way to contaminate it.',
-        'The capstone did not start here. We took a time management app and then a gardening companion through idea evaluation, pain points and problem statements before dropping both, and the board records the arc as too broad, then similar but specific, then fermentation. It won on practical grounds: Leith had the experience and the equipment, and the process looked simple enough to model. The cons we wrote down at the time were that it might be too simple and might not have enough variables in it.',
-        'Leith Gow and I ran the research together. Partway through it became clear the findings were pulling toward two different people. His was an experienced fermenter losing track across several batches at once. Mine was a beginner in the first month, who has no baseline to compare anything against. Rather than average them into one product we split there, and from that point the two designs share a research phase and nothing else.',
-      ],
-    },
-    {
-      kind: 'prose',
-      heading: 'The reframe',
-      body: [
-        'The obvious framing is that beginners lack confidence. It is true, and it is not something you can build against, because a lack of confidence is a symptom. What I wrote on the research board is that ambiguous signals, high consequences and low expertise together produce it, which turns the question into which of those three a product can actually move.',
-        // The second-person voice in the figure below ("evidenced in your
-        // research") makes the AI drafting visible to anyone who reads it, so
-        // the claim here is written to match rather than to survive the image.
-        // Disclosure at the point of the claim, which is what guardrail 2
-        // allows; a workflow narrative is what it bans.
-        'So I put three candidate framings side by side, each with its reasoning written out, drafted with AI to pressure-test them rather than to settle them. The first put the cause in state and timing: users cannot reliably read where the process is or judge when to act. The second put it in invisible variables, temperature and microbial activity being hard to observe, which is why results resist prediction. The third put it in decision-making during execution: not knowing when to act, which signals to trust, or how to evaluate progress without risking the batch.',
-        'The third is the most behaviourally precise and the second explains the most, but the first is the one that names something a product can change. You cannot make microbial activity visible to someone looking at a jar. You can make the state legible and the timing predictable. That is the framing that shipped: fermentation beginners need to know what to expect, because variable conditions and unclear progress make it hard to decide whether action is required or what that action should be.',
-      ],
-    },
-    {
-      // The reasoning paragraphs are still the point, which is the argument the
-      // screenshot version of this section made for two years' worth of a
-      // fortnight. What changed on 2026-08-06 is the medium, not the content:
-      // the three options and their reasoning are transcribed verbatim, so
-      // nothing is lost and the argument becomes readable on a phone, in the
-      // dark theme, and to a screen reader that previously got one alt string
-      // in place of 250 words.
-      kind: 'embed',
-      heading: 'The three framings, as they were written',
-      caption:
-        'The candidate framings from the research board, transcribed rather than screenshotted, second person and all. Option 1 became the shipped statement, on the argument in the paragraph above.',
-      figure: 'fermentor-framings',
-    },
-    {
+      // Was three paragraphs. The middle one argued that a proto persona is a
+      // thinner evidence base and that every decision downstream inherits it,
+      // which Leonid cut on 2026-08-07: the readers this page is written for
+      // know what a proto persona is, so naming it is the whole disclosure and
+      // the argument after it was talking down to them.
       kind: 'prose',
       heading: 'Who it is for',
       body: [
-        'Lukas Weber, 32, a product designer who started fermenting vegetables a few months ago for a more balanced diet. He likes making things himself, he follows the general guidelines, and he is still in the phase of working out what the right timing and conditions are. His line on the persona card: "I know the steps, but I\'m never fully sure if now is the right moment to do something or just leave it."',
-        'He is a proto persona, assembled from desk research and three interviews, two of those with experts rather than with beginners. That is a thinner evidence base than a researched persona and it is worth naming, because every decision downstream inherits it.',
+        'Lukas Weber, 32, a product designer who started fermenting vegetables a few months ago for a more balanced diet. He follows the general guidelines and is still working out what the right timing and conditions are. His line on the persona card: "I know the steps, but I\'m never fully sure if now is the right moment to do something or just leave it." A proto persona, from desk research and three interviews, two of those with experts rather than with beginners.',
         'What he needs is narrow enough to design against. An indication of the state his ferment is in. Guidance on what to expect at that state. Help deciding whether action is required at all. The damage is done by his own mental model, which is reasonable and which costs him batches: if he is not sure what is happening he waits, because intervening at the wrong moment might ruin it. Waiting is the safe move right up until it is not.',
       ],
-    },
-    {
-      kind: 'embed',
-      heading: 'What the product had to know',
-      caption:
-        'The stage model as it was written for the capstone, ported onto the tokens this site runs on, so it follows the theme.',
-      figure: 'fermentor-stages',
     },
     {
       kind: 'prose',
       heading: 'From model to product',
       body: [
-        'A model is only worth anything if the user meets it somewhere. In FerMentor that place is a single control on the batch detail screen, a SHOW ME button sitting on whichever step is currently in progress.',
+        // Carries what the retired stage-model figure carried. That embed was
+        // dropped on 2026-08-07 as a diagram of something the product already
+        // shows: the five stages are in every batch screenshot on this page,
+        // and the signals attached to each are what the SHOW ME card prints.
+        // The model still has to be named for this section to have a subject,
+        // so it is named here in a sentence instead of a section.
+        'The model under the product is a list of fermentation stages with the signals a beginner can actually observe attached to each one. It is worth nothing until the user meets it somewhere, and in FerMentor that place is a single control on the batch detail screen, a SHOW ME button sitting on whichever step is currently in progress.',
         'It answers the question a step list cannot. Steps tell you where you are in a sequence. SHOW ME tells you what this stage should look like right now, for this batch and the conditions it was set up under, so the user compares instead of guessing. That is the difference between instruction and prediction, and it is most of the product in one control.',
         'The other half is the order you are allowed to check in. The research finding that intervening carries contamination risk has a design consequence that follows directly: assessment is ordered so the jar stays shut as long as possible. Appearance first. Smell and texture only if appearance was not enough. Opening is the last resort rather than the reflex, which is the inverse of what a beginner does when they are unsure.',
         'Logging follows the same rule. Structured choices per sensory category rather than a free text field, so what the user observed can be read against the model instead of only recorded next to it.',
@@ -249,25 +265,27 @@ const fermentor: Project = {
       heading: 'The system',
       body: [
         'The screens run on Figma variables rather than colour styles, so a change to a token updates everywhere that token is used. The component library is organised as an explicit hierarchy, from sub atomic through atomic, molecule, organism and template to the screens themselves, with one frame holding every component and every state laid out together.',
-        'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention.',
+        // The last sentence is load-bearing since 2026-08-07. The image below
+        // shows the four levels on a dashboard row, not on the message cards
+        // this sentence lists, and with the caption gone there is nothing but
+        // this clause to stop a reader reading the rows as those four jobs.
+        // That 1:1 would be tidy and wrong: the jobs are the message cards,
+        // recorded in `fermentor_source_of_truth.md` off graduation slide 19.
+        'Two design principles in the deck are mine. Consistency, which is what the token system is for, and Clear State, which is the one that matters to this product specifically. If the premise is that a user cannot read the state of their ferment, then the interface cannot be vague about the state of anything. Feedback runs as a four level stack, each level with its own colour and icon and its own job: the batch is doing well, here is what you should be seeing, tell us what you observed, and this needs your attention. The same four levels carry onto anything else that has to report status.',
       ],
-    },
-    {
-      // Added 2026-08-06, against a claim the page had made since 2026-08-02
-      // with nothing behind it. The caption deliberately does not map these four
-      // rows onto the four jobs named in the paragraph above: those are the
-      // message cards, recorded in `fermentor_source_of_truth.md` from
-      // graduation slide 19, and this is the same four levels applied to a
-      // different component. Saying otherwise would be the kind of tidy 1:1 that
-      // is wrong on inspection.
-      kind: 'figure',
-      heading: 'One component, four levels',
-      caption:
-        'The four levels on a dashboard row. Colour, icon and urgency move together, and the red state is the only one that stops counting down and says now. The message cards further up this page are the same four levels on a different component, which is the whole of what Clear State bought. The dashed boundary is Figma marking a component set: one component in four states, not four rows drawn four times.',
-      src: '/figures/fermentor-feedback.png',
-      alt: 'Four rows of one component, each on its own tint and carrying its own icon. A green row with a filled check, a cream row with an amber information dot and a pale orange row with an orange warning triangle, all three reading "Task Label" and "in 2d", then a pink row with a red diamond alert reading "Task Label" and "now". A dashed violet rectangle encloses all four.',
-      width: 1201,
-      height: 882,
+      // Was a section of its own, "One component, four levels", added
+      // 2026-08-06 against a claim the page had made since 2026-08-02 with
+      // nothing behind it. Leonid's call on 2026-08-07 was that the evidence is
+      // worth keeping and the section around it is not: a heading, an index and
+      // a caption for one small figure is three pieces of furniture for a thing
+      // that only has to be looked at. So it stays, indented into the paragraph
+      // that names it, and says nothing.
+      inset: {
+        src: '/figures/fermentor-feedback.png',
+        alt: 'Four rows of one component, each on its own tint and carrying its own icon. A green row with a filled check, a cream row with an amber information dot and a pale orange row with an orange warning triangle, all three reading "Task Label" and "in 2d", then a pink row with a red diamond alert reading "Task Label" and "now". A dashed violet rectangle encloses all four, which is Figma marking a component set.',
+        width: 1201,
+        height: 882,
+      },
     },
     {
       // The first paragraph used to enumerate the four states of the flow and

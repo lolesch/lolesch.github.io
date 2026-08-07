@@ -1109,3 +1109,232 @@ rather than redesigned in passing.
 
 Typecheck clean, 76 unit, 202 export, up from 168. Checked in a browser at 1280
 in both themes and at 390, where the page does not scroll horizontally.
+
+
+## 2026-08-07: FerMentor loses three sections, and the page gets shorter for the first time
+
+Leonid read the 2026-08-06 pass and stopped at section 8. That is the finding.
+Everything below is downstream of one sentence: "As a reader I would stop right
+here, because I lost interest. there are so many sections but what do they
+offer?" Sixteen sections, and the first eight were a heading and an index
+apiece for arguments that mostly did not need one.
+
+The page is thirteen sections now. Three came out and nothing was added.
+
+### What the visual pass got wrong
+
+The 2026-08-05 spec that produced the Rollhaus pass is written entirely in terms
+of adding evidence: eight figures where there was one, a progression, a
+prototype. Applied to FerMentor on 2026-08-06 it added six figures and two
+sections, and every one of them was individually defensible. The failure was
+that nothing in the spec ever asks whether a section earns its own heading. A
+rule that only pushes one way produces a page that grows every time it is
+touched.
+
+So this pass adds a second question to the same list. Not "does this have
+evidence" but "does this need a section". Two of the things retired below were
+figures I built the day before, and both were right on their own terms and wrong
+on the page.
+
+### The three framings, retired twice in two days
+
+On 2026-08-06 this was a 1101x2811 screenshot of a FigJam column, and the pass
+replaced it with a ported text figure on this site's tokens, on the grounds that
+the reasoning was text and a screenshot of text is not evidence. That was
+correct and it was the wrong fight. Leonid's note: "the decision toward one of
+them is already made at this point. Also I dont find these 'cards' visually
+attractive."
+
+He is right about the sequencing, and it is the more interesting objection. The
+prose above the figure argued the choice between the three options and reached a
+conclusion. The figure then transcribed the three options. By the time a reader
+arrives, the artifact cannot evidence a decision because the decision has already
+landed; it can only restate it at greater length. That is true of the ported
+version and it was equally true of the screenshot, which means the 2026-08-06
+pass fixed the medium of a figure whose problem was its position.
+
+What survived is the part the old prose was actually vague about. Leonid: "the
+second abstract is vague because it never names the candidates. what put the
+cause in state and timing?" The section names all three statements now, in one
+paragraph, and then spends a paragraph on the test that picked between them.
+
+Both files are deleted, `public/figures/fermentor-framings.png` with them, and
+the crop box is in the rejected notes in `scripts/extract-figures.py`.
+
+### The stage model figure, same reason
+
+`fermentor-stages` was the only figure on the page that was a diagram of
+something the product already shows. Leonid: "its just a fancy way of showing
+the dropdowns from the evaluation but holds little value to a reader." The five
+stages are in every batch screenshot on the page and the signals attached to each
+are literally what the SHOW ME card prints, so the embed was rule 4 of the visual
+pass violated by the pass itself: show the artifact, not a diagram of it.
+
+The claim it carried has to stay, because `whatIDid` asserts a stage model. It is
+now one sentence opening `From model to product`, which is the section that
+needed a subject anyway. A figure replaced by a subordinate clause is the correct
+trade when the figure was restating the clause.
+
+Cost, recorded honestly: the retired figure carried a footnote saying the model
+was written from desk research and AI-assisted synthesis rather than from the
+three interviews, and that it "rests on the thinnest evidence in the project".
+That disclosure is gone. The thin evidence base is still stated once, in
+`Who it is for`, and `whatChanged` still says there was no usability testing. Per
+tone tell #10 one statement is the correct dose, so this is not a regression, but
+it is a thing the page used to say and no longer says. If it should come back it
+belongs in `Who it is for`, not in a restored figure.
+
+### One component, four levels becomes an inset
+
+Leonid: "Instead of giving '13: One Component...' its own section, this visual
+could be part of one of the text sections, indented into the text, without
+further explanation, just SHOWING the states."
+
+This is the sharpest note in the round, because it names a shape the type system
+did not have. Every image on this site was in a section with a heading, an index
+and a caption. Some images only have to be looked at.
+
+`prose` gained an optional `inset`: src, alt, dimensions, and deliberately no
+caption. Not a `figure` with an optional caption, because the absence of the
+caption is the point and an optional field lets one drift back in. A section that
+wants to say something about its image already has a kind.
+
+Two things this cost:
+
+  1. The retired caption was doing real work. It said the four rows are the four
+     feedback levels applied to a dashboard row, and that the message cards
+     further up the page are the *same four levels on a different component*.
+     Without it, an image of four rows sitting directly under a sentence listing
+     four message-card jobs invites exactly the 1:1 reading that is wrong on
+     inspection. Fixed by extending the paragraph rather than the image: it now
+     ends "The same four levels carry onto anything else that has to report
+     status." One clause, and the image lands correctly after it.
+
+  2. `ml-gutter` with `w-full` overflowed. The indent was added to a width that
+     was already the whole column, so on a 390px viewport the inset ran from
+     x=48 to x=375 while its text column ended at 351. Caught by measuring the
+     rendered page rather than by looking at it: it does not produce a scrollbar,
+     it just breaks the right edge against the gutter. Padding on a wrapper takes
+     the indent out of the width instead.
+
+Both test walkers were extended. `Shipped.caption` in `figures.test.ts` is
+nullable now, which is the honest shape: requiring a caption would have meant a
+fake string in the data or the inset staying outside the guards, and the second
+is how figure copy escaped those guards once before. The vacuity check enumerates
+all four image-bearing kinds rather than naming two.
+
+### The flow, re-cut
+
+Leonid: "I want the Notification screen removed, lets start with the dashboard
+but then insert a screen from the 'New Batch' flow."
+
+The notification was step 1 on the argument that the app decides when to speak.
+Cutting it is right and I had the reasoning backwards yesterday: it is the one
+frame in the flow that is not the product, and the claim it carried is made twice
+more on this page, by the next-action list and by the dashboard pair where time
+passing is the only input. The `New Batch` frame took the slot, which is the only
+one on the canvas and shows the first of four setup steps.
+
+What steps 2, 3 and 4 of that wizard ask for is not in the frame and not in
+`fermentor_source_of_truth.md`. The batch info the rest of the app reads has to
+be entered somewhere and this is the only candidate, but that is an inference and
+it stays out of the copy. Recorded on the figure record.
+
+### The composited screen, and the one place this file stops cropping
+
+Leonid: screen 3 "could include the overlay that would appear when clicking on
+'Show Me' (centered and the background slightly dimmed out, so like a ~15% alpha
+full black."
+
+The design file draws that card beside the screen it belongs to rather than over
+it. So this is the first figure on the site that composes rather than crops, and
+the bar for that is higher than for a crop. Three things cleared it: the card is
+a real designed artifact from the same file, the working TODO list on the same
+canvas carries "add system prompts as overlay" struck through as done, so the
+presentation is decided in the source and only the rendering of it is missing,
+and the alternative is a screen with a button on it and, six sections later, a
+card the reader has to connect back by memory.
+
+Guardrail 1 is satisfied by putting every number in the script rather than by
+trusting the caption. `scripts/extract-figures.py` grew an `over` mode: which two
+regions, the scrim opacity, where the second lands on the first, and the canvas
+colour keyed out at the corners so the card's own radius survives instead of
+shipping four grey wedges. Anyone can re-derive the image or change one number.
+
+**One deviation from the brief, and it is deliberate.** Leonid asked for the card
+vertically centred. Centred, it covers the Activation card, which is where SHOW
+ME lives. The image would then show the result of an interaction whose trigger is
+hidden behind it, which is the one thing this step exists to demonstrate. It sits
+at 468pt instead, in the gap directly under the card carrying the button, so
+cause and effect are one glance apart. Horizontal centring and the 15% scrim are
+exactly as asked. `at[1]` to 0.38152 restores the centred version and the record
+says so.
+
+The composite lands at 700x1515 where its three siblings are 701x1516. That is
+rounding and nothing else: a clip box starting at x=218.99 rounds outward to 701
+pixels, the same width starting at a synthetic page origin of exactly 0 rounds to
+700. Same region, same zoom, same framing. Not worth offsetting a page to hide,
+and recorded so the next reader does not think the framing drifted.
+
+### The prototype moves down, and Context loses its prehistory
+
+`Try it` sat between the progression and the first line of prose, which put the
+offer to go and press it before the page had said what it was. It is after
+`Context` and `Lack of confidence` now. Its poster changed from the batch screen
+to the dashboard, because the batch screen is composited and a facade should not
+promise the prototype opens on a state it does not.
+
+`Context` lost the paragraph on how the capstone arrived at fermentation, a time
+management app and a gardening companion dropped in turn. Leonid: "all the back
+and forth before the project seems irrelevant." It was the only part of the page
+about what happened before the project rather than about the project. Also gone:
+"That is what makes it a bad fit for a recipe", which was a setup-and-reveal
+sentence explaining a conclusion the two sentences around it already carry.
+
+`Who it is for` lost the paragraph arguing that a proto persona is a thinner
+evidence base and that every decision downstream inherits it. Leonid: "I'm
+presenting all this to people who work in that area, they know, bro." Naming it a
+proto persona is the whole disclosure; the argument after it was talking down to
+the reader, which is tone tell #1 wearing a different coat.
+
+### Rejected
+
+  Keeping the framings as a two-column layout or a table instead of cards. The
+  complaint about the cards was cosmetic on its face and structural underneath.
+  Restyling would have kept a figure that restates a settled decision, which is
+  fixing the paint on a wall in the wrong room. Second time in two days this
+  figure got a cosmetic fix for a positional problem.
+
+  A `figure` kind with an optional caption instead of the new `inset`. One field
+  fewer in the type and one more thing that has to stay `undefined` by
+  convention. The whole value of the inset is that it cannot say anything.
+
+  Moving the feedback inset into `From model to product`, which also discusses
+  states. `The system` is where the four levels are named, and an image should
+  sit under the sentence it illustrates.
+
+  Colour-keying the composited card across its whole area rather than at the
+  corners. The card's body text is dark enough to sit inside the key threshold of
+  a mid grey, so a full-area key would have made the type semi-transparent. The
+  corners are the only place the card's own edge meets the canvas.
+
+  Reordering so the prototype opens the page. It is the strongest interactive
+  thing here and it is still not what a reader needs first.
+
+### Verification
+
+`npm run typecheck` clean, 76 unit, 214 export. Export went 199 to 214: the
+caption assertion split into a heading case and an optional caption case, and the
+inset added a full set of cases on a path that did not exist. Section count 16 to
+13, images 12, iframes 0. The inset measured at a 390px viewport after the fix:
+48 to 351 inside a text column of 24 to 351.
+
+`impeccable` flagged four `broken-image` findings in `tests/export/figures.test.ts`
+again. Same false positives as 2026-08-06: they are `<img[^>]*` regex strings
+inside test assertions, not markup. Left unchanged.
+
+### Still open
+
+The facade's label sits on a 90% scrim across the bottom of the poster and at
+rest reads more like a caption baked into a screenshot than like a control.
+Logged open 2026-08-05, unchanged, now on two pages.

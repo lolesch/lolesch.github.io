@@ -60,10 +60,14 @@ describe('embedded figures (Seam 2)', () => {
 // section later, so nothing downstream has to re-narrow `Section` to reach
 // them. A prose section has no caption, and the cast that would paper over
 // that is exactly the kind of thing these guards exist to not need.
+// `caption` is nullable since 2026-08-07, when `prose` gained an optional
+// inset. That kind of image ships with no caption on purpose, so requiring one
+// here would mean either a fake string in the data or the inset staying outside
+// these guards, and the second is how figure copy escaped them once already.
 type Shipped = {
-  kind: 'figure' | 'comparison' | 'progression';
+  kind: 'figure' | 'comparison' | 'progression' | 'prose';
   heading: string;
-  caption: string;
+  caption: string | null;
   src: string;
   alt: string;
   label: string | null;
@@ -74,6 +78,15 @@ const imagesOf = (section: Section): Shipped[] => {
     case 'figure': {
       const { kind, heading, caption, src, alt } = section;
       return [{ kind, heading, caption, src, alt, label: null }];
+    }
+    // The one image-bearing kind that is optional rather than definitional. A
+    // prose section without an inset is not a figure and returns nothing; one
+    // with an inset owes every rule below, because a broken src renders the
+    // same neat empty box either way.
+    case 'prose': {
+      if (!section.inset) return [];
+      const { kind, heading, inset } = section;
+      return [{ kind, heading, caption: null, src: inset.src, alt: inset.alt, label: null }];
     }
     case 'comparison': {
       const { kind, heading, caption } = section;
@@ -120,10 +133,14 @@ const IMAGES = projects.flatMap((project) =>
 );
 
 describe('image figures (Seam 2)', () => {
-  it('ships image figures of both kinds, so the cases below are not vacuous', () => {
+  it('ships an image of every kind that can carry one, so the cases below are not vacuous', () => {
     expect(IMAGES.length).toBeGreaterThan(0);
-    expect(IMAGES.some(({ state }) => state.kind === 'figure')).toBe(true);
-    expect(IMAGES.some(({ state }) => state.kind === 'comparison')).toBe(true);
+    for (const kind of ['figure', 'comparison', 'progression', 'prose'] as const) {
+      expect(
+        IMAGES.some(({ state }) => state.kind === kind),
+        `no ${kind} image ships, so its guards below run against nothing`,
+      ).toBe(true);
+    }
   });
 
   it('ships a progression whose steps stay in order', () => {
@@ -167,11 +184,15 @@ describe('image figures (Seam 2)', () => {
     describe(`${project.slug} / ${state.src}`, () => {
       const page = `out/projects/${project.slug}/index.html`;
 
-      it('renders its heading and caption', () => {
-        const visible = body(page);
-        expect(visible).toContain(state.heading);
-        expect(visible).toContain(state.caption);
+      it('renders its heading', () => {
+        expect(body(page)).toContain(state.heading);
       });
+
+      if (state.caption !== null) {
+        it('renders its caption', () => {
+          expect(body(page)).toContain(state.caption);
+        });
+      }
 
       it('carries its alt text, which is the copy a screen reader gets', () => {
         // `text`, not `body`: alt is an attribute, so React escapes the quotes

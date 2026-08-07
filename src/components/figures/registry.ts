@@ -1,6 +1,4 @@
 import type { ComponentType } from 'react';
-import { FermentorFramings } from '@/components/figures/fermentor-framings';
-import { FermentorStages } from '@/components/figures/fermentor-stages';
 import { GlyphsheroChain } from '@/components/figures/glyphshero-chain';
 import { RollhausSlots } from '@/components/figures/rollhaus-slots';
 import type { FigureId } from '@/content/types';
@@ -11,6 +9,4 @@ import type { FigureId } from '@/content/types';
 export const FIGURES: Record<FigureId, ComponentType> = {
   'rollhaus-slots': RollhausSlots,
   'glyphshero-chain': GlyphsheroChain,
-  'fermentor-stages': FermentorStages,
-  'fermentor-framings': FermentorFramings,
 };
