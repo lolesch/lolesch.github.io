@@ -54,41 +54,6 @@ export default function Home() {
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
         </div>
-
-        {/*
-          Both controls are the same shape and differ by fill, which is the
-          smallest difference that still reads as an order. The filled one is
-          `text-bg` on `bg-accent` rather than a white that would be a literal:
-          the page background is white in light and near-black in dark, which is
-          exactly the direction the type on gold has to move to stay legible in
-          both. Measured at 4.54:1 light and 6.87:1 dark, and listed in
-          CONTRAST_PAIRS so the build holds it there.
-
-          `border-border-interactive` on the second, because these are the only
-          two controls on the page and SC 1.4.11 wants the boundary at 3:1. The
-          filled one needs no border: its own fill is the boundary.
-        */}
-        <div className="mt-gap flex flex-wrap gap-tight">
-          {hero.actions.map((action) => (
-            <a
-              key={action.href}
-              href={action.href}
-              // The CV is the one that leaves, and it opens elsewhere for the
-              // reason ContactLinks gives: a PDF replacing the site is a dead
-              // end for a reader who was about to keep reading.
-              target={action.primary ? undefined : '_blank'}
-              rel={action.primary ? undefined : 'noopener noreferrer'}
-              className={`rounded-control px-gutter py-tight type-body transition-[background-color,border-color] motion-state ${
-                action.primary
-                  ? 'bg-accent text-bg hover:bg-fg'
-                  : 'border border-border-interactive hover:border-fg'
-              }`}
-            >
-              {action.label}
-              {action.primary ? null : <span className="sr-only"> (opens in a new tab)</span>}
-            </a>
-          ))}
-        </div>
       </div>
 
       <ProjectGrid />

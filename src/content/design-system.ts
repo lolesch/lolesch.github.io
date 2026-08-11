@@ -167,16 +167,18 @@ export const CONTRAST_PAIRS: readonly ContrastPair[] = [
     bg: '--ds-color-accent',
     min: 4.5,
     /*
-     * The one filled control on the site, added with the hero on 2026-08-05.
-     * The label takes `bg` rather than a white, and that is the whole reason the
-     * pair clears AA in both themes: gold is dark in light mode and light in
-     * dark mode, so the type on it has to move in the opposite direction, which
-     * is exactly what `bg` does for free.
+     * Documents the filled-control pattern: `bg` on `bg-accent` rather than a
+     * white label, which is the whole reason the pair clears AA in both themes.
+     * Gold is dark in light mode and light in dark mode, so the type on it has
+     * to move in the opposite direction, which is exactly what `bg` does for
+     * free.
      *
-     * It is the tightest pair in this table at 4.54:1 in light, against 6.87:1
-     * in dark, and it is listed rather than eyeballed for that reason. A Brand
-     * change that darkens `accent` by a step in light mode fails here instead of
-     * shipping.
+     * The hero's primary CTA was the only control rendering this pair, from
+     * 2026-08-05 until it was removed 2026-08-11 (see _build-log.md). Kept
+     * listed rather than deleted: it is the tightest pair in this table at
+     * 4.54:1 in light against 6.87:1 in dark, and the next filled control this
+     * site adds should clear the same bar rather than being eyeballed against
+     * a palette that has since moved on.
      */
     role: 'label on a filled control',
   },

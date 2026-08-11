@@ -33,21 +33,11 @@ export const hero = {
     // It is a fact about a duration, so it moves only when that does.
     'More than five years of building features taught me that. The expensive problems were rarely in the code. They were in what nobody had decided yet, so I went and learned to do that part.',
   ],
-  // Added 2026-08-05. There was no call to action anywhere on Home before this:
-  // a reader convinced by the hero had a nav bar and nothing else, and the only
-  // contact details on the site were on /about behind a third nav item.
-  //
-  // Two, not three. The grid below is what the page is for, so it is primary and
-  // the link is an anchor rather than a route: the work is already on this page
-  // and sending someone to a second copy of it would be a lie about where they
-  // are. The CV is the one thing a hiring manager reliably wants and cannot get
-  // from reading, so it is second and it is the only other one.
-  //
-  // The href tracks src/components/project-grid.tsx's `id="projects"`, and
-  // tests/export/nav.test.ts is where that link is checked against the rendered
-  // target rather than trusted.
-  actions: [
-    { label: 'See the work', href: '#projects', primary: true },
-    { label: 'Read the CV', href: '/cv/leonid-schreiber-ux-engineer.pdf', primary: false },
-  ],
+  // Two CTAs lived here from 2026-08-05 to 2026-08-11: "See the work" anchored
+  // to the grid three lines below it, and a CV link. Removed once ProjectGrid
+  // was confirmed to render immediately under this section: the anchor scrolled
+  // to content already in view, so it repeated the page rather than acting on
+  // it. The CV link moved into SiteFooter the same day (see the 2026-08-11 nav
+  // entry in _build-log.md), reachable from every route instead of only Home,
+  // so Home does not need to carry it a second time.
 } as const;
