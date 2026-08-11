@@ -9,14 +9,14 @@ import { body } from './rendered';
  * them at once.
  */
 
-// The four the PRD specifies: three links plus the wordmark. The wordmark is
-// matched on its text rather than on href="/", which a project page also ships
-// on "Back to all projects" and would pass without a header at all.
+// Three links, not four, since the wordmark absorbed About on 2026-08-11 and
+// its own ROUTES entry was dropped as redundant. Both Portfolio and the
+// wordmark are matched on text rather than on href="/", which a project page
+// also ships on "Back to all projects" and would pass without a header at all.
 const LINKS = [
   ['the wordmark', '>Leonid Schreiber</a>'],
-  ['Projects', 'href="/#projects"'],
+  ['Portfolio', '>Portfolio</a>'],
   ['Design System', 'href="/design-system/"'],
-  ['About', 'href="/about/"'],
 ] as const;
 
 // Every route a link stands for. The 404 pages are deliberately absent: they
@@ -43,24 +43,31 @@ describe('site navigation', () => {
   }
 
   it('marks the current route on every route page, Home included', () => {
-    // Home was the exception until 2026-08-01, because Projects is a fragment
-    // into it and was read as unable to claim the page. A fragment does not
-    // leave the page it points into, so Projects is the page on '/', and Home
-    // is not an exception at all.
+    // Home was the exception until 2026-08-01, when Projects (now Portfolio)
+    // started claiming '/' as its own page rather than reading as a mere
+    // fragment into it. /about stopped being an exception on 2026-08-11 too,
+    // once the wordmark became its link and started carrying the same marker.
     for (const page of ROUTES) {
       expect(body(page), `${page} marks nothing as current`).toContain('aria-current="page"');
     }
   });
 
-  it('never marks the wordmark, wherever the visitor is', () => {
-    // It is the way back, not a place you can be: Home is the projects page,
-    // and Projects is what that location is called. This briefly marked the
-    // wordmark on '/' instead, so clicking Projects highlighted the site's own
-    // name.
+  it('marks the wordmark on /about, its own destination, and nowhere else', () => {
+    // Reversed on 2026-08-11: the wordmark used to mark nothing anywhere,
+    // because it pointed at Home and Portfolio was already that page's link.
+    // It now points at /about instead, so it carries `page` there the same as
+    // any other route, and still nothing anywhere else.
     for (const page of pages) {
       const tag = body(page).match(/<a[^>]*>Leonid Schreiber<\/a>/)?.[0] ?? '';
       expect(tag, `${page} has no wordmark`).not.toBe('');
-      expect(tag, `${page} marks the wordmark`).not.toContain('aria-current');
+      // Compared with separators normalised: globSync returns native ones,
+      // which are backslashes on Windows, and the other paths in this file are
+      // forward-slash literals compared against `body()`, not against `page`.
+      if (page.replace(/\\/g, '/') === 'out/about/index.html') {
+        expect(tag, `${page} does not mark the wordmark`).toContain('aria-current="page"');
+      } else {
+        expect(tag, `${page} marks the wordmark`).not.toContain('aria-current');
+      }
     }
   });
 
@@ -104,11 +111,11 @@ describe('site navigation', () => {
     }
   });
 
-  it('marks a project page as inside Projects rather than as Projects itself', () => {
+  it('marks a project page as inside Portfolio rather than as Portfolio itself', () => {
     // /projects/<slug> has no link of its own and highlighted nothing until
     // 2026-08-01. `true` rather than `page`, because the visitor is under
-    // Projects and is not on /#projects: the distinction is the whole reason
-    // both exist.
+    // Portfolio and is not on '/': the distinction is the whole reason both
+    // exist.
     const page = globSync('out/projects/*/index.html')[0];
     expect(page, 'no project page was exported').toBeDefined();
     expect(body(page)).toContain('aria-current="true"');

@@ -12,11 +12,15 @@ import { about } from '@/content/about';
  * there: a long case study ends the same way, and the reader most likely to
  * write is the one who just finished reading one.
  *
- * Not a second copy of ContactLinks. That is a <section> with an h2 and a
- * two-column list, correct where the page is *about* getting in touch. Here the
- * same four links are a row at the end of a page about something else, so they
- * are shorter, quieter, and carry no heading that would enter the document
- * outline on every route.
+ * The CV link joined this on 2026-08-11, and /about's own contact section, the
+ * `ContactLinks` component, was deleted rather than kept. The two used to carry
+ * the same four links: a reader who reached /about by way of the wordmark saw
+ * them once at the end of the bio and again one scroll further in the footer.
+ * This is now the one copy, which is also the one that reaches every route
+ * instead of only /about. Still no heading that would enter the document
+ * outline on every page; "Contact" is styled to read as one without being one,
+ * the same call `ContactLinks` used to make with a real `<h2>` where the page
+ * was about nothing else.
  */
 export function SiteFooter() {
   return (
@@ -30,22 +34,24 @@ export function SiteFooter() {
     <footer className="mt-section border-t border-border">
       <div className="frame mx-auto flex flex-col gap-gap px-gutter py-section">
         {/*
-          The invitation, and deliberately the only sentence here. Availability,
-          notice period and what Leonid is looking for all belong on /about or
+          "Say hello." until 2026-08-11. Renamed once this became the site's
+          only contact block: an invitation reads right beside a lone set of
+          links, but this now sits under a header whose own wordmark reads
+          "Leonid Schreiber" and points at the bio the links used to close, so
+          the plainer, findable label is the one worth having. Availability,
+          notice period and what Leonid is looking for still belong on /about or
           in an email, where they can be said properly; a footer that tried to
           say them would be the clutter CONTEXT.md's one anti-brand constraint
-          bans. Two words and four links is the whole of what a footer owes.
+          bans.
         */}
-        <p className="type-title">Say hello.</p>
+        <p className="type-title">Contact</p>
 
         <ul className="flex flex-wrap gap-x-gap gap-y-tight type-body">
           {about.contact.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                // Same tab, and `noopener` set on the external three only. Both
-                // calls match ContactLinks exactly, which is the point of the
-                // two being one set of links in two placements.
+                // Same tab, and `noopener` set on the external three only.
                 rel={link.external ? 'noopener noreferrer' : undefined}
                 className="flex items-center gap-tight text-accent"
               >
@@ -58,6 +64,26 @@ export function SiteFooter() {
             </li>
           ))}
         </ul>
+
+        {about.cv ? (
+          <p className="type-body">
+            <a
+              href={about.cv.href}
+              // The CV is the one link that opens elsewhere. A PDF replacing
+              // the site is a dead end for a reader who was about to email. No
+              // `download` attribute: opening in the browser's viewer is
+              // friendlier for someone skimming, and forcing a file to disk is
+              // their call. Carried over unchanged from the deleted
+              // `ContactLinks`, which made the same call for the same reasons.
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline underline-offset-4"
+            >
+              {about.cv.label}
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
+        ) : null}
 
         {/*
           The one line that is not a link to a person, and it is here rather than

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { ContactLinks } from '@/components/contact-links';
 import { ReadingPage } from '@/components/reading-page';
 import { ContentSections } from '@/components/sections';
 import { about } from '@/content/about';
@@ -63,8 +62,6 @@ export default function AboutPage() {
       </div>
 
       <ContentSections sections={about.sections} />
-
-      <ContactLinks contact={about.contact} cv={about.cv} />
     </ReadingPage>
   );
 }

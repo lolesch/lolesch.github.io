@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { SectionHeading } from '@/components/section-heading';
-import type { About, ContactIconId, ContactLink } from '@/content/types';
+import type { ContactIconId } from '@/content/types';
 
 /*
  * The drawings, keyed by the id on the record. One 24-unit grid, one stroke
@@ -46,11 +45,13 @@ const ICONS: Record<ContactIconId, ReactNode> = {
   ),
 };
 
-// Exported since 2026-08-05, when the footer started carrying the same four
-// links in a shorter row. The drawings stay here, with the section that has the
-// most to say about them, rather than moving to a third file that both import:
-// two call sites is not yet a shared module, and the registry above is the
-// thing either one would have to come back to.
+// The only export left in this file since 2026-08-11, when the /about Contact
+// section it used to sit beside was cut as a duplicate of the footer (both
+// rendered the same four links; see site-footer.tsx). The drawings and the
+// registry stayed rather than moving into site-footer.tsx directly, because
+// SiteFooter is the only remaining caller and a component still earns its own
+// file at one call site when the thing it owns, four hand-drawn icon sets, is
+// not something a footer component should carry inline.
 export function Icon({ id }: { id: ContactIconId }) {
   return (
     <svg
@@ -72,78 +73,5 @@ export function Icon({ id }: { id: ContactIconId }) {
     >
       {ICONS[id]}
     </svg>
-  );
-}
-
-export function ContactLinks({ contact, cv }: { contact: readonly ContactLink[]; cv: About['cv'] }) {
-  return (
-    // `mt-section` moved onto SectionHeading on 2026-08-05, with the rule.
-    <section aria-labelledby="contact">
-      {/*
-        No index, and this is the one place where that is a judgement rather
-        than a count. /about runs four numbered sections and then this, which is
-        not a fifth part of the reading: it is what the page is for. The rule
-        still separates it; the number would file it as more prose.
-      */}
-      <SectionHeading id="contact">Contact</SectionHeading>
-
-      <ul className="mt-gap grid gap-x-gap gap-y-tight type-body sm:grid-cols-2">
-        {contact.map((link) => (
-          <li key={link.href}>
-            <a
-              href={link.href}
-              // Same tab, deliberately. The visitor chose to leave, and taking
-              // over their tab management is not this site's call. `noopener`
-              // is inert without target="_blank" and is set anyway, so the rel
-              // is already right if that ever changes.
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              className="flex items-center gap-tight text-accent"
-            >
-              <Icon id={link.icon} />
-              {/*
-                The underline is on the text rather than on the link, so it does
-                not run under the icon. Matches the "Back to all projects" link on a
-                project page: always underlined, no hover change. One link style
-                on the site.
-              */}
-              <span className="underline underline-offset-4">
-                {/*
-                  The label was a heading above the value until 2026-08-01, when
-                  the icon took that job. It stays here because a picture is not
-                  an accessible name: without it the itch.io link announces as
-                  "lolesch.itch.io" and the drawing beside it says nothing.
-                */}
-                <span className="sr-only">{link.label} </span>
-                {link.value}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      {cv ? (
-        <p className="mt-gap type-body">
-          <a
-            href={cv.href}
-            // The CV is the one link that opens elsewhere. A PDF replacing the
-            // site is a dead end for a reader who was about to email. No
-            // `download` attribute: opening in the browser's viewer is
-            // friendlier for someone skimming, and forcing a file to disk is
-            // their call.
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent underline underline-offset-4"
-          >
-            {cv.label}
-            {/*
-              The behaviour is announced in the link, but it belongs to the
-              component rather than to the content record: the record says what
-              the file is, the component knows how it opens.
-            */}
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-        </p>
-      ) : null}
-    </section>
   );
 }

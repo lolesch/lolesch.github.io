@@ -1754,3 +1754,182 @@ figures, typed as data and rendered on Semantic tokens, sourced from
 one-way door test and the day-shift/night-shift split. One real screenshot, the
 Unity Test Runner at 213/213 EditMode tests green, Leonid's own capture and the
 one step the agent cannot do itself. Five sections became eight.
+
+## 2026-08-08: How to God gets its own evidence
+
+How to God was the last case study with no owned source: Rollhaus and
+FerMentor are Figma exports Leonid controls, GlyphsHero is his own repo, and
+How to God is Thoughtfish's shipped game, credited but departed before
+release. It carried three sections and one image, the card thumb, itself press
+art with no provenance entry. A prior pass
+(`docs/superpowers/specs/2026-08-05-case-study-visual-pass-design.md`) flagged
+the gap and left "what Thoughtfish IP permits" open. Scoped in
+`docs/superpowers/specs/2026-08-08-how-to-god-case-study-pass-design.md`.
+
+**The press kit resolves the IP question.** Leonid supplied the official,
+currently-live Thoughtfish press kit this session, downloaded to
+`job-search/portfolio/projects/how-to-god/assets/`. Same resolution as every
+other project's assets: officially-distributed press materials, meant for
+exactly this kind of external use, not borrowed art. `PRODUCT.md`'s
+Evidence-on-Hand entry updated to name the two figures actually taken from it.
+
+**Two screenshots of six, not all six.** `PDPScreenshot3` (a hand mid-gesture,
+the Alchemy, Villagers recipe book open behind it) and `PDPScreenshot4` (two
+hands gripping wooden building blocks) are the two frames that most directly
+show the systems `whatIDid` names: gesture recognition and grab/collider
+tuning. The other four stay unused: `PDPScreenshot1` and `PDPScreenshotEvil`
+both show a grab, but of a scripted creature-and-villager moment rather than a
+placed object; `Screenshot5` shows no hand-object interaction at all. Using all
+six would have padded the page with press art rather than choosing the two
+that are actually evidence.
+
+**"Making it feel right" splits into Casting and Grabbing.** The section
+already carried two systems in four paragraphs, casting in the first two,
+grabbing in the last two. Rather than write new prose to earn two figures, it
+split along its own existing paragraph boundary, the same move FerMentor's
+"The system" section made in the other direction. Text unchanged.
+
+**JPEG, not the PNG the spec's table named.** Both screenshots are
+photographic 3D game renders, the case `extract-figures.py`'s own JPEG/PNG
+rule is for, and the existing `how-to-god.jpg` thumb already made that call
+for this project. A first PNG export ran 1.5 MB per image; JPEG at quality 86,
+the site's standing convention, landed both at 210-252 KB. The spec's table
+named `.png` because the extraction mode is called "png" (the source is a
+raster file, not a PDF page), and the file suffix followed that name
+mechanically rather than by a format decision. Output width 1400px, in the
+986-1701px range every other real-screenshot figure on the site already sits
+in; height 788px follows from the source's native 2560x1440 aspect ratio.
+
+**The Meta Quest store link.** Sourced from `work_history.md:58`, resolving
+the open question `PRODUCT.md`'s Evidence-on-Hand entry had been carrying: a
+public store page exists but its URL was not recorded in this repo. Linked
+from Outcome, which is the section whose opening line the link substantiates.
+The Thoughtfish project page is also real but carries the studio's own
+marketing rather than the same evidentiary weight, and every other case study
+on the site links exactly one outward source, so it stays unlinked.
+
+### Verification
+
+`npm run typecheck` clean, 96 unit, 239 export. Checked in a browser against
+the built export: both figures render at 1400x788, the Casting and Grabbing
+headings appear in the section rail in order between Context and Outcome, and
+the Meta Quest Store link opens in a new tab. `npm run build` regenerated
+before the export suite ran, since it reads `out/` rather than the content
+module directly.
+
+### Still open
+
+The thumb, `how-to-god.jpg`, still carries no provenance entry in
+`extract-figures.py`, unlike its two new siblings. Noted in the spec as a real
+gap and left out of scope for this pass.
+
+The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
+
+The ladder is unreadable on a phone, logged 2026-08-07, unchanged.
+
+## 2026-08-08: the feedback pass, and the half that didn't survive contact
+
+An external review of the live site raised seven numbered issues plus rewrite
+suggestions. Scoped in
+`docs/superpowers/specs/2026-08-08-feedback-response-pass-design.md`, which
+checked every claim against the live site, `src/content/**`, and the sibling
+`job-search` decision logs before adopting or rejecting it. Roughly half
+didn't survive that check: the reviewed About route (two-item nav, no footer)
+doesn't match the live site and never needed fixing; the "Test Radio Buttons"
+complaint turned out to be accurate alt text on a Figma collection genuinely
+named that, and cutting it would have made the alt text less accurate, which
+contradicts the same review's own praise of the site's alt-text discipline;
+Beholder 3 and HellClockBuilder as new tiles, the Rollhaus proportion trim,
+and the CV single-column variant were all real but out of scope, deferred, or
+not this repo's to fix (full reasoning in the spec's Part 2).
+
+**One label, everywhere.** Four surfaces carried four different
+self-descriptions: `layout.tsx`'s title and meta description said "Design
+Engineer" and "UX/UI designer", the hero eyebrow said "UX/UI Designer", About's
+intro said "UX/UI designer", and the CV filename already said
+`ux-engineer.pdf`. Traced upstream to `CONTEXT.md` itself never picking
+between "Design Engineer" and "UX Engineer" for the hybrid track. Leonid's
+call: **UX Engineer** everywhere, matching the CV and job-search's own
+decision log ("C-primary (UX Engineer)"). Changed in `layout.tsx` (title,
+description), `hero.ts` (eyebrow), and `about.ts` (intro); the `Lens` tags
+("UX/UI" as a project category) are a separate taxonomy and untouched.
+
+**Hero body rewritten, headline unchanged.** The review's own suggested
+replacement opened with the exact proposition-then-claim shape the
+2026-08-04 hero rewrite was written to escape, so it wasn't usable as
+written. The underlying complaint was fair though: the old body narrated five
+years of engineering entirely in the past tense, with no present-day claim
+attached, right where a Track C reader needs it to read as a live skill. New
+body: "Five years of building features taught me that, and I haven't stopped
+building. The expensive problems were rarely in the implementation. They were
+in what nobody had decided yet, so I learned to do that part too." Still
+three plain sentences, no em-dash, and deliberately not reusing About's "I
+still write the code" verbatim so the two pages don't carry an identical
+sentence.
+
+**How to God gets its missing evidence.** The review claimed How to God ends
+on an unaddressed testing gap like the other three case studies. Checked
+against Leonid: wrong premise. Thoughtfish ran roughly twenty playtesters
+during his time there; he wasn't running the sessions, but the findings drove
+real changes to quest lines, game feel, and visuals. None of that was in the
+case study. New section, "What testing changed", inserted between Casting/
+Grabbing (split from "Making it feel right" earlier the same day, see the
+entry above) and Outcome. This also partly answers the review's proportion
+complaint: How to God goes from 4 sections to 5.
+
+**FerMentor's no-testing sentence, cut rather than relocated.** The review
+suggested moving it into Outcome. Leonid's call was sharper: omitting it reads
+better than disclosing it, provided nothing else on the page implies testing
+happened, and nothing does. `whatIDid` and "Who it is for" already scope the
+research honestly (proto persona, desk research, three interviews) without
+claiming usability testing on the product. This is the tell-#10 "honesty
+dosage" rule taken one step further than the 2026-08-06 decision: not just
+stated once, but only stated where its absence would otherwise mislead.
+
+### Verification
+
+`npm run typecheck` clean. `npm run build` regenerated `out/`. 96 unit tests
+and 239 export tests pass, including the two updated hero-body assertions in
+`tests/export/static-export.test.ts` and `content.test.ts`'s existing guards
+against the new How to God section (no em-dash, no verbatim restatement,
+non-empty body). Checked against the built export: `<title>` and the meta
+description both read "UX Engineer" in view-source, the hero eyebrow and body
+render the new copy, About's intro reads "UX Engineer", FerMentor's summary
+`dl` no longer carries the cut sentence, and How to God's section rail shows
+five headings in order: Context, Casting, Grabbing, What testing changed,
+Outcome.
+
+### Still open
+
+Everything logged as rejected or deferred in Part 2 of the spec: no
+Beholder 3 or HellClockBuilder tile (v2, Leonid's call), no Rollhaus
+proportion trim, no CV rebuild (that's the `job-search` repo's work), no
+project-grid reordering.
+
+The facade's label on a 90% scrim, logged 2026-08-05, unchanged.
+
+The ladder is unreadable on a phone, logged 2026-08-07, unchanged.
+
+## 2026-08-11 — Nav rebuilt around three root pages, not four
+
+Worked through with Leonid conversationally rather than from a written spec: small enough in code (one nav component, one content component, one page) to design and build in the same pass.
+
+**The wordmark now links to /about, not Home.** Leonid's own read: a name reads as a person, not as a body of work, so his name should open his bio rather than the project grid. `site-nav.tsx`'s `WORDMARK` gained `page: '/about'` and started carrying the same `aria-current="page"` marker any other route gets, reversing a rule that had stood since 2026-08-01 ("the wordmark is the way back, not a place you can be") and had its own caught-bug history.
+
+**"Projects" renamed "Portfolio", href changed from the `/#projects` fragment to plain `/`.** Two reasons, surfaced by Leonid noticing the wordmark and "Projects" pointed at the same page and feeling wrong before either of us had named why: once the wordmark stopped being "the way back" and started being a real destination, a second link to the same place read as the exact duplication he was pointing at, and the fix generalized into a rule, every nav entry links to a root page, none to a fragment.
+
+**About/Contact's ROUTES entry: dropped as redundant, not rearranged.** The site has exactly three root pages (`/`, `/design-system`, `/about`). Once the wordmark took `/about` and Portfolio kept `/`, a third nav entry had nowhere to point that wasn't a repeat of one of those two. Leonid asked directly whether this made an entry obsolete; it did. **Rejected: keeping a `/about#contact` fragment link** in its place, which would have broken the "root pages only" rule the rest of the change was establishing.
+
+**About's own Contact section deleted; the CV link moved into the sitewide footer.** Leonid caught the resulting duplication himself: with the wordmark now landing on /about, a visitor saw the same four contact links twice, once in `/about`'s `ContactLinks` section and again one scroll further in `SiteFooter`. `ContactLinks` (the component, not the `Icon` export `SiteFooter` also uses) is deleted; the footer is now the one copy, reachable from every route instead of only `/about`, and gained the CV link `ContactLinks` used to carry. Footer heading relabeled "Say hello." to "Contact" to match, on Leonid's request, now that it is the site's only contact block rather than a closing line under a lone set of icons. **Rejected: leaving the footer's "two words and four links" comment as written**, since it now carries a CV link too; rewritten rather than left contradicting the code.
+
+**Nav clicks now reset scroll when the destination is the page already open.** Caught by Leonid clicking the wordmark on a scrolled `/about` and watching nothing happen: `next/link` does not scroll for a navigation whose pathname does not change, so a link that is also the current page was inert past the initial load. `NavItem` now calls `window.scrollTo({ top: 0 })` on click when `marker()` already says `'page'`, reusing that comparison rather than re-deriving it. No `behavior: 'smooth'`, matching the plain jump `section-nav.tsx` already uses. Verified in a live dev server: before the fix, scrolling to 900px on `/about/` and clicking the wordmark left `scrollY` at 900; after, it lands at 0. Cross-route navigation (a real pathname change) was unaffected, both before and after.
+
+**Deferred: a dedicated "back to top" control.** Leonid asked whether one was needed. Home, About and Design System now get it for free from the fix above, since each has a nav item whose destination is itself. Project case studies do not: `/projects/<slug>` has no nav entry pointing at itself (Portfolio's marker there is `'true'`, not `'page'`, so clicking it navigates to Home rather than scrolling), and the on-page section rail only jumps between numbered sections, not to the hero above section 01. Case studies are also the site's longest reading pages, so this is the one real gap. Left alone for now rather than added speculatively: the header is sticky on every route, so the way up is never more than one click (to a different page) or one scroll away, and adding a control before it is asked for would be the kind of unrequested affordance the footer's own anti-clutter rule already argues against elsewhere on this site.
+
+### Verification
+
+`npm run typecheck` clean. `npm run build` regenerated `out/`; `vitest run tests/export tests/unit` (335 tests) passed, including `tests/export/nav.test.ts`'s rewritten wordmark-marking test and the trimmed three-link `LINKS` table. `tests/export/about.test.ts` and `tests/export/section-nav.test.ts` needed no changes: the former reads contact links and the CV out of `body(PAGE)` without caring which component rendered them, and the rail was never built from the deleted Contact section in the first place. Checked live in a dev server: header shows the wordmark plus Portfolio and Design System only, the wordmark marks current on `/about` (visually and in `aria-current`), the About page ends cleanly after its fourth section with no duplicated contact block, the footer carries "Contact", the four links and the CV, and same-page nav clicks reset scroll on all three routes that can point at themselves.
+
+### Still open
+
+A "back to top" affordance for `/projects/<slug>`, logged above, deferred rather than rejected: revisit if a case study grows long enough that the sticky header stops feeling sufficient.

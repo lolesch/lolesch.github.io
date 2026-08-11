@@ -7,7 +7,7 @@ import { useEffect, useId, useState } from 'react';
 type NavLink = {
   href: string;
   label: string;
-  /** The route this link *is*, normalised. Absent on a link that is a fragment. */
+  /** The route this link *is*, normalised. Absent on a link with no destination of its own. */
   page?: string;
   /** A route prefix this link stands for while the visitor is somewhere inside it. */
   section?: string;
@@ -16,11 +16,12 @@ type NavLink = {
 };
 
 /*
- * The wordmark carries no `page` and no `section`, so it is never marked. It is
- * the way back, not a place you can be: Home *is* the projects page, the grid
- * is on it, and Projects is what that location is called. Marking both would
- * put two links on one destination, and marking the name would make the site's
- * identity double as a location.
+ * The wordmark carried no `page` and no `section` until 2026-08-11: it was the
+ * way back, not a place you can be. That held while it pointed at Home, which
+ * every other link could also reach. It no longer does. A name reads as a
+ * person, not as a body of work, so Leonid's own read was that his name should
+ * open his bio rather than the project grid: the wordmark now *is* /about, the
+ * same as any other route, and carries the same `page` marker as one.
  *
  * It is still a NavLink rather than its own block in site-header.tsx, because
  * everything else about it is a nav link and the alternative is a second copy
@@ -28,25 +29,38 @@ type NavLink = {
  * other end of the header.
  */
 const WORDMARK: NavLink = {
-  href: '/',
+  href: '/about/',
   label: 'Leonid Schreiber',
+  page: '/about',
   role: 'type-wordmark',
 };
 
+/*
+ * Two links, not three. About/Contact was the third until 2026-08-11, and it
+ * became redundant rather than rearranged: the wordmark took /about, and this
+ * site has exactly three root pages, so a third ROUTES entry could only repeat
+ * one of the other two destinations. That is the same "two links, one place"
+ * problem the wordmark used to avoid by carrying no destination at all;
+ * dropping the entry is what avoids it now that the wordmark carries one.
+ *
+ * Every href below is a root page on purpose, none a fragment. That was Home's
+ * own rule under the old "Projects" label (see below); it now applies site-wide.
+ */
 const ROUTES: readonly NavLink[] = [
   /*
-   * Projects is both. On '/' it is the page: the href is a fragment, and a
-   * fragment does not leave the page it points into. On /projects/<slug> it is
-   * the section the visitor is inside, which is a weaker claim and gets the
-   * weaker marker.
+   * Portfolio is both. On '/' it is the page. On /projects/<slug> it is the
+   * section the visitor is inside, which is a weaker claim and gets the weaker
+   * marker.
    *
-   * Named Work until 2026-08-02. "Work" reads as employment, which is the wrong
-   * promise on a page where two of three entries are not jobs, and the route
-   * moved with the label rather than leaving the URL arguing with the nav.
+   * Named Projects until 2026-08-11, and Work before that. Renamed because the
+   * wordmark moved onto /about and "Projects" then read as a second link to the
+   * same place as the name beside it. The href changed with it, from the
+   * `/#projects` fragment to plain '/': the label describes what the whole page
+   * is, not a scroll position on it, and root pages are now the rule for every
+   * nav entry, not an exception the wordmark used to be argued out of.
    */
-  { href: '/#projects', label: 'Projects', page: '/', section: '/projects', role: 'type-body' },
+  { href: '/', label: 'Portfolio', page: '/', section: '/projects', role: 'type-body' },
   { href: '/design-system/', label: 'Design System', page: '/design-system', role: 'type-body' },
-  { href: '/about/', label: 'About', page: '/about', role: 'type-body' },
 ];
 
 // trailingSlash: true means a path can arrive either way. Stripped, except '/'
@@ -55,8 +69,8 @@ const normalise = (path: string) => (path.length > 1 ? path.replace(/\/$/, '') :
 
 /*
  * 'page' is the exact route. 'true' is the generic "you are inside this", and
- * the distinction is kept rather than blurred: a project page is under Projects
- * but it is not /#projects, and claiming 'page' there would tell a screen
+ * the distinction is kept rather than blurred: a project page is under
+ * Portfolio but it is not '/', and claiming 'page' there would tell a screen
  * reader the visitor is somewhere they are not.
  */
 const marker = (link: NavLink, here: string): 'page' | 'true' | undefined => {
@@ -71,6 +85,16 @@ function NavItem({ link, here }: { link: NavLink; here: string }) {
     <Link
       href={link.href}
       aria-current={current}
+      // A link to the page already open is not a navigation Next.js scrolls
+      // for: the pathname does not change, so the router has nothing to react
+      // to and the visitor stays wherever they were reading. `current ===
+      // 'page'` is exactly that case (`marker` above), so it is what this
+      // checks rather than re-deriving the same comparison a second way. No
+      // `behavior: 'smooth'`, matching the plain jump the section rail already
+      // uses instead of animating ten thousand pixels of case study.
+      onClick={() => {
+        if (current === 'page') window.scrollTo({ top: 0 });
+      }}
       // aria-current alone is invisible, so the state is carried visually too.
       // A screen-reader-only cue is not a cue. The underline stays, so colour
       // is never the only channel (SC 1.4.1) and the accent is the second one.
@@ -98,13 +122,15 @@ export function Wordmark() {
  *
  * The header used to wrap instead, and that was the right answer while it
  * scrolled away: nothing was hidden, and the cost was paid once at the top of
- * the page. Pinning it changed the arithmetic. Three links, the wordmark and
- * the switch wrap to three rows at 390px and four at 320px, which measured
- * 135px and 186px of permanent bar, or a sixth and a fifth of a phone screen.
- * A menu that has to be opened is the smaller loss.
+ * the page. Pinning it changed the arithmetic: a wrapped bar becomes permanent
+ * screen real estate rather than a one-time cost, measured at the time as a
+ * sixth to a fifth of a phone screen across two narrow breakpoints. A menu
+ * that has to be opened is the smaller loss. Dropping the third link on
+ * 2026-08-11 (About/Contact folded into the wordmark) only widens that
+ * margin, so the conclusion was not re-measured.
  *
- * Nothing changes at `sm` and up, where all five fit on one 75px row and a
- * button would be hiding three links from a screen with room for them.
+ * Nothing changes at `sm` and up, where all four fit on one 75px row and a
+ * button would be hiding two links from a screen with room for them.
  */
 export function SiteNav() {
   const here = useHere();
@@ -112,9 +138,9 @@ export function SiteNav() {
   const panelId = useId();
 
   // Closes on navigation. Every link either leaves the route, which changes
-  // `here`, or is the fragment into Home, which does not: hence both this and
-  // the handler on the list below. A panel still standing open over the section
-  // it just scrolled to is the obvious failure here.
+  // `here`, or points back at the page already open, which does not: hence
+  // both this and the handler on the list below. A panel still standing open
+  // over a route the visitor never left is the obvious failure here.
   useEffect(() => setOpen(false), [here]);
 
   useEffect(() => {
