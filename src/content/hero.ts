@@ -15,12 +15,18 @@ export const hero = {
   // job layout.tsx's `description` does for a search result, and it is answered
   // the same way.
   //
-  // Tracks the first clause of /about's intro exactly. "Design Engineer" is the
-  // title tag and the Track C claim; the eyebrow carries the design half because
-  // the headline and the body below it already carry the engineering half, and a
-  // hero that said engineer twice would leave the UX/UI half of the arc to a
-  // page most readers never open.
-  eyebrow: 'UX/UI Designer · Berlin',
+  // Tracks the first clause of /about's intro exactly, which is a coupling the
+  // eyebrow's own comment has documented since 2026-08-05: both have to move
+  // together for that claim to keep being true. Was "Design Engineer" until
+  // 2026-08-08, when it split from the title tag and gave the eyebrow the
+  // design half on its own, on the theory that the headline and body below
+  // already carried the engineering half. An external review caught that this
+  // repo carried four different self-descriptions across four surfaces, which
+  // traced back to CONTEXT.md itself never picking between "Design Engineer"
+  // and "UX Engineer" for the hybrid track. Resolved to "UX Engineer"
+  // everywhere, matching the CV and job-search's decision log. See
+  // docs/superpowers/specs/2026-08-08-feedback-response-pass-design.md Part 3.
+  eyebrow: 'UX Engineer · Berlin',
   headline: 'The hard part happens before anyone starts building.',
   body: [
     // Three plain sentences, no subordinate clause. "what nobody had decided
@@ -31,7 +37,28 @@ export const hero = {
     //
     // "More than five years" tracks `cv/work_history.md` and the About intro.
     // It is a fact about a duration, so it moves only when that does.
-    'More than five years of building features taught me that. The expensive problems were rarely in the code. They were in what nobody had decided yet, so I went and learned to do that part.',
+    //
+    // Rewritten 2026-08-08 (Part 4 of the spec above). The review's own
+    // suggested fix opened with a proposition-then-claim shape ("I design the
+    // system and I build it...") this rewrite was specifically written to
+    // escape, so it wasn't usable as written, but the underlying complaint was
+    // fair: the old wording narrated five years of engineering as a closed
+    // chapter, right where a Track C reader needs it to read as a live skill.
+    // "I haven't stopped building" lands a present-tense claim the old sentence
+    // never made. "In the implementation" replaces "in the code": the old
+    // phrasing devalued code twice in one paragraph, contradicting the sentence
+    // in front of it. "Learned to do that part too" replaces "went and learned
+    // to do that part": "too" signals addition where "went and learned" read as
+    // a departure. Deliberately not reusing About's "I still write the code"
+    // verbatim, so Home and About don't carry an identical sentence, which is
+    // the kind of repetition the "one job" guard above exists to catch
+    // elsewhere on this page.
+    //
+    // Note 2026-08-11: About's "I still write the code" was cut in that file's
+    // own rewrite the same day, so there is no live duplicate left to avoid.
+    // Left as history rather than deleted; the constraint could recur if
+    // About's intro changes again.
+    "Five years of building features taught me that, and I haven't stopped building. The expensive problems were rarely in the implementation. They were in what nobody had decided yet, so I learned to do that part too.",
   ],
   // Two CTAs lived here from 2026-08-05 to 2026-08-11: "See the work" anchored
   // to the grid three lines below it, and a CV link. Removed once ProjectGrid

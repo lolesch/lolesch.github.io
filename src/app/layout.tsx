@@ -47,7 +47,14 @@ const body = Archivo({
 export const metadata: Metadata = {
   // No em-dash (CLAUDE.md guardrail 5). The middot matches the metadata
   // separator already used in site_copy.md's tile lines.
-  title: 'Leonid Schreiber · Design Engineer',
+  //
+  // "UX Engineer" since 2026-08-08, superseding "Design Engineer". Four
+  // surfaces (this title, this description, the hero eyebrow, About's intro)
+  // had drifted to four different self-descriptions; an external review
+  // caught it. Resolved to match the CV and job-search's own decision log
+  // ("C-primary (UX Engineer)") rather than inventing a fifth label. See
+  // docs/superpowers/specs/2026-08-08-feedback-response-pass-design.md Part 3.
+  title: 'Leonid Schreiber · UX Engineer',
   // Descriptive rather than the h1, which the headline rewrite on 2026-08-04
   // made necessary: "The hard part happens before anyone starts building." is a
   // point of view, and a search result carrying only that says nothing about
@@ -55,7 +62,7 @@ export const metadata: Metadata = {
   // person and the contents; the headline is read in context and does not have
   // to.
   description:
-    'Portfolio of Leonid Schreiber, UX/UI designer in Berlin. Case studies in UX, design systems and interaction, plus the design system this site runs on.',
+    'Portfolio of Leonid Schreiber, UX Engineer in Berlin. Case studies in UX, design systems and interaction, plus the design system this site runs on.',
 };
 
 // Runs before first paint so the correct theme is on <html> with no flash.

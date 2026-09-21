@@ -48,12 +48,20 @@ const fermentor: Project = {
     'Fermentation beginners cannot tell whether what they are seeing is normal, and opening the jar to find out is the thing most likely to ruin it.',
   whatIDid:
     'Reframed a confidence problem into a state and timing problem, then built the product on a stage model carrying the observable signals for each stage. The screens run on a Figma variable system.',
-  // The no-testing limitation is stated here, once, and the Outcome section
-  // deliberately does not restate it. Same call as how-to-god below: the detail
-  // page renders these three lines in a <dl> above the sections, so a section
-  // repeating one is the apology loop, tone tell #10.
+  // Cut, not relocated, 2026-08-08 (Part 7 of
+  // docs/superpowers/specs/2026-08-08-feedback-response-pass-design.md). An
+  // external review suggested moving the no-testing sentence into Outcome;
+  // Leonid's call was sharper than that: omitting it reads better than
+  // disclosing it, provided nothing else on the page implies testing
+  // happened. Checked: `whatIDid` and "Who it is for" already scope the
+  // research honestly (proto persona, desk research, three interviews)
+  // without claiming usability testing on the product itself, so cutting the
+  // sentence doesn't create a false impression. This is the tell-#10
+  // "honesty dosage" rule applied one level further than the 2026-08-06
+  // decision took it: not just stated once, but only stated where its
+  // absence would otherwise mislead.
   whatChanged:
-    'A clickable full flow, built on a model that answers what this should look like right now instead of listing steps. No usability testing: the capstone ran out of time.',
+    'A clickable full flow, built on a model that answers what this should look like right now instead of listing steps.',
   sections: [
     {
       kind: 'constraints',
@@ -748,13 +756,62 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        kind: 'prose',
-        heading: 'Making it feel right',
+        // Split 2026-08-08 from "Making it feel right", per
+        // docs/superpowers/specs/2026-08-08-how-to-god-case-study-pass-design.md
+        // Part 3-4, along the section's own paragraph boundary: casting is
+        // paragraphs 1-2, grabbing is 3-4. Two systems, two pieces of evidence,
+        // rather than one section padded to fit both. Text unchanged from the
+        // original section.
+        kind: 'figure',
+        heading: 'Casting',
         body: [
           'The recognition plugin was already in the project when I arrived. What was open was everything around it: which shapes the spells used, how much slack a shape got before it stopped counting, and how fast the game told you it had counted. That is the part I was hired for.',
           'Simple, distinct shapes did most of the work, because a shape that stays distinguishable when it is drawn badly needs less tuning than one that does not. I trained the model across several people instead of only myself, which is the difference between a system that works and a system that works for the person who built it.',
+        ],
+        // PDPScreenshot3 from the Thoughtfish press kit, chosen over the other
+        // five for the reason the spec's Part 3 gives: it is the frame that most
+        // directly shows the hand mid-gesture rather than a scripted moment or a
+        // menu with no hand-object interaction at all.
+        caption:
+          'A single hand mid-gesture, the Alchemy, Villagers recipe book open behind it: a villager becomes a guard with metal, or a lumberjack with wood.',
+        alt: 'A hand with fingertips glowing yellow-orange holds a small bearded villager above a forested island. In front of it, an open recipe book headed Alchemy, Villagers shows two crafting rows: a villager combined with metal becomes a guard, and a villager combined with wood becomes a lumberjack.',
+        src: '/figures/how-to-god-casting.jpg',
+        width: 1400,
+        height: 788,
+      },
+      {
+        kind: 'figure',
+        heading: 'Grabbing',
+        body: [
           'Grabbing is the same problem from the other side. The colliders on the in-game hand model decide whether a pickup reads as contact or as a near miss, and that is tuning rather than design: you adjust, you playtest, you adjust again. Haptics carry the result back, one signal for a success and another for a warning.',
           "The input scheme follows Meta Quest's guidelines, which set what a grab, a trigger and a menu call are expected to do on that hardware. Deliberately conventional, so it is learnable.",
+        ],
+        // PDPScreenshot4, the other frame the spec's Part 3 names: two hands
+        // gripping placed objects, rather than the scripted creature-and-villager
+        // grab in PDPScreenshot1 or PDPScreenshotEvil.
+        caption: 'Two hands gripping wooden building blocks over the village.',
+        alt: 'Two hands, black and orange, reach over a desert village, each gripping a stack of wooden blocks. A gauge beside the right hand reads 25 of 25. Palm trees, sandstone buildings and a pyramid fill the settlement below, a river crossing the foreground.',
+        src: '/figures/how-to-god-grabbing.jpg',
+        width: 1400,
+        height: 788,
+      },
+      {
+        // Added 2026-08-08, per
+        // docs/superpowers/specs/2026-08-08-feedback-response-pass-design.md
+        // Part 5. An external review claimed How to God ended on an
+        // unaddressed testing gap like the other three case studies. Checked
+        // against Leonid: the premise was wrong. Thoughtfish ran roughly
+        // twenty playtesters during his time there; he wasn't running the
+        // sessions, but the findings drove real changes. That fact just
+        // wasn't in the case study yet, so this is missing content rather
+        // than a placement fix. `whatChanged` above is a provenance statement
+        // ("playtested and merged to main... I can't tell you what
+        // survived"), not the testing gap the review flagged, and stays as
+        // written.
+        kind: 'prose',
+        heading: 'What testing changed',
+        body: [
+          "Roughly twenty playtesters came through during my time on the project. I wasn't running those sessions myself, but the findings came back to the team and changed real things: quest lines were rewritten where feedback showed people getting stuck or missing the point, and both game feel and visuals were adjusted wherever players expected an interaction to work that we hadn't built, or expected nothing where we had.",
         ],
       },
       {
@@ -769,6 +826,17 @@ export const projects: readonly Project[] = [
           'I left Thoughtfish in December 2024, and the game reached Early Access a year after that.',
           'One thing on this project is not mine. It ran a hybrid OOP and ECS architecture, and the team had already done the optimisation work before I arrived: low-poly geometry, object pooling, simplified colliders. I worked next to that, not on it.',
         ],
+        // Sourced 2026-08-08 from work_history.md:58, resolving the open
+        // question PRODUCT.md's Evidence-on-Hand entry left standing: a public
+        // store page exists but its URL was not recorded in this repo. The
+        // direct proof the game shipped, which is the claim this section's
+        // opening line makes. The studio's own project page carries the same
+        // information with less evidentiary weight and is not linked, so the
+        // page keeps its one-outward-link-per-case-study convention.
+        link: {
+          label: 'View on the Meta Quest Store',
+          href: 'https://www.meta.com/experiences/how-to-god/5997754983577827/',
+        },
       },
     ],
   },

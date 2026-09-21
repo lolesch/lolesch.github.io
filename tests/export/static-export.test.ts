@@ -41,9 +41,9 @@ describe('static export (Seam 2)', () => {
     // by a document-wide match.
     const paragraphs = [...rendered(HOME).matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1]);
     expect(paragraphs.length).toBeGreaterThanOrEqual(2);
-    expect(paragraphs[0]).toContain('UX/UI Designer');
-    expect(paragraphs[1]).toContain('The expensive problems were rarely in the code.');
-    expect(paragraphs[1]).toContain('so I went and learned to do that part');
+    expect(paragraphs[0]).toContain('UX Engineer');
+    expect(paragraphs[1]).toContain('The expensive problems were rarely in the implementation.');
+    expect(paragraphs[1]).toContain('so I learned to do that part too');
   });
 
   it('has dropped the rejected "one job" framing everywhere on Home', () => {

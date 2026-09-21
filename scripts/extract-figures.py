@@ -468,6 +468,50 @@ FIGURES = [
             "framed and native resolution is the point."
         ),
     },
+    # The How to God entries, added 2026-08-08 per
+    # docs/superpowers/specs/2026-08-08-how-to-god-case-study-pass-design.md.
+    # Official Thoughtfish press screenshots, not Leonid's own captures, which is
+    # why each `why` below says so rather than naming a source file he made.
+    # Sources sit one level deeper than the flat `assets/` layout the other three
+    # projects use, at `assets/Visual Assets/Screenshots/`; `find_source`'s
+    # `subdir` join already handles that nested path with no script change, since
+    # `Path` joins a subpath the same as a filename.
+    {
+        # .jpg rather than the .png the spec's table names, which reused "png"
+        # as the extraction-mode label (the source is a raster file, not a PDF
+        # page) and the file suffix followed mechanically. Both screenshots are
+        # photographic 3D game renders, the case this file's own JPEG/PNG rule
+        # above is for, and the existing how-to-god.jpg thumb already made that
+        # call for this project. A PNG export of this source ran 1.5 MB; JPEG
+        # at quality 86 is the site's convention for exactly this content.
+        "out": "public/figures/how-to-god-casting.jpg",
+        "project": "how-to-god",
+        "png": "Visual Assets/Screenshots/PDPScreenshot3.png",
+        "crop": [0, 0, 2560, 1440],
+        "width": 1400,
+        "why": (
+            "Official Thoughtfish press art, one of six screenshots in the "
+            "studio's press kit. A single hand mid-cast, the alchemy recipe "
+            "book open behind it, evidencing the gesture-recognition system "
+            "the Casting section's prose names: simple, distinct shapes, "
+            "trained across several people. Full-bounds crop, a no-op: the "
+            "source is already framed and there is nothing in it to cut."
+        ),
+    },
+    {
+        "out": "public/figures/how-to-god-grabbing.jpg",
+        "project": "how-to-god",
+        "png": "Visual Assets/Screenshots/PDPScreenshot4.png",
+        "crop": [0, 0, 2560, 1440],
+        "width": 1400,
+        "why": (
+            "Official Thoughtfish press art, from the same kit. Two hands "
+            "gripping wooden building blocks over the village, evidencing the "
+            "collider-tuning and grab claims the Grabbing section's prose "
+            "makes. Full-bounds crop, a no-op, same reasoning as its Casting "
+            "sibling above."
+        ),
+    },
 ]
 
 # Rejected while scanning, recorded so the next session does not re-derive them:

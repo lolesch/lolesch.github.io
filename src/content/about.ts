@@ -10,13 +10,19 @@ export const about: About = {
   // many hats", is a cliché that says less. What the old line was missing is
   // that it listed three states and attached no claim to any of them.
   //
-  // The claim is "I still write the code", which the tone check pulled back to
-  // from "I still use all three". That version read as though the metalwork were
-  // also live, and it is not: what survives it is on the wall and in a pocket,
-  // which the last section says properly. Guardrail 1 applies to a sentence
-  // about yourself the same as to one about a project.
+  // "UX Engineer" replaces "UX/UI designer" on 2026-08-08, matching the title
+  // tag, the hero eyebrow and the CV. See hero.ts's eyebrow comment for the
+  // full reasoning; this line and that one move together by the same coupling.
+  //
+  // Rewritten again 2026-08-11, worked out on the LinkedIn About rewrite the
+  // same day and ported back here. "And I still write the code" is cut: it
+  // reads as pre-empting a doubt nobody had raised, and the page already
+  // proves it (the Paintbucket token system and the AI-workflow paragraph
+  // below). Restructured from the two-sentence "X before this, Y before that"
+  // shape into one sentence, "building on A, and B before that", which reads
+  // as accumulation rather than a chronological list.
   intro:
-    "I'm a UX/UI designer in Berlin, and I still write the code. Five years as a Unity developer before this, and a metalworker's apprenticeship before that.",
+    "I'm a UX Engineer in Berlin, building on five years as a Unity developer, and a hands-on metalworker's apprenticeship before that.",
 
   // Reordered 2026-08-04, from chronological to present-first. The old order ran
   // How that happened, Why UX, How I work, Where I'm going, which put who Leonid
@@ -33,8 +39,17 @@ export const about: About = {
         // the point of the sentence, but as the first line of the page the old
         // order opened on a weakness and read as a hedge before anything had
         // been claimed.
-        'I think in systems. My work still holds up when the requirements change three months later, and I am usually not the fastest person on a task. It shows up as design tokens, reusable components, and architecture decisions made early enough to matter.',
-        'It has a failure mode and I know what it is. Coming from engineering, the temptation is to jump to a solution before the problem is properly framed. Learning to do the framing first is most of what I went to SPICED for.',
+        //
+        // Split into two sentences 2026-08-11 to fix a comma splice; "design
+        // tokens" folded into a plain list and "the urge to improve systems
+        // throughout their lifetime" added as its closing item.
+        "I think in systems. My work still holds up when the requirements change three months later. This quality can't be rushed. It shows up as reusable components, architecture decisions, and the urge to improve systems throughout their lifetime.",
+        // Rewritten 2026-08-11. The old close, "most of what I went to SPICED
+        // for", moved to "Why UX" below, which now names SPICED directly. This
+        // version stays on what the paragraph is actually claiming: UX training
+        // is what keeps the framing-first habit honest, not just where the
+        // theory came from.
+        'Coming from engineering, the temptation is to jump to a solution before the problem is properly framed. Learning to do the framing first is where my UX focus helps keep it grounded.',
       ],
     },
     {
@@ -49,16 +64,31 @@ export const about: About = {
         // than two". Cut 2026-08-04 with the same phrase in the hero: if the two
         // are one job then there is only one job, which was never the claim.
         // They are two ways at the same problem and Leonid has both.
-        'Design and engineering as two ways into the same problem rather than two departments, and working out what AI actually changes about that. I write the architecture and the design docs myself, then use AI to review them and to execute inside guardrails I set. This site is being built that way.',
+        //
+        // "and working out what AI actually changes about that" replaced
+        // 2026-08-11 with a plain statement that the field itself is new,
+        // ahead of the concrete workflow sentence that follows it.
+        "Design and engineering are two ways into the same problem rather than two departments. With the recent AI changes in the industry, there is a new field of experience to conquer. I write the architecture and design docs myself, then use AI to review them and to execute inside guardrails I set. This site is being built that way.",
       ],
     },
     {
       kind: 'prose',
       heading: 'Why UX',
       body: [
-        'The interface was in every job I had. Games Academy coursework included interaction design. At Paintbucket I started implementing UI because nobody else wanted to, then ended up owning it. At Sorcerers Lab and Grimbart Tales the UI functionality and animation were mine. At Thoughtfish the remit was interaction and game feel. The pivot made formal the part I had already been doing.',
-        'The practical side was real too: multi-year projects and not much stability. I wanted to go somewhere my existing skillset stays valuable.',
-        "In 2023 I became a father and took time out from work to care for my family. After that I built VR interaction systems at Thoughtfish, spent a year on self-directed systems work, then did SPICED's UX/UI program, 720 hours, graduating in May 2026.",
+        // Rewritten 2026-08-11. The old closer, "the pivot made formal the part
+        // I had already been doing", was cut for reading as a manufactured
+        // summary line (tone tell #2) once it sat a page away from a near-
+        // identical closer in "How I got here" below, the same point made
+        // twice. Paintbucket, Sorcerers Lab and Grimbart Tales collapsed into
+        // one "I owned UI functionality and animation" clause; Paintbucket's
+        // fuller origin story ("started implementing UI because nobody else
+        // wanted to, then owned it") moved to "How I got here" rather than
+        // being lost, replaced there by the token-system claim.
+        'The interface was in every job I had. Games Academy included interaction design. At Paintbucket, Sorcerers Lab, and Grimbart Tales I owned UI functionality and animation. At Thoughtfish the remit was interaction and game feel.',
+        'The practical side is real too: not much stability in multi-year game projects. I wanted to go somewhere my existing skillset stays valuable.',
+        // "720 hours, graduating in May 2026" replaced with "to get back on
+        // track" 2026-08-11, Leonid's edit, kept as written.
+        "Then in 2023 I became a father and took time out from work to care for my family. After that I built VR interaction systems at Thoughtfish, spent a year on self-directed systems work, then did SPICED's UX/UI program to get back on track.",
       ],
     },
     {
@@ -67,17 +97,29 @@ export const about: About = {
       kind: 'prose',
       heading: 'How I got here',
       body: [
-        // The second sentence is the metalwork systems-origin line, decided
-        // 2026-07-29 and written 2026-07-31. It states a fact about the shelf
-        // and leaves the parallel to design work unstated: an earlier version
-        // drew it ("same instinct as the shelf, different material") and was
-        // cut under tone tell #4. It also avoids claiming he already framed
-        // before building, which would contradict "How I work" above. That
-        // section led this page until 2026-08-04 and now opens it, so the
-        // contradiction would land harder, not softer.
-        "I trained in Metallgestaltung and passed my journeyman's exam in 2016. My Gesellenstück was a wall shelf on a bayonet mechanism, so the layers unlock and remount in any configuration. That was the first thing I built where the parts had to work in more than one arrangement. It is still on my wall, and I still carry the pocket knife I forged during the apprenticeship.",
-        'Then a few years without much direction. I was restoring a VW LT with a friend, living on a farm in Mecklenburg, and modding Torchlight II in the evenings, when it occurred to me that people do this for a living. I applied to Games Academy in Berlin.',
-        "I trained there as a game designer and then kept gravitating to the programming side of every project, so I taught myself to code. At Sorcerers Lab I ended up as the studio's only developer and shipped a turn-based roguelite in about five months. At Paintbucket Games I owned the UI on Beholder 3: designed it, implemented it, and built a color system where a single ScriptableObject drove the palette across every menu instead of colors being set per object.",
+        // "Metallgestaltung" and "Gesellenstück" gained inline English glosses
+        // 2026-08-11, matching the CV gloss in work_history.md ("artistic metal
+        // design"). The systems-origin sentence ("That was the first thing I
+        // built where the parts had to work in more than one arrangement.") and
+        // the closing pocket-knife clause were cut in the same pass: the
+        // shelf's own description ("layers unlock and remount in any
+        // configuration") now carries the point on its own, and the later
+        // Paintbucket token-system sentence closes the loop without needing a
+        // sentence to spell out the parallel.
+        "I trained in Metallgestaltung (artistic metal design) and passed my journeyman's exam in 2016. My Gesellenstück (journeyman's piece) was a wall shelf on a bayonet mechanism, so the layers unlock and remount in any configuration. It is still on my wall.",
+        // "modding Torchlight II" generalized to "occasionally modding games"
+        // 2026-08-11, Leonid's edit, kept as written.
+        'I was restoring a VW LT with a friend, living on a farm in Mecklenburg, and occasionally modding games, when it occurred to me that people do this for a living. I applied to Games Academy in Berlin and started my digital career.',
+        // Reordered 2026-08-11 to run chronologically: Paintbucket (2020-21) now
+        // sits before Sorcerers Lab (2022), which an earlier draft had
+        // backwards. The old Beholder 3 sentence ("owned the UI... a color
+        // system where a single ScriptableObject drove the palette across
+        // every menu") is replaced by a shorter claim about the token system
+        // itself; the fuller technical detail still lives in work_history.md
+        // and the Beholder 3 portfolio tile for a reader who wants it. Closing
+        // line replaces "so I taught myself to code" as the section's landing
+        // point.
+        "I trained there as a game designer and then kept gravitating to the programming side of every project. At Paintbucket Games I created a reusable token system in Unity that the studio could build on throughout future projects. At Sorcerers Lab I ended up as the studio's only developer and shipped a turn-based roguelite in about five months. As all my jobs were user-centric, UX was just the natural next step.",
       ],
     },
   ],

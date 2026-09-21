@@ -63,13 +63,17 @@ guardrails are in `CLAUDE.md`.
 - **Rollhaus interactive Figma prototype**, already live and linked from the
   case study at `src/content/projects.ts:175`.
 - **How to God, released commercially.** Reached Early Access roughly a year
-  after Leonid left Thoughtfish in December 2024. A public store page exists,
-  but its URL is not recorded in this repo: source it before linking, never
-  reconstruct it.
+  after Leonid left Thoughtfish in December 2024. The public Meta Quest store
+  page is sourced from `work_history.md:58` and linked from the case study's
+  Outcome section at `src/content/projects.ts`.
 - **GlyphsHero**, a real and active repo carrying a `CLAUDE.md`, nine ADRs, and
   an Obsidian doc vault. Public at `github.com/lolesch/GlyphsHero`.
-- **Thoughtfish press kit**, source of `/figures/how-to-god.jpg` and available
-  for further imagery on that project.
+- **Thoughtfish press kit**, source of `/figures/how-to-god.jpg` and, since
+  2026-08-08, `/figures/how-to-god-casting.jpg` and
+  `/figures/how-to-god-grabbing.jpg`. Four of the kit's six screenshots remain
+  unused: two show a scripted creature-and-villager grab rather than the
+  systems Leonid built, one shows the evil-god hand variant, one shows no
+  hand-object interaction at all.
 - **In-repo assets:** CV PDF in `public/cv/`, figures in `public/figures/`,
   portrait at `public/leonid-schreiber.jpg`.
 
